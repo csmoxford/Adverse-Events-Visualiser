@@ -1,0 +1,21 @@
+
+
+
+.container-fluid {
+  height: 5vh;
+}
+
+
+.navbar-nav > li > a, .navbar-brand {
+  padding-top:0vh;
+  padding-bottom:0vh;
+  line-height: 4.9vh;
+}
+
+.navbar-brand {
+    height: 4.9vh
+}
+
+.navbar {
+  height:5vh !important
+}

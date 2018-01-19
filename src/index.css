@@ -1,0 +1,47 @@
+body {
+  margin: 0px;
+  padding: 0%;
+  font-family: sans-serif;
+}
+
+
+
+.cssGrid {
+  display: grid;
+  grid-template-columns: [start] 15% [colMarginLeft] 50% [colMarginRight] 35% [end];
+  grid-template-rows: 94vh;
+}
+
+.item-left {
+  grid-column-start: start;
+  grid-column-end: colMarginLeft;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.item-middle {
+  grid-column-start: colMarginLeft;
+  grid-column-end: colMarginRight;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.item-right {
+  grid-column-start: colMarginRight;
+  grid-column-end: end;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.item-main {
+  grid-column-start: colMarginLeft;
+  grid-column-end: end;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+
+
+.navbar {
+  margin-bottom: 0px;
+}
