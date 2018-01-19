@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import ToxPlotCycle from './ToxPlotCycle'
-
+import {$} from 'jquery'
 
 class ToxPlotCycleUI extends PureComponent {
 
@@ -17,16 +17,12 @@ class ToxPlotCycleUI extends PureComponent {
    }
 
   updateOneGraph() {
-    console.log('hi');
-    // console.log($('#oneGraph').is(':checked'));
     this.setState({
       oneGraph: $('#oneGraph').is(':checked')
     })
   }
 
   render() {
-
-
     return <div>
       <div className="form-check filter-option">
         <div style={{height: '20px'}}/>
@@ -38,7 +34,6 @@ class ToxPlotCycleUI extends PureComponent {
       {...this.props}/>
   </div>
   }
-
 }
 
 

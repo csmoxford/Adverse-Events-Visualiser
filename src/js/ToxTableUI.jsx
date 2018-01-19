@@ -5,7 +5,7 @@ import './ToxTable.css'
 import ToxTableAE from './ToxTableAE'
 import ToxTableCategory from './ToxTableCategory'
 import ToxTableKeyGroups from './ToxTableKeyGroups'
-
+import {$} from 'jquery'
 
 const sortFunctions = [
   {

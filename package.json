@@ -2,6 +2,7 @@
   "name": "d3react",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://csmoxford.github.io/Adverse-Events-Visualiser/",
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootstrap-select": "^1.12.4",
@@ -15,24 +16,23 @@
     "d3-selection": "1.2.0",
     "d3-svg-legend": "2.25.3",
     "d3-transition": "1.1.1",
+    "extract-text-webpack-plugin": "^1.0.1",
     "jquery": "^3.2.1",
     "jquery-match-height": "^0.7.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
-    "react-axis": "0.2.5",
     "react-bootstrap": "^0.31.5",
     "react-bootstrap-select": "^0.14.0",
     "react-dom": "^16.2.0",
     "react-move": "^2.6.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
-    "react-select": "^1.1.0",
-    "save": "^2.3.2"
+    "react-select": "^1.1.0"
   },
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server",
-    "build": "react-scripts build",
+    "build": "react-scripts build && mv build docs",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -46,7 +46,7 @@
     "css-loader": "^0.28.7",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.16.2"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "1.16.2"
   }
 }

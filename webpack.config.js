@@ -3,26 +3,26 @@ var webpack = require("webpack");
 module.exports = {
 	entry: "./src/index.js",
 	output: {
-		path: "dist/assets",
+		path: "public/assets",
 		filename: "bundle.js",
 		publicPath: "assets"
 	},
 	devServer: {
 		inline: true,
-		contentBase: './dist',
+		contentBase: './public',
 		port: 3000
 	},
 	resolve: {
-    extensions: ['','.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   plugins: [
-        new webpack.ProvidePlugin({
-           $: "jquery",
-           jQuery: "jquery"
-       })
-    ],
+    new webpack.ProvidePlugin({
+       $: "jquery",
+       jQuery: "jquery"
+    })
+  ],
 	module: {
-		loaders: [
+		rules: [
       {
         test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
         loader: 'url-loader'

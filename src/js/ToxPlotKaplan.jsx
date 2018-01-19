@@ -72,7 +72,7 @@ const ToxPlotKaplan = (props) => {
 
   const offset={top: 30, bottom: 50, left: 50, right: 10}
 
-  var size = {width: 0.8*screen.width, height: 0.8*window.screen.height}
+  var size = {width: 0.8*window.screen.width, height: 0.8*window.screen.height}
 
   if(filteredData.length === 0) {
     return <div><br/>No data was sent. Graph could not be plotted.</div>
@@ -85,7 +85,7 @@ const ToxPlotKaplan = (props) => {
 
   const kaplanData = treatments.map(t => GetKaplanMeierData(data.patientData.filter(d => d.treatment == t), filteredData.filter(d => d.treatment == t)))
 
-console.log(kaplanData);
+
   const xMin = 0
   const xMax = max(kaplanData.map((d) => max(d.map(d => d.x)))) + 1
 

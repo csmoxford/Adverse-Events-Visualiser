@@ -1,7 +1,7 @@
-import 'jquery'
-import React  from 'react'
-import {Component} from 'react'
+import React, {Component}  from 'react'
 import {Switch, Route} from 'react-router-dom'
+
+import {$} from 'jquery'
 
 import ToxPlot from './ToxPlot'
 import ToxPlotKey from './ToxPlotKey'
@@ -20,12 +20,8 @@ import ToxPlotKaplan from './ToxPlotKaplan'
 import ToxLoadData from './ToxLoadData'
 import ToxAddData from './ToxAddData'
 
-
 import {vhToPx, vwToPx} from './utils/vhTOpx'
 import {DayDifference} from './utils/formatDate'
-
-
-import {getJSON} from 'jquery'
 
 
 
@@ -225,7 +221,7 @@ class ToxData extends Component {
 
    render() {
 
-     const {data, filteredData} = this.state
+     const {data, filteredData, filterValues} = this.state
 
       if(data === null) {
         return <div className="cssGrid"><ToxLoadData onSubmit={this.handleFileSelect}/></div>
