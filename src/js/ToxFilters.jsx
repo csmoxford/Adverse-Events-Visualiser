@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+
 import 'bootstrap-select'
 import "bootstrap-select/dist/css/bootstrap-select.css"
 import './ToxFilters.css'
 import {uniq} from 'lodash'
-import {$} from 'jquery'
+var $ = require('jquery')
 
 class ToxFilters extends Component {
 

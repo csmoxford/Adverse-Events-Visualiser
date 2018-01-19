@@ -6,7 +6,7 @@ import './ToxAddData.css'
 import {uniq} from 'lodash'
 import {DayDifference} from './utils/formatDate'
 import {matchHeight} from 'jquery-match-height'
-import {$} from 'jquery'
+var $ = require('jquery')
 
 class ToxAddData extends Component {
 

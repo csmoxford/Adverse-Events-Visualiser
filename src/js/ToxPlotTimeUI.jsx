@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import ToxPlotTime from './ToxPlotTime'
 import {max } from 'd3-array'
 import './ToxPlotTime.css'
-import {$} from 'jquery'
+var $ = require('jquery')
 
 class ToxPlotTimeUI extends PureComponent {
 

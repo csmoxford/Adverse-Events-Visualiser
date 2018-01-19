@@ -1,8 +1,6 @@
 import React, {Component}  from 'react'
 import {Switch, Route} from 'react-router-dom'
 
-import {$} from 'jquery'
-
 import ToxPlot from './ToxPlot'
 import ToxPlotKey from './ToxPlotKey'
 import ToxPlotTimeUI from './ToxPlotTimeUI'
@@ -23,7 +21,7 @@ import ToxAddData from './ToxAddData'
 import {vhToPx, vwToPx} from './utils/vhTOpx'
 import {DayDifference} from './utils/formatDate'
 
-
+var $ = require('jquery')
 
 // filteredData
 function filterData(data, filterValues) {
@@ -230,7 +228,7 @@ class ToxData extends Component {
 
 
      // change zero date for plots
-     var from = $("#adverseEventTimeFrom").val() // get the start of time window from patientData
+     var from = filterValues.from // get the start of time window from patientData
      from = from == undefined ? data.keyDates[0].column : from
 
      for (var i = 0; i < filteredData.length; i++) {

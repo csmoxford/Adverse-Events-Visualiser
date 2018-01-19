@@ -2,7 +2,7 @@
   "name": "d3react",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://csmoxford.github.io/Adverse-Events-Visualiser/",
+  "homepage": "http://csmoxford.github.io/Adverse-Events-Visualiser/",
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootstrap-select": "^1.12.4",
@@ -10,7 +10,7 @@
     "css-grid": "^1.0.7",
     "d3-array": "1.2.1",
     "d3-axis": "1.0.8",
-    "d3-ease": "^1.0.3",
+    "d3-ease": "1.0.3",
     "d3-line": "0.0.1",
     "d3-scale": "1.0.7",
     "d3-selection": "1.2.0",
@@ -19,6 +19,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "jquery": "^3.2.1",
     "jquery-match-height": "^0.7.2",
+    "loader-utils": "1.1.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -32,21 +33,23 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server",
-    "build": "react-scripts build && mv build docs",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
-    "autoprefixer-loader": "^3.2.0",
+    "autoprefixer-loader": "3.2.0",
     "babel-cli": "6.18.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^6.2.5",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.16.0",
-    "css-loader": "^0.28.7",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.19.1",
-    "webpack": "^3.10.0",
+    "babel-core": "6.26.0",
+    "babel-loader": "6.4.1",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "6.16.0",
+    "css-loader": "0.28.7",
+    "sass-loader": "6.0.6",
+    "style-loader": "0.19.1",
+    "webpack": "3.10.0",
     "webpack-dev-server": "1.16.2"
   }
 }

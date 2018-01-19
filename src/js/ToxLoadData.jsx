@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react'
 import './ToxLoadData.css'
+var $ = require('jquery')
+
 
 
 

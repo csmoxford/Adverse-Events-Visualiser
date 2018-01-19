@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import ToxPlotCycle from './ToxPlotCycle'
-import {$} from 'jquery'
+var $ =require('jquery')
 
 class ToxPlotCycleUI extends PureComponent {
 
