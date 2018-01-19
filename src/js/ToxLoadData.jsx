@@ -72,12 +72,12 @@ class ToxLoadData extends PureComponent {
               <li>sae: Was this an SAE?</li>
               <li>causalities: As defined in the causality object. The data store here should be numeric 1 for definitely not related through to 5 for definitely related</li>
             </ul>
-            <p><b>keyGroups:</b> A column within toxData containing a logical value. A value of 1 will be included in this group. This can be used to group adverse events such as haematological toxicities, or to group patients such as those with metatstatic disease.</p>
+            <p><b>keyGroups:</b> (optional) A column within toxData containing a logical value. A value of 1 will be included in this group. This can be used to group adverse events such as haematological toxicities, or to group patients such as those with metatstatic disease.</p>
             <ul>
               <li>column: the column name of the column in toxData</li>
               <li>label: A display name for this group</li>
             </ul>
-            <p><b>keyEvents:</b> A column label and color for an event to be placed on the adverse event patient level plots.</p>
+            <p><b>keyEvents:</b> (optional) A column label and color for an event to be placed on the adverse event patient level plots.</p>
             <ul>
               <li>column: the column name of the column in patientData</li>
               <li>label: A display name for this event</li>
