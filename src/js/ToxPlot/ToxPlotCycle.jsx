@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
 import {uniq} from 'lodash'
-import TreatmentLegendBox from './utils/TreatmentLegendBox'
+import TreatmentLegendBox from '../utils/TreatmentLegendBox'
 
 import ToxPlotCycleCreate from './ToxPlotCycleCreate'
 

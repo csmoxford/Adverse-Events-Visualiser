@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import { scaleLinear } from 'd3-scale'
-import TreatmentLegendBox from './utils/TreatmentLegendBox'
-import {getToxicityColor} from './utils/getColors'
+import TreatmentLegendBox from '../utils/TreatmentLegendBox'
+import {getToxicityColor} from '../utils/getColors'
 import {uniqBy} from 'lodash'
 
 
@@ -80,7 +80,7 @@ const EventKey = (props) => {
 
   const events = uniqeuEvents.map((e,i) => {
 
-    return <g transform={`translate(${i},${i*30})`}>
+    return <g key={i} transform={`translate(${i},${i*30})`}>
       <polyline
         points={`10,10 10,-10`}
         stroke={e.color}

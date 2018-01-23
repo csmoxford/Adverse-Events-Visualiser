@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import {uniq} from 'lodash'
 import {sum} from 'd3-array'
-import {getToxicityColor, getTreatmentColor} from './utils/getColors'
+import {getToxicityColor, getTreatmentColor} from '../utils/getColors'
 import './ToxTable.css'
 
 function bracketPercent (count = 0, total) {

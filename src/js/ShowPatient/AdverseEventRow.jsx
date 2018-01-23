@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './AdverseEventRow.css'
-import {getToxicityColor} from './utils/getColors'
-import {formatDate} from './utils/formatDate'
+import {getToxicityColor} from '../utils/getColors'
+import {formatDate} from '../utils/formatDate'
 
 
 const causalityLabels = ["", "Not related", "Unlikely related", "Possibly related", "Probably related", "Definitely related"]

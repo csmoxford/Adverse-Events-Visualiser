@@ -1,48 +1,15 @@
 import React, {Component, PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
-import Axis from './utils/Axis.jsx'
+import Axis from '../utils/Axis.jsx'
 import {uniq, uniqBy} from 'lodash'
-import {getToxicityColor} from './utils/getColors'
-import {DayDifference} from './utils/formatDate'
+import {DayDifference} from '../utils/formatDate'
+
+import AdverseEventRect from './AdverseEventRect'
+import EventPolyline from '../utils/EventPolyline'
+import AdverseEventLabels from './AdverseEventLabels'
 
 
-
-class AdverseEventRect extends Component {
-
-
-  shouldComponentUpdate(prevProps) {
-    return prevProps.filteredData !== this.props.filteredData
-  }
-
-  render() {
-
-    const {filteredData, xScale, yScale} = this.props
-
-    function GradeSort(a,b) {
-      let val = 0
-      if(a.aegrade > b.aegrade)
-        val = 1
-      else if(a.aegrade < b.aegrade)
-        val = -1
-      return val
-    }
-
-    const rects = filteredData.filter(d => !isNaN(d.toxStart) && !isNaN(d.aegrade)).sort(GradeSort)
-       .map((d,i) => {
-        return <rect
-         key={'rect' + i}
-         x={xScale(d.toxStart < 0 ? 0: d.toxStart)}
-         y={yScale(d.index - 0.5)}
-         height={yScale(d.index + 0.5) - yScale(d.index - 0.5)}
-         width={xScale(d.toxEnd) - xScale(d.toxStart < 0 ? 0: d.toxStart) > 0 ? xScale(d.toxEnd) - xScale(d.toxStart < 0 ? 0: d.toxStart) : 1}
-         fill={getToxicityColor(d.aegrade)}
-         />
-       })
-
-       return <g id="adverseEventRects">{rects}</g>
-  }
-}
 
 class ToxPlot extends PureComponent {
 
@@ -72,8 +39,7 @@ class ToxPlot extends PureComponent {
 
 
   render() {
-    const {size, data, totalHeight, selectedPatient, offset, filter, oneRowPerPatient} = this.props
-    var filteredData = this.props.filteredData
+    const {size, data, filteredData, totalHeight, selectedPatient, offset, filter, oneRowPerPatient} = this.props
 
     if(filteredData.length === 0) {
       return <div><br/>No data was sent. Graph could not be plotted.</div>
@@ -86,10 +52,7 @@ class ToxPlot extends PureComponent {
     const yMin = min(filteredData.map((d) => d.index)) - 0.5
     const yMax = max(filteredData.map((d) => d.index)) + 0.5
 
-    const height = 30 * (max(filteredData.map(d => d.index))+1)
-
-    const column = "nelfdate"
-
+    const height = 30 * (max(filteredData.map(d => d.index))+1) + offset.top + offset.bottom
     const heightDiv = totalHeight - 80
 
     const yScale = scaleLinear()
@@ -99,8 +62,6 @@ class ToxPlot extends PureComponent {
       .domain([xMin, xMax])
       .range([offset.left, size.width - offset.right])
 
-
-      const indexes = filteredData.filter(d => d.patid == selectedPatient).map(d => d.index)
 
       const uniquePatid = uniq(filteredData.map(d => d.patid))
       const uniquePositions = uniquePatid.map((d) => {
@@ -128,37 +89,32 @@ class ToxPlot extends PureComponent {
        </g>
      })
 
+
+
      var names = null
 
      if(!oneRowPerPatient) {
       const rowData = uniqBy(filteredData.filter(d => d.patid == selectedPatient).map(d => {return {patid: d.patid, index: d.index, aeterm: d.aeterm}}), 'index')
 
       if(rowData.length > 0)
-       names = <g id="names">{rowData.map((d,i) => {
-           return <text
-             key={i}
-             x={xScale(xMin)+5}
-             y={yScale(d.index)}
-             dominantBaseline="middle"
-             >{d.aeterm}</text>})}</g>
+       names = <AdverseEventLabels data={rowData} xScale={xScale} yScale={yScale} xPos={xMin}/>
       }
 
-
+console.log(names);
 
       var events = null
       if(data.keyEvents !== undefined) {
         events = data.keyEvents.map((e,i) => {
 
-          const event = uniquePositions.map((d,j) => {
-            const patient = data.patientData.find(p => p.patid == d.patid)
-            const x = DayDifference(patient[filter.from], patient[e.column])
-            return <polyline
-              key={j}
-              points={`${xScale(x)},${yScale(d.min-0.5)} ${xScale(x)},${yScale(d.max+0.5)}`}
-              stroke={e.color}
-              strokeWidth={3}
-              />
-          })
+          const event = <EventPolyline
+            key={i}
+            data={data}
+            uniquePositions={uniquePositions}
+            filteredData={filteredData}
+            filter={filter}
+            event={e}
+            xScale={xScale}
+            yScale={yScale}/>
 
           return <g key={i} id={e.column}>{event}</g>
 
@@ -166,8 +122,8 @@ class ToxPlot extends PureComponent {
       }
 
 
-      return [<div  style={{height: '30px'}}></div>,
-      <div align="right"><svg
+      return [<div key='white' style={{height: '30px'}}></div>,
+      <div key='axis' align="right"><svg
       style={{verticalAlign: "bottom", marginRight: height < heightDiv ? "0px": "17px"}}
       ref={node => this.node = node}
       width={size.width} height="50px">
@@ -179,19 +135,20 @@ class ToxPlot extends PureComponent {
       /></svg>
     </div>,
         <div
+          key='graph'
           style={{height: `${heightDiv}px`, bottom: '0', right: '0',overflowY: 'auto', overflowX: 'hidden'}}
           align="right">
           <svg ref={node => this.node = node}
         width={size.width} height={height}>
-        <AdverseEventRect
-          filteredData={this.props.filteredData}
-          xScale={xScale}
-          yScale={yScale}/>
-          {events}
-          {names}
-          <g id="background-rects">
-            {backgroundRect}
-          </g>
+            <AdverseEventRect
+              filteredData={this.props.filteredData}
+              xScale={xScale}
+              yScale={yScale}/>
+              {events}
+              {names}
+              <g id="background-rects">
+                {backgroundRect}
+              </g>
         </svg></div>]
    }
 }

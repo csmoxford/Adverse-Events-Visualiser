@@ -1,22 +1,25 @@
 import React, {Component}  from 'react'
 import {Switch, Route} from 'react-router-dom'
 
-import ToxPlot from './ToxPlot'
-import ToxPlotKey from './ToxPlotKey'
-import ToxPlotTimeUI from './ToxPlotTimeUI'
+import ToxPlot from './ToxPlot/ToxPlot'
+import ToxPlotKey from './ToxPlot/ToxPlotKey'
+import ToxPlotTimeUI from './ToxPlot/ToxPlotTimeUI'
 
 
-import ShowToxicityRecord from './ShowToxicityRecord'
+import ShowToxicityRecord from './ShowPatient/ShowToxicityRecord'
 import ToxFilters from './ToxFilters'
 import prepareData from './prepareData'
 
-import ToxTableUI from './ToxTableUI'
-import ToxTableSummary from './ToxTableSummary'
-import ToxPlotCycleUI from './ToxPlotCycleUI'
-import ToxPlotKaplan from './ToxPlotKaplan'
+import ToxTableUI from './ToxTable/ToxTableUI'
+import ToxTableSummary from './ToxTable/ToxTableSummary'
+
+import ToxPlotCycleUI from './ToxPlot/ToxPlotCycleUI'
+import ToxPlotKaplan from './ToxPlot/ToxPlotKaplan'
 
 import ToxLoadData from './ToxLoadData'
 import ToxAddData from './ToxAddData'
+
+import PatientView from './PatientView'
 
 import {vhToPx, vwToPx} from './utils/vhTOpx'
 import {DayDifference} from './utils/formatDate'
@@ -41,6 +44,8 @@ function filterData(data, filterValues) {
     const causalityOk = filterValues.causalities.every((c) => d[c.column] >= c.value || (d[c.column] === undefined && c.value == 1) ) // if causality related enough
     const isSae = filterValues.isSae? d.sae: true
     const presentAtStart = filterValues.includePresentAtStart ? true: d.aestartdate >= d[from] // if toxicities present at start permitted then is true, otherwise start of toxicity must be on or after start of toxicity window
+
+    console.log(gradeSelected);
 
     return  inTime && aeSelected && gradeSelected && causalityOk && isSae && presentAtStart
   }
@@ -86,7 +91,6 @@ class ToxData extends Component {
   updateDimentions() {
     const height = vhToPx(80)
     const width = vwToPx(50);
-    console.log(width);
     this.setState({size: {width: width, height: height}})
   }
 
@@ -121,7 +125,19 @@ class ToxData extends Component {
         includePresentAtStart: includePresentAtStart
       }
 
-    const filteredData = filterData(this.state.data, filterValues)
+
+      // change start date to the time period from date
+    var filteredData = filterData(this.state.data, filterValues)
+
+    for (var i = 0; i < filteredData.length; i++) {
+      filteredData[i].toxStart = DayDifference(filteredData[i][from], filteredData[i].aestartdate)
+      filteredData[i].toxEnd = DayDifference(filteredData[i][from], filteredData[i].aestopdate)
+      if(isNaN(filteredData[i].toxEnd)) {
+        filteredData[i].toxEnd = filteredData[i].toxStart + 1
+      }
+    }
+
+
 
     this.setState({
       filterValues: filterValues,
@@ -142,10 +158,10 @@ class ToxData extends Component {
 
 
   onReaderLoad(event){
-          console.log(event.target.result);
           var obj = JSON.parse(event.target.result);
-          console.log(obj);
           prepareData(obj)
+
+          console.log(obj);
 
           const filterValues = {
             from: obj.keyDates[0].column,
@@ -158,6 +174,8 @@ class ToxData extends Component {
           }
 
           const filteredData = filterData(obj, filterValues)
+
+          console.log(filteredData);
 
           this.setState({
             filterValues: filterValues,
@@ -183,7 +201,6 @@ class ToxData extends Component {
         alert("Please select a file before clicking 'Load'");
       }
       else {
-        console.log("File name: " + input.files[0]);
         var reader = new FileReader();
         reader.onload = this.onReaderLoad;
         reader.readAsText(input.files[0]);
@@ -210,8 +227,6 @@ class ToxData extends Component {
           order = -1
         return order
       })
-
-      console.log(index);
       data.toxData.splice(index+1, 0, row);
       // data.toxData.push(row)
       this.setState({data: data})
@@ -231,13 +246,7 @@ class ToxData extends Component {
      var from = filterValues.from // get the start of time window from patientData
      from = from == undefined ? data.keyDates[0].column : from
 
-     for (var i = 0; i < filteredData.length; i++) {
-       filteredData[i].toxStart = DayDifference(filteredData[i][from], filteredData[i].aestartdate)
-       filteredData[i].toxEnd = DayDifference(filteredData[i][from], filteredData[i].aestopdate)
-       if(isNaN(filteredData[i].toxEnd)) {
-         filteredData[i].toxEnd = filteredData[i].toxStart + 1
-       }
-     }
+
      /***************************************************************/
 
      const totalHeight = vhToPx(94.5)
@@ -286,10 +295,14 @@ class ToxData extends Component {
                       />
                    </div>
                    }/>
-                 <Route path="/ae/survival" render={() => <ToxPlotKaplan
-                     data={data}
-                     filteredData={filteredData}
-                     />}/>
+               <Route path="/ae/survival" render={() => <ToxPlotKaplan
+                   data={data}
+                   filteredData={filteredData}
+                   />}/>
+                 <Route path="/ae/PatientView" render={() => <PatientView
+                   data={data}
+                   filteredData={filteredData}
+                   />}/>
                <Route path='/ae/pt' render={() =>
                     [
                       <div className="item-middle" key={0}>

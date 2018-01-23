@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
-import Axis from './utils/Axis'
+import Axis from '../utils/Axis'
 import {uniq} from 'lodash'
 import ToxPlotTimeCreate from './ToxPlotTimeCreate'
-import TreatmentLegendBox from './utils/TreatmentLegendBox'
+import TreatmentLegendBox from '../utils/TreatmentLegendBox'
 
 function getCounts(data, patients, times) {
     return times.map((t) => {
@@ -23,11 +23,13 @@ class ToxPlotTime extends PureComponent {
 
     const offset={top: 30, bottom: 50, left: 50, right: 20}
 
-    const size = oneGraph ?{width: 0.8*window.innerWidth, height: 0.82*window.innerHeight} : {width: 0.8*window.innerWidth, height: Math.max(0.82*window.innerHeight/data.treatment.length, window.innerHeight*0.205)}
-
     if(filteredData.length === 0) {
       return <div><br/>No data was sent. Graph could not be plotted.</div>
     }
+
+    const size = oneGraph ?{width: 0.8*window.innerWidth, height: 0.82*window.innerHeight} : {width: 0.8*window.innerWidth, height: Math.max(0.82*window.innerHeight/data.treatment.length, window.innerHeight*0.205)}
+
+
 
     const treatments = data.treatment.map(t => t.value)
     const color = data.treatment.map(t => t.color)

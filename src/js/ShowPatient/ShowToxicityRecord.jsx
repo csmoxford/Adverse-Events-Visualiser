@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AdverseEventRow from './AdverseEventRow.jsx'
 import "./ShowToxicityRecord.css"
-import {formatDate} from './utils/formatDate'
+import {formatDate} from '../utils/formatDate'
 
 class ShowToxicityRecord extends Component {
 

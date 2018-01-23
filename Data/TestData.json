@@ -1,0 +1,88 @@
+{
+  "treatment": [
+    {
+      "value": 0,
+      "label": "Placebo",
+      "color": "#0000FF"
+    },
+    {
+      "value": 1,
+      "label": "Mystery Drug",
+      "color": "#FF0000"
+    }
+  ],
+  "causality": [
+    {
+      "column": "causalityD",
+      "label": "Drug causality"
+    }
+  ],
+  "keyDates": [
+    {
+      "column": "registration",
+      "label": "Registration"
+    },
+    {
+      "column": "mdtreatment",
+      "label": "Mid treatment"
+    },
+    {
+      "column": "eot",
+      "label": "End of treatment"
+    }
+  ],
+  "adverseEventGroups" : [
+    {
+      "name": "Flu Like Symptoms",
+      "adverseEvents": [
+        "Nausea",
+        "Vomiting"
+      ]
+    }
+  ],
+  "keyEvents": [
+    {
+      "column": "eot",
+      "label": "End of treatment",
+      "color": "#000"
+    }
+  ],
+  "patientData" : [
+    {"patid": "P0", "treatment": 0, "registration": "2015-01-01", "mdtreatment": "2015-01-15", "eot": "2015-02-01"},
+    {"patid": "P1", "treatment": 0, "registration": "2015-01-05", "mdtreatment": "2015-01-15", "eot": "2015-02-05"},
+    {"patid": "P2", "treatment": 1, "registration": "2015-01-08", "mdtreatment": "2015-01-15", "eot": "2015-02-10"},
+    {"patid": "P3", "treatment": 1, "registration": "2015-01-09", "mdtreatment": "2015-01-15", "eot": "2015-02-12"},
+    {"patid": "P4", "treatment": 1, "registration": "2015-01-10", "mdtreatment": "2015-01-15", "eot": "2015-02-14"},
+    {"patid": "P5", "treatment": 0, "registration": "2015-01-12", "mdtreatment": "2015-01-18", "eot": "2015-02-18"}
+  ],
+  "toxData": [
+    {"aestartdate": "2015-01-01", "aestopdate": "2015-01-03", "patid": "P0", "aecategory": "Gastrointestinal", "aeterm": "Nausea", "aegrade": 1, "sae": false, "causalityD": 1},
+    {"aestartdate": "2015-01-06", "aestopdate": "2015-01-08", "patid": "P0", "aecategory": "Gastrointestinal", "aecategory": "Gastrointestinal", "aeterm": "Nausea", "aegrade": 2, "sae": false, "causalityD": 3},
+    {"aestartdate": "2015-01-11", "aestopdate": "2015-01-13", "patid": "P0", "aecategory": "Gastrointestinal", "aeterm": "Vomiting", "aegrade": 1, "sae": false, "causalityD": 4},
+    {"aestartdate": "2015-01-09", "aestopdate": "2015-01-13", "patid": "P1", "aecategory": "Gastrointestinal", "aeterm": "Nausea", "aegrade": 2, "sae": false, "causalityD": 5},
+    {"aestartdate": "2015-01-09", "aestopdate": "2015-01-13", "patid": "P1", "aecategory": "Gastrointestinal", "aeterm": "Vomiting", "aegrade": 1, "sae": false, "causalityD": 2},
+    {"aestartdate": "2015-01-11", "aestopdate": "2015-01-12", "patid": "P2", "aecategory": "Gastrointestinal", "aeterm": "Vomiting", "aegrade": 2, "sae": false, "causalityD": 3},
+    {"aestartdate": "2015-01-12", "aestopdate": "2015-01-18", "patid": "P3", "aecategory": "Gastrointestinal", "aeterm": "Nausea", "aegrade": 2, "sae": true, "causalityD": 4},
+    {"aestartdate": "2015-01-14", "aestopdate": "2015-01-14", "patid": "P4", "aecategory": "Gastrointestinal", "aeterm": "Nausea", "aegrade": 3, "sae": true, "causalityD": 5},
+    {"aestartdate": "2015-01-17", "aestopdate": "2015-01-24", "patid": "P4", "aecategory": "Gastrointestinal", "aeterm": "Vomiting", "aegrade": 1, "sae": false, "causalityD": 3},
+    {"aestartdate": "2015-01-18", "aestopdate": "", "patid": "P4", "aecategory": "Neurological", "aeterm": "Headache", "aegrade": 1, "sae": true, "causalityD": 3},
+    {"aestartdate": "2015-01-20", "aestopdate": "2015-01-22", "patid": "P4", "aecategory": "Vascular System", "aeterm": "Palpitations", "aegrade": 1, "sae": true, "causalityD": 1}
+  ],
+  "measureData": [
+    {"patid": "P0", "dateOfMeasure": "2015-01-01","platelets": 50, "rbc": 240, "cholesterol": 4},
+    {"patid": "P0", "dateOfMeasure": "2015-01-08","platelets": 55, "rbc": 275, "cholesterol": 4.2},
+    {"patid": "P0", "dateOfMeasure": "2015-01-15","platelets": 60, "rbc": 245, "cholesterol": 3.8},
+    {"patid": "P0", "dateOfMeasure": "2015-01-22","platelets": 55, "rbc": 220, "cholesterol": 4},
+    {"patid": "P1", "dateOfMeasure": "2015-01-05","platelets": 70, "rbc": 290, "cholesterol": 5},
+    {"patid": "P1", "dateOfMeasure": "2015-01-12","platelets": 73, "rbc": 250, "cholesterol": 5},
+    {"patid": "P1", "dateOfMeasure": "2015-01-19","platelets": 71, "rbc": 250, "cholesterol": 5},
+    {"patid": "P3", "dateOfMeasure": "2015-01-09","platelets": 50, "rbc": 210, "cholesterol": 5.3},
+    {"patid": "P3", "dateOfMeasure": "2015-01-17","platelets": 56, "rbc": 219, "cholesterol": 5},
+    {"patid": "P3", "dateOfMeasure": "2015-01-25","platelets": 58, "rbc": 209, "cholesterol": 4.6}
+  ],
+  "measureColumns": [
+    {"column": "platelets", "label": "Platelets"},
+    {"column": "rbc", "label": "Red Blood Count"},
+    {"column": "cholesterol", "label": "Cholesterol"}
+  ]
+}

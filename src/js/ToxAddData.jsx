@@ -6,7 +6,11 @@ import './ToxAddData.css'
 import {uniq} from 'lodash'
 import {DayDifference} from './utils/formatDate'
 import {matchHeight} from 'jquery-match-height'
+
+import PatientSelect from './utils/PatientSelect'
 var $ = require('jquery')
+
+
 
 class ToxAddData extends Component {
 
@@ -87,8 +91,6 @@ class ToxAddData extends Component {
 
     const {data, addAdverseEvent} = this.props
 
-    const patientOptions = data.patientData.map((d,i) => <option key={i}>{d.patid}</option>)
-
     var causality
     if(data.causality !== undefined) {
     causality = data.causality.map((c,i) => {
@@ -123,12 +125,8 @@ class ToxAddData extends Component {
         <div className="col-xs-6 matched">
           <div className="redbox">
             <h4><b>Required information</b></h4>
-            <div className="add-patient">
-              <label htmlFor="patid">Patient Trial Number</label><br/>
-              <select id="patid" className="selectpicker">
-                {patientOptions}
-              </select>
-            </div>
+            <PatientSelect className="add-patient"
+              data={data.patientData}/>
             <div className="add-patient">
               <label htmlFor="aecategory">Category</label><br/>
               <input id="aecategory" className="form-control"/>

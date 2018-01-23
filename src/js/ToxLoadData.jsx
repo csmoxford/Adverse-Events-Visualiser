@@ -83,6 +83,16 @@ class ToxLoadData extends PureComponent {
               <li>label: A display name for this event</li>
               <li>color: a color associated with this event type</li>
             </ul>
+            <h4>Work in progress</h4>
+            <p><b>measureData:</b> (optional) A dataset of measure data at various time points such as blood test results.</p>
+              <li>patid: A unique patient identifier such as trial number</li>
+              <li>dateOfMeasure: The date the measurement was taken</li>
+              <li>measureColum: The column named in measureColumns</li>
+          <p><b>measureColumns:</b> (optional) A list of measure types o plot from measure data.</p>
+            <ul>
+              <li>column: the column name of the column in measureData</li>
+              <li>label: A display name for this measure</li>
+            </ul>
         </div>
 
         </div>

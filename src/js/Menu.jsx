@@ -30,6 +30,7 @@ class Menu extends Component {
            {to: '/ae/survival', label: 'Time to First Event', id: 'plot', dropDown: false, active: false}
          ]},
          {to: '/ae/addae', label: 'Add event', id: 'addevent', dropDown: false, active: false},
+         {to: '/ae/PatientView', label: 'Test', id: 'bloods', dropDown: false, active: false},
        ]
      }
      this.updateActive = this.updateActive.bind(this)
