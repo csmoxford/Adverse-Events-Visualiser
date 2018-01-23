@@ -78,7 +78,8 @@
     {"patid": "P1", "dateOfMeasure": "2015-01-19","platelets": 71, "rbc": 250, "cholesterol": 5},
     {"patid": "P3", "dateOfMeasure": "2015-01-09","platelets": 50, "rbc": 210, "cholesterol": 5.3},
     {"patid": "P3", "dateOfMeasure": "2015-01-17","platelets": 56, "rbc": 219, "cholesterol": 5},
-    {"patid": "P3", "dateOfMeasure": "2015-01-25","platelets": 58, "rbc": 209, "cholesterol": 4.6}
+    {"patid": "P3", "dateOfMeasure": "2015-01-25","platelets": 58, "rbc": 209, "cholesterol": 4.6},
+    {"patid": "P4", "dateOfMeasure": "2015-01-25","platelets": 58, "cholesterol": 4.6}
   ],
   "measureColumns": [
     {"column": "platelets", "label": "Platelets"},

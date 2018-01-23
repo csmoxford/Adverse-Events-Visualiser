@@ -45,7 +45,6 @@ function filterData(data, filterValues) {
     const isSae = filterValues.isSae? d.sae: true
     const presentAtStart = filterValues.includePresentAtStart ? true: d.aestartdate >= d[from] // if toxicities present at start permitted then is true, otherwise start of toxicity must be on or after start of toxicity window
 
-    console.log(gradeSelected);
 
     return  inTime && aeSelected && gradeSelected && causalityOk && isSae && presentAtStart
   }
@@ -150,7 +149,7 @@ class ToxData extends Component {
     if(data !== null) {
       this.setState({
         entry: data,
-        selectedPatient: [data[0].patid]
+        selectedPatient: data[0]
       })
     }
   }
@@ -160,8 +159,6 @@ class ToxData extends Component {
   onReaderLoad(event){
           var obj = JSON.parse(event.target.result);
           prepareData(obj)
-
-          console.log(obj);
 
           const filterValues = {
             from: obj.keyDates[0].column,
@@ -174,8 +171,6 @@ class ToxData extends Component {
           }
 
           const filteredData = filterData(obj, filterValues)
-
-          console.log(filteredData);
 
           this.setState({
             filterValues: filterValues,
@@ -301,7 +296,9 @@ class ToxData extends Component {
                    />}/>
                  <Route path="/ae/PatientView" render={() => <PatientView
                    data={data}
+                   totalHeight={totalHeight}
                    filteredData={filteredData}
+                   filterValues={filterValues}
                    />}/>
                <Route path='/ae/pt' render={() =>
                     [
@@ -321,6 +318,7 @@ class ToxData extends Component {
                        <ShowToxicityRecord
                          data={data}
                          totalHeight={totalHeight}
+                         selectedPatient={this.state.selectedPatient}
                          thisData={this.state.entry}/>
                      </div>
                    ]
@@ -348,6 +346,7 @@ class ToxData extends Component {
                    <ShowToxicityRecord
                      data={data}
                      totalHeight={totalHeight}
+                     selectedPatient={this.state.selectedPatient}
                      thisData={this.state.entry}/>
                  </div>
                ]}/>

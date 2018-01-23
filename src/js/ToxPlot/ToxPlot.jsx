@@ -19,6 +19,10 @@ class ToxPlot extends PureComponent {
    }
 */
 
+  componentWillUnmount() {
+    console.log("don't unmount");
+  }
+
   getIndex(data, oneRowPerPatient = false) {
 
     var numberUnique = -1
@@ -99,8 +103,6 @@ class ToxPlot extends PureComponent {
       if(rowData.length > 0)
        names = <AdverseEventLabels data={rowData} xScale={xScale} yScale={yScale} xPos={xMin}/>
       }
-
-console.log(names);
 
       var events = null
       if(data.keyEvents !== undefined) {

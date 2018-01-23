@@ -26,7 +26,7 @@ console.log(data);
 
 CircleSet.defaultProps = {
   color: '#000',
-  radius: '5px'
+  radius: '10px'
 
 }
 

@@ -17,8 +17,8 @@ class BloodPlot extends PureComponent {
 
     console.log(data);
 
-    const yMin = min(data.map((d) => d.y)) - 0.5
-    const yMax = max(data.map((d) => d.y)) + 0.5
+    const yMin = min(data.map((d) => d.y)) / 1.02
+    const yMax = max(data.map((d) => d.y)) * 1.02
     const yScale = scaleLinear()
        .domain([yMin, yMax])
        .range([size.height-offset.bottom, offset.top])
@@ -29,7 +29,8 @@ class BloodPlot extends PureComponent {
       <CircleSet
         data={data}
         xScale={xScale}
-        yScale={yScale}/>
+        yScale={yScale}
+        />
       <Axis
         side="bottom"
         lab="Time (days)"

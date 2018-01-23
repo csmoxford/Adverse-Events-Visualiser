@@ -28,10 +28,6 @@ function prepareData(data) {
       order = 1
     else if(a.patid < b.patid)
       order = -1
-    else if(a.toxStart < b.toxStart)
-        order = 1
-    else if(a.toxStart > b.toxStart)
-        order = -1
     return order
   })
 
@@ -65,6 +61,19 @@ function prepareData(data) {
       order = -1
     return order
   })
+
+  if(data.measureData !== undefined) {
+    var measureData = data.measureData
+
+    for (var i = 0; i < measureData.length; i++) {
+      measureData[i].dateOfMeasure = new Date(measureData[i].dateOfMeasure)
+
+      const patient = patientData.find(d => d.patid === measureData[i].patid)
+      Object.assign(measureData[i], patient)
+
+      measureData[i].relativeTime = DayDifference(patient[initDate], measureData[i].dateOfMeasure) // miliseconds in a day
+    }
+  }
 
 }
 

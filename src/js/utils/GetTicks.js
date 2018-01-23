@@ -1,10 +1,12 @@
+import {significantFigures} from './FormatNumber'
+
 
 function getTicksDateTime(scale, targetNumber) {
   var domain = scale.domain()/60000
 
   var range = domain[1] - domain[0]
   var pow10 = 10**Math.floor(Math.log10(range, 10))/100
-  
+
   var scale = [1,5,15,60,120,360,1440,10080].reduce((prev, curr) => Math.abs(curr*range - targetNumber) < Math.abs(prev*range - targetNumber) ? curr : prev);
 
 }
@@ -21,14 +23,14 @@ function getTicksNumeric(scale,  targetNumber = 5) {
   range = domain[1] - domain[0]
 
 
-  var values = [domain[0]]
+  var values = [significantFigures(domain[0], 3)]
   var curValue = domain[0]
   const increment = pow10 / scale
   // console.log('range = ' + range);
   // console.log('increment = ' + increment);
   while(curValue < domain[1]) {
     curValue += increment
-    values.push(curValue)
+    values.push(significantFigures(curValue, 3))
   }
   return values
 }

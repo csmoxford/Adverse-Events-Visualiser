@@ -15,6 +15,7 @@ class Menu extends Component {
        links:
        [
          {to: '/ae/load', label: 'Load', id: 'load', dropDown: false, active: false},
+         {to: '/ae/PatientView', label: 'Patient Level', id: 'patient', dropDown: false, active: false},
          {label: "Event Level", id: 'event', dropDown: true, active: false, subLinks: [
            {to: '/ae', label: 'Adverse Event Level', id: 'event', dropDown: false},
            {to: '/ae/pt', label: 'Patient Level', id: 'event', dropDown: false},
@@ -29,8 +30,7 @@ class Menu extends Component {
            {to: '/ae/summary', label: 'Time Plot', id: 'plot', dropDown: false, active: false},
            {to: '/ae/survival', label: 'Time to First Event', id: 'plot', dropDown: false, active: false}
          ]},
-         {to: '/ae/addae', label: 'Add event', id: 'addevent', dropDown: false, active: false},
-         {to: '/ae/PatientView', label: 'Test', id: 'bloods', dropDown: false, active: false},
+         {to: '/ae/addae', label: 'Add New Event', id: 'addevent', dropDown: false, active: false},
        ]
      }
      this.updateActive = this.updateActive.bind(this)

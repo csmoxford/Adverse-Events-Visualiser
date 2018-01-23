@@ -3,7 +3,12 @@ import React from 'React'
 
 const PatientSelect = (props) => {
 
-  const patientOptions = props.data.map((d,i) => <option key={i}>{d.patid}</option>)
+  var patientOptions
+  if(props.treatment != undefined) {
+    patientOptions = props.data.map((d,i) => <option key={i} style={{backgroundColor: props.treatment.find(t => t.value == d.treatment).color + "40"}}>{d.patid}</option>)
+  } else {
+    patientOptions = props.data.map((d,i) => <option key={i}>{d.patid}</option>)
+  }
 
   return <div className="add-patient">
     <label htmlFor="patid">Patient Trial Number</label><br/>
