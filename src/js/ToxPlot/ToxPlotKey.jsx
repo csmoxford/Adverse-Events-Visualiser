@@ -1,15 +1,13 @@
 import React, {PureComponent} from 'react'
 import { scaleLinear } from 'd3-scale'
 import TreatmentLegendBox from '../utils/TreatmentLegendBox'
-import {getToxicityColor} from '../utils/getColors'
 import {uniqBy} from 'lodash'
-
+import {defaultToxColors} from '../utils/Constants'
 
 const AdverseEventLegend = (props) => {
   const {svgPosition} = props
 
-  const colors = [1,2,3,4,5].map(c => getToxicityColor(c))
-  console.log(colors);
+  const colors = [1,2,3,4,5].map(c => props.colors[c])
   const height = 30
   const rows = colors.map((c,i) => <g
     key={i}
@@ -39,7 +37,8 @@ const AdverseEventLegend = (props) => {
 
 }
 AdverseEventLegend.defaultProps = {
-  svgPosition: {top: 50, left: 1200}
+  svgPosition: {top: 50, left: 1200},
+  colors: defaultToxColors
 }
 
 

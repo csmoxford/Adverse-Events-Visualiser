@@ -11,11 +11,8 @@ import {DayDifference} from '../utils/formatDate'
 import {PathKaplanMeier} from '../utils/PolylinePaths'
 
 
-
-function GetKaplanMeierData(patientData, filteredData) {
-
-  const startColumn = "randomisationdate"
-  const censorColumn = "date_stopped_treatment"
+// creates the survival times and event values from the datasets
+function GetKaplanMeierData(patientData, filteredData, startColumn, censorColumn) {
 
   const survivalData = patientData.filter(p => !isNaN(p[startColumn]))
     .map(p => {
@@ -30,6 +27,7 @@ function GetKaplanMeierData(patientData, filteredData) {
   return KaplanMeier(survivalData)
 }
 
+// converts exit time and event indicator to the data requried to plot the kaplan-meier
 function KaplanMeier(data) {
 
   var dta = [{x:0, y:100}]
@@ -52,7 +50,6 @@ function KaplanMeier(data) {
       val = -1
     return val
   })
-
   var scur = 100
   for (var i = 0; i < times.length; i++) {
     const d = data.filter(d => d.event && d.time == times[i]).length
@@ -82,8 +79,9 @@ const ToxPlotKaplan = (props) => {
   const color = data.treatment.map(t => t.color)
   const patients = data.patientData.map(d => d.patid)
 
-
-  const kaplanData = treatments.map(t => GetKaplanMeierData(data.patientData.filter(d => d.treatment == t), filteredData.filter(d => d.treatment == t)))
+  const startColumn = data.keyDates[0]
+  const censorColumn = data.keyDates[data.keyDates.length - 1]
+  const kaplanData = treatments.map(t => GetKaplanMeierData(data.patientData.filter(d => d.treatment == t), filteredData.filter(d => d.treatment == t), startColumn.column, censorColumn.column))
 
 
   const xMin = 0
@@ -108,7 +106,6 @@ const ToxPlotKaplan = (props) => {
      .domain([yMin,yMax])
      .range([size.height - offset.bottom, offset.top])
 
-console.log(kaplanData);
   const polylines = kaplanData.map((d,i) =><polyline
     key={i}
     points={PathKaplanMeier(d,xScale, yScale)}

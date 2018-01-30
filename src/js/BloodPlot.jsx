@@ -12,8 +12,8 @@ class BloodPlot extends PureComponent {
 
   render() {
 
-    const {size, data, xScale} = this.props
-    const offset={top: 30, bottom: 50}
+    const {size, data, xScale, measure} = this.props
+    const offset={top: 10, bottom: 50}
 
     console.log(data);
 
@@ -24,8 +24,23 @@ class BloodPlot extends PureComponent {
        .range([size.height-offset.bottom, offset.top])
 
 
+    const minLine = measure.min == undefined? null: <polyline
+       points={`${xScale.range()[0]},${yScale(measure.min)} ${xScale.range()[1]},${yScale(measure.min)}`}
+       stroke={'#FF0000'}
+       strokeWidth={2}
+       />
+
+     const maxLine = measure.max == undefined? null: <polyline
+        points={`${xScale.range()[0]},${yScale(measure.max)} ${xScale.range()[1]},${yScale(measure.max)}`}
+        stroke={'#FF0000'}
+        strokeWidth={2}
+        />
+
+
     return <svg ref={node => this.node = node}
-  width={size.width} height={size.height}>
+      width={size.width} height={size.height}>
+      {minLine}
+      {maxLine}
       <CircleSet
         data={data}
         xScale={xScale}
@@ -50,7 +65,7 @@ class BloodPlot extends PureComponent {
 
 
 BloodPlot.defaultProps = {
-  size: {width: 500, height: 500}
+  size: {width: 500, height: 400}
 }
 
 export default BloodPlot

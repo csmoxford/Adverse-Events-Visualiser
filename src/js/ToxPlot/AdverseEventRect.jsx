@@ -1,6 +1,5 @@
 import React, {Component } from 'react'
-import {getToxicityColor} from '../utils/getColors'
-
+import {defaultToxColors} from '../utils/Constants'
 
 // prevent update caused by xScale and mouseover event
 class AdverseEventRect extends Component {
@@ -10,7 +9,7 @@ class AdverseEventRect extends Component {
   }
 
   render() {
-    const {filteredData, xScale, yScale} = this.props
+    const { filteredData, colors, xScale, yScale} = this.props
 
     function GradeSort(a,b) {
       let val = 0
@@ -29,7 +28,7 @@ class AdverseEventRect extends Component {
        y={yScale(d.index - 0.5)}
        height={yScale(d.index + 0.5) - yScale(d.index - 0.5)}
        width={xScale(d.toxEnd) - xScale(d.toxStart < 0 ? 0: d.toxStart) > 0 ? xScale(d.toxEnd) - xScale(d.toxStart < 0 ? 0: d.toxStart) : 1}
-       fill={getToxicityColor(d.aegrade)}
+       fill={colors[d.aegrade]}
        />
      })
 
@@ -37,5 +36,8 @@ class AdverseEventRect extends Component {
   }
 }
 
+AdverseEventRect.defaultProps = {
+  colors: defaultToxColors
+}
 
 export default AdverseEventRect

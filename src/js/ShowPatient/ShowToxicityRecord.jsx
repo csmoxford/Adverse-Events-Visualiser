@@ -17,7 +17,6 @@ class ShowToxicityRecord extends Component {
 
     const {data, totalHeight, selectedPatient, thisData} = this.props
 
-
     if(thisData === null)
       return <div></div>
 
@@ -42,7 +41,8 @@ class ShowToxicityRecord extends Component {
       return(<AdverseEventRow
         key={'row' + i}
         thisData={d}
-        data={data}/>)
+        data={data}
+        colors={data.toxColors}/>)
     }): ""
 
     const causality = data.causality.map((c,i) => <th key={i}>{c.label}</th>)
@@ -50,7 +50,7 @@ class ShowToxicityRecord extends Component {
 
     return(
       <div
-        className="patient-toxicity-record"
+        className="patient-record"
         style={{'backgroundColor': treatment.color + "40", bottom: '0', height: `${totalHeight}px`, overflowX: 'auto', overflowY: 'auto'}}>
         <h3><b>Subject ID:</b> {selectedPatient.patid}</h3>
         <h4><b>Treatment Arm:</b> {treatment.label}</h4>

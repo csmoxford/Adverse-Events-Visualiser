@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import './AdverseEventRow.css'
-import {getToxicityColor} from '../utils/getColors'
 import {formatDate} from '../utils/formatDate'
-
+import {defaultToxColors} from '../utils/Constants'
 
 const causalityLabels = ["", "Not related", "Unlikely related", "Possibly related", "Probably related", "Definitely related"]
 
@@ -13,7 +12,7 @@ const AdverseEventRow = (props) => {
   const causality = data.causality.map((c,i) => <td key={i}>{causalityLabels[thisData[c.column]]}</td>)
 
   return(
-    <tr style={{ backgroundColor: getToxicityColor(thisData.aegrade)}}>
+    <tr style={{ backgroundColor: props.colors[thisData.aegrade]}}>
       <td>{formatDate(thisData.aestartdate)}</td>
       <td>{formatDate(thisData.aestopdate)}</td>
       <td>{thisData.aecategory}</td>
@@ -22,6 +21,10 @@ const AdverseEventRow = (props) => {
       {causality}
     </tr>
   )
+}
+
+AdverseEventRow.defaultProps = {
+  colors: defaultToxColors
 }
 
 export default AdverseEventRow

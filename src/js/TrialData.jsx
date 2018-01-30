@@ -16,10 +16,12 @@ import ToxTableSummary from './ToxTable/ToxTableSummary'
 import ToxPlotCycleUI from './ToxPlot/ToxPlotCycleUI'
 import ToxPlotKaplan from './ToxPlot/ToxPlotKaplan'
 
-import ToxLoadData from './ToxLoadData'
+import LoadData from './LoadData'
 import ToxAddData from './ToxAddData'
 
 import PatientView from './PatientView'
+
+import Treatment from './Treatment'
 
 import {vhToPx, vwToPx} from './utils/vhTOpx'
 import {DayDifference} from './utils/formatDate'
@@ -69,7 +71,7 @@ function locationOf(element, array, comparer, start, end) {
 };
 
 
-class ToxData extends Component {
+class TrialData extends Component {
 
   constructor(props){
      super(props)
@@ -145,11 +147,11 @@ class ToxData extends Component {
     )
   }
 
-  showDetails(data, event) {
-    if(data !== null) {
+  showDetails(patient, event) {
+    if(patient !== null) {
       this.setState({
-        entry: data,
-        selectedPatient: data[0]
+        entry: this.state.filteredData.filter(d => patient.patid == d.patid),
+        selectedPatient: patient
       })
     }
   }
@@ -232,7 +234,7 @@ class ToxData extends Component {
      const {data, filteredData, filterValues} = this.state
 
       if(data === null) {
-        return <div className="cssGrid"><ToxLoadData onSubmit={this.handleFileSelect}/></div>
+        return <div className="cssGrid"><LoadData onSubmit={this.handleFileSelect}/></div>
       }
 
 
@@ -251,23 +253,22 @@ class ToxData extends Component {
 
      return (
          <div className="cssGrid">
-          <ToxFilters
+           <Route path="/trialData/ae" render={() => <ToxFilters
             className="item-left"
             data={data}
             updateFilterStateValues={this.updateFilterStateValues}
-            />
-
+            />}/>
              <Switch>
-               <Route path="/ae/load" render={() => <ToxLoadData onSubmit={this.handleFileSelect}/>}/>
-               <Route path="/ae/addae" render={() => <ToxAddData data={data} filterValues={filterValues} addAdverseEvent={this.addAdverseEvent}/>}/>
-               <Route path='/ae/summary' render={() => <div id="main" className="item-main">
+               <Route path="/trialData/load" render={() => <LoadData onSubmit={this.handleFileSelect}/>}/>
+               <Route path="/trialData/ae/addae" render={() => <ToxAddData data={data} filterValues={filterValues} addAdverseEvent={this.addAdverseEvent}/>}/>
+               <Route path='/trialData/ae/summary' render={() => <div id="main" className="item-main">
                  <ToxPlotTimeUI
                    data={data}
                    filteredData={filteredData}
                    />
                </div>
                  }/>
-              <Route path='/ae/table' render={() => <div className="item-main">
+              <Route path='/trialData/ae/table' render={() => <div className="item-main">
                 <div style={{height:30}}></div>
                 <ToxTableUI
                    data={data}
@@ -275,7 +276,7 @@ class ToxData extends Component {
                 />
                </div>
                }/>
-             <Route path='/ae/summary_table' render={() => <div className="item-main">
+             <Route path='/trialData/ae/summary_table' render={() => <div className="item-main">
                 <div style={{height:30}}></div>
                    <ToxTableSummary
                       data={data}
@@ -283,24 +284,24 @@ class ToxData extends Component {
                    />
                 </div>
                 }/>
-              <Route path='/ae/cycle_plot' render={() => <div className="item-main">
+              <Route path='/trialData/ae/cycle_plot' render={() => <div className="item-main">
                       <ToxPlotCycleUI
                          data={data}
                          filteredData={filteredData}
                       />
                    </div>
                    }/>
-               <Route path="/ae/survival" render={() => <ToxPlotKaplan
+               <Route path="/trialData/ae/survival" render={() => <ToxPlotKaplan
                    data={data}
                    filteredData={filteredData}
                    />}/>
-                 <Route path="/ae/PatientView" render={() => <PatientView
+                 <Route path="/trialData/ae/PatientView" render={() => <PatientView
                    data={data}
                    totalHeight={totalHeight}
                    filteredData={filteredData}
                    filterValues={filterValues}
                    />}/>
-               <Route path='/ae/pt' render={() =>
+               <Route path='/trialData/ae/pt' render={() =>
                     [
                       <div className="item-middle" key={0}>
                         <ToxPlot
@@ -324,13 +325,20 @@ class ToxData extends Component {
                    ]
                  }
                 />
-                <Route path='/ae/key' render={() => <div className="item-middle" key={0}>
+                <Route path='/trialData/ae/key' render={() => <div className="item-middle" key={0}>
                    <ToxPlotKey
                      data={data}
                       size={size} />
                   </div>
                 }/>
-               <Route path='/ae' render={() =>
+              <Route path="/trialData/treatment" render={() => <Treatment
+                  data={data}
+                  totalHeight={totalHeight}
+                  showDetails={this.showDetails}
+                  selectedPatient={this.state.selectedPatient}
+                  />}
+                />
+            <Route path='/trialData/ae' render={() =>
                 [<div className="item-middle" key={0}>
                    <ToxPlot
                      totalHeight={totalHeight}
@@ -355,4 +363,4 @@ class ToxData extends Component {
      )
    }
 }
-export default ToxData
+export default TrialData

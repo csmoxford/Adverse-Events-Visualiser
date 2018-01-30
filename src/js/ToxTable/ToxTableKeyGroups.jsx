@@ -3,6 +3,7 @@ import {uniq, uniqBy} from 'lodash'
 import {sum} from 'd3-array'
 import './ToxTable.css'
 
+
 function bracketPercent (count = 0, total) {
   if(count === 0)
     return ""
@@ -40,7 +41,6 @@ const ToxTableKeyGroups = (props) => {
     {totals}
   </tr>
 
-  console.log(data.keyGroups);
 
   const rowData = data.keyGroups.map((a,i) => {
     const trtData = data.treatment.map((t,j) => {
@@ -61,7 +61,7 @@ const ToxTableKeyGroups = (props) => {
         <td key={`${j}_1`} style={style}>{a.treatmentData[j].count3} {bracketPercent(a.treatmentData[j].count3,numberOfPatients[j])}</td>
       ]
     })
-    console.log(a);
+
     return <tr key={i}>
       <td>{a.label}</td>
       {cells}

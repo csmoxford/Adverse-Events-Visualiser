@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import Menu from './js/Menu.jsx'
-import Home from './js/Home.jsx'
-import ToxData from './js/ToxData.jsx'
-import Error404 from './js/Error404.jsx'
+import Menu from './js/Menu'
+import Home from './js/Home'
+import TrialData from './js/TrialData'
+import Error404 from './js/Error404'
 import {HashRouter, Route, Switch, Link} from 'react-router-dom'
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
         <Menu/>
         <Switch>
           <Route path="/" exact component={Home}/>
-          <Route path="/ae" component={ToxData}/>
+          <Route path="/trialData" component={TrialData}/>
           <Route component={Error404}/>
         </Switch>
       </div>

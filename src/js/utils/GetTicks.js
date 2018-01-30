@@ -11,6 +11,7 @@ function getTicksDateTime(scale, targetNumber) {
 
 }
 
+
 function getTicksNumeric(scale,  targetNumber = 5) {
   var domain = scale.domain()
   var range = domain[1] - domain[0]
@@ -23,16 +24,17 @@ function getTicksNumeric(scale,  targetNumber = 5) {
   range = domain[1] - domain[0]
 
 
-  var values = [significantFigures(domain[0], 3)]
+  var values = [domain[0]]
   var curValue = domain[0]
   const increment = pow10 / scale
   // console.log('range = ' + range);
   // console.log('increment = ' + increment);
   while(curValue < domain[1]) {
     curValue += increment
-    values.push(significantFigures(curValue, 3))
+    values.push(curValue)
   }
-  return values
+
+  return significantFigures(values,3)
 }
 
 export default getTicksNumeric

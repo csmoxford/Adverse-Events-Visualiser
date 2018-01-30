@@ -18,6 +18,8 @@ import AdverseEventLabels from './ToxPlot/AdverseEventLabels'
 
 import ShowToxicityRecord from './ShowPatient/ShowToxicityRecord'
 
+import TreatmentPlotOnePatient from './TreatmentPlot/TreatmentPlotOnePatient'
+
 
 function getIndex(data, oneRowPerPatient = false) {
   var numberUnique = -1
@@ -67,19 +69,20 @@ class PatientView extends PureComponent {
   updateBloodValue() {
     const measureColumns = this.props.data.measureColumns.find(d => d.column == $('#measureColumns').val())
     this.setState({measureColumns: measureColumns})
+
   }
 
 
   render() {
 
     const {data, filteredData, filterValues, totalHeight} = this.props
-    const size = {width: 0.47*window.innerWidth, height: 400}
+    const size = {width: 0.47*window.innerWidth, height: 350}
     const offset = {left: 50, right:50, top: 10, bottom: 50}
 
     var bloodSelect
+    // if measure data was defined
     if(data.measureColumns !== undefined) {
       const bloodOptions = data.measureColumns.map((d,i) => <option key={i} value={d.column}>{d.label}</option>)
-
       bloodSelect = <div className="add-patient">
         <label htmlFor="measureColumns">Measurement</label><br/>
         <select id="measureColumns" className="selectpicker" onChange={this.updateBloodValue}>
@@ -88,17 +91,19 @@ class PatientView extends PureComponent {
       </div>
     }
 
-    var toxPlot, bloodPlot, patient
+    var toxPlot, bloodPlot, patient, treatmentPlot
+    // if a patient has been selected
     if(this.state.patid !== undefined) {
-
 
       var patient = data.patientData.find(p => p.patid === this.state.patid)
       var subData = filteredData.filter(d => d.patid === this.state.patid)
       getIndex(subData)
 
       var xMin = 0
-      var xMax = max(subData.map((d) => d.toxEnd)) + 1
-
+      var xMax = 1
+      if(subData.length > 0) {
+        max(subData.map((d) => d.toxEnd)) + 1
+      }
 
       var subMeasureData = []
       if(data.measureData != undefined){
@@ -129,6 +134,7 @@ class PatientView extends PureComponent {
           size={size}
           data={subMeasureData.filter(d => d[this.state.measureColumns.column] != undefined).map((d,i) => {return {x: d.relativeTime, y: d[this.state.measureColumns.column]}})}
           xScale={xScale}
+          measure={this.state.measureColumns}
           />
       } else if(data.measureData !== undefined){
         bloodPlot = <p>No measure data for this patient</p>
@@ -136,14 +142,14 @@ class PatientView extends PureComponent {
         bloodPlot = <p>No measure data was loaded</p>
       }
 
-
       if(subData.length > 0) {
         toxPlot = <svg ref={node => this.node = node}
       width={size.width} height={height}>
           <AdverseEventRect
             filteredData={subData}
             xScale={xScale}
-            yScale={yScale}/>
+            yScale={yScale}
+            colors={data.toxColors}/>
           <AdverseEventLabels data={rowData} xScale={xScale} yScale={yScale}/>
             <Axis
               side="bottom"
@@ -153,22 +159,32 @@ class PatientView extends PureComponent {
             />
         </svg>
       } else {
-        toxPlot = <p>No adverse events for this patient</p>
+        toxPlot = <p>No adverse event data selected</p>
       }
 
+      // if treatment was specified in the data then add it.
+      if(data.treatmentSpecification != undefined) {
+        treatmentPlot = <TreatmentPlotOnePatient
+          size={size}
+          data={data}
+          patid={this.state.patid}
+          xScale={xScale}/>
+      }
     }
+
 
     return [<div  key={0} className='item-middle'>
         <div className="row">
           <div style={{height:'10px'}}></div>
-          <div className="col-xs-3 col-xs-offset-3">
-            <PatientSelect data={data.patientData} treatment={data.treatment} didChange={this.updatePatient}/>
+          <div className="col-xs-6">
+            <PatientSelect patients={data.patientData} treatment={data.treatment} didChange={this.updatePatient}/>
           </div>
-          <div className="col-xs-3">
+          <div className="col-xs-6">
             {bloodSelect}
           </div>
         <div className="col-xs-12">
           {bloodPlot}
+          {treatmentPlot}
           {toxPlot}
         </div>
       </div>
@@ -182,7 +198,6 @@ class PatientView extends PureComponent {
         /> : null}
     </div>]
   }
-
 
 }
 

@@ -14,23 +14,23 @@ class Menu extends Component {
      this.state = {
        links:
        [
-         {to: '/ae/load', label: 'Load', id: 'load', dropDown: false, active: false},
-         {to: '/ae/PatientView', label: 'Patient Level', id: 'patient', dropDown: false, active: false},
-         {label: "Event Level", id: 'event', dropDown: true, active: false, subLinks: [
-           {to: '/ae', label: 'Adverse Event Level', id: 'event', dropDown: false},
-           {to: '/ae/pt', label: 'Patient Level', id: 'event', dropDown: false},
-           {to: '/ae/key', label: 'Graph Key', id: 'event', dropDown: false},
+         {to: '/trialData/load', label: 'Load', id: 'load', dropDown: false, active: false},
+         {to: '/trialData/ae/PatientView', label: 'Patient Summary', id: 'patient', dropDown: false, active: false},
+         {label: "Adverse Events", id: 'event', dropDown: true, active: false, subLinks: [
+           {to: '/trialData/ae/', label: 'Adverse Events', id: 'event', dropDown: false},
+           {to: '/trialData/ae/pt', label: 'Patient Worst Grade', id: 'event', dropDown: false},
+           {to: '/trialData/ae/key', label: 'Graph Key', id: 'event', dropDown: false},
+           {dropDown: false, separator: true},
+           {to: '/trialData/ae/table', label: 'Summary', id: 'event', dropDown: false, active: false},
+           {to: '/trialData/ae/summary_table', label: 'Cycle Summary', id: 'event', dropDown: false, active: false},
+           {dropDown: false, separator: true},
+           {to: '/trialData/ae/summary', label: 'Time Plot', id: 'event', dropDown: false, active: false},
+           {to: '/trialData/ae/cycle_plot', label: 'Cycle Plot', id: 'event', dropDown: false, active: false},
+           {to: '/trialData/ae/survival', label: 'Time to First Event', id: 'event', dropDown: false, active: false},
+           {dropDown: false, separator: true},
+           {to: '/trialData/ae/addae', label: 'Add Adverse Event', id: 'event', dropDown: false, active: false}
          ]},
-          {label: "Table", id: 'table', dropDown: true, active: false, subLinks: [
-           {to: '/ae/table', label: 'Table', id: 'table', dropDown: false, active: false},
-           {to: '/ae/summary_table', label: 'Summary: Table', id: 'table', dropDown: false, active: false}
-         ]},
-         {label: "Aggregated plot", id: 'plot', dropDown: true, active: false, subLinks: [
-           {to: '/ae/cycle_plot', label: 'Cycle Plot', id: 'plot', dropDown: false, active: false},
-           {to: '/ae/summary', label: 'Time Plot', id: 'plot', dropDown: false, active: false},
-           {to: '/ae/survival', label: 'Time to First Event', id: 'plot', dropDown: false, active: false}
-         ]},
-         {to: '/ae/addae', label: 'Add New Event', id: 'addevent', dropDown: false, active: false},
+         {to: '/trialData/treatment', label: 'Treatment', id: 'treatment', dropDown: false, active: false},
        ]
      }
      this.updateActive = this.updateActive.bind(this)
@@ -55,7 +55,13 @@ class Menu extends Component {
 
     const links = this.state.links.map((l,i) => {
       if(l.dropDown){
-        const subLinks = l.subLinks.map((s,i) => <NavLink key={i} {...s} updateActive={this.updateActive}/>)
+        const subLinks = l.subLinks.map((s,j) => {
+          if(s.separator) {
+            return <li key={j} role="separator" class="divider"></li>
+          } else {
+            return <NavLink key={j} {...s} updateActive={this.updateActive}/>
+          }
+        })
 
         return <li key={i} className={`nav-item dropdown show${l.active ? " active":""}`}><a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#">{l.label}<span className="caret"></span></a>
           <ul className="dropdown-menu">

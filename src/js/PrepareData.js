@@ -1,5 +1,5 @@
 import {DayDifference} from './utils/formatDate'
-
+import {defaultToxColors} from './utils/Constants'
 
 
 
@@ -18,6 +18,32 @@ function prepareData(data) {
     }
   }
 
+  // count and discard patients with no treatment assigned.
+  var numberWithoutTreatment = 0
+  for (var i = patientData.length-1; i >= 0; i--) {
+    if(patientData[i].treatment == undefined) {
+      patientData.splice(i,1)
+      numberWithoutTreatment++
+    }
+  }
+  if(numberWithoutTreatment > 0) {
+    console.log("Warning: There were " + numberWithoutTreatment + " patients without a treatment assigned. These were discarded.");
+  }
+
+  // count and discard patients with no keyDate[0] which will typically be registration or randomisation dateOfMeasure
+  var numberWithoutKeyDate = 0
+  const keyDate = data.keyDates[0]
+  for (var i = patientData.length-1; i >= 0; i--) {
+    if(patientData[i][keyDate.column] == "Invalid Date") {
+      patientData.splice(i,1)
+      numberWithoutKeyDate++
+    }
+  }
+  if(numberWithoutKeyDate > 0) {
+    console.log("Warning: There were " + numberWithoutKeyDate + " patients without the " + keyDate.label + " Date. These patients were discarded.");
+  }
+
+
   patientData = patientData.sort((a,b) => {
     let order = 0
     if(a.treatment > b.treatment)
@@ -33,15 +59,17 @@ function prepareData(data) {
 
   for (var i = 0; i < toxData.length; i++) {
     const patient = patientData.find(d => d.patid === toxData[i].patid)
-    toxData[i].aestartdate = new Date(toxData[i].aestartdate)
-    toxData[i].aestopdate = new Date(toxData[i].aestopdate)
+    if(patient != undefined) {
+      toxData[i].aestartdate = new Date(toxData[i].aestartdate)
+      toxData[i].aestopdate = new Date(toxData[i].aestopdate)
 
-    Object.assign(toxData[i], patient)
+      Object.assign(toxData[i], patient)
 
-    toxData[i].toxStart = DayDifference(patient[initDate], toxData[i].aestartdate) // miliseconds in a day
-    toxData[i].toxEnd = 1+DayDifference(patient[initDate], toxData[i].aestopdate) // miliseconds in a day
-    if(isNaN(toxData[i].toxEnd)) {
-      toxData[i].toxEnd = toxData[i].toxStart + 1
+      toxData[i].toxStart = DayDifference(patient[initDate], toxData[i].aestartdate) // miliseconds in a day
+      toxData[i].toxEnd = 1+DayDifference(patient[initDate], toxData[i].aestopdate) // miliseconds in a day
+      if(isNaN(toxData[i].toxEnd)) {
+        toxData[i].toxEnd = toxData[i].toxStart + 1
+      }
     }
   }
 
@@ -69,10 +97,16 @@ function prepareData(data) {
       measureData[i].dateOfMeasure = new Date(measureData[i].dateOfMeasure)
 
       const patient = patientData.find(d => d.patid === measureData[i].patid)
-      Object.assign(measureData[i], patient)
+      if(patient != undefined) {
+        Object.assign(measureData[i], patient)
 
-      measureData[i].relativeTime = DayDifference(patient[initDate], measureData[i].dateOfMeasure) // miliseconds in a day
+        measureData[i].relativeTime = DayDifference(patient[initDate], measureData[i].dateOfMeasure) // miliseconds in a day
+      }
     }
+  }
+
+  if(data.toxColors == undefined) {
+    data.toxColors = defaultToxColors
   }
 
 }

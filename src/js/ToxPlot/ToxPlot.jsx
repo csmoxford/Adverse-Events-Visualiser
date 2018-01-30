@@ -51,6 +51,8 @@ class ToxPlot extends PureComponent {
 
     this.getIndex(filteredData, oneRowPerPatient)
 
+    const selectedPatid = selectedPatient == null ? undefined:  selectedPatient.patid
+
     const xMin = 0
     const xMax = max(filteredData.map((d) => d.toxEnd)) + 1
     const yMin = min(filteredData.map((d) => d.index)) - 0.5
@@ -79,15 +81,15 @@ class ToxPlot extends PureComponent {
       const backgroundRect = uniquePositions
          .map((d,i) => {
          return <g key={d.patid}><rect
-           x={xScale(xMin)+1}
+           x={xScale(xMin)}
            y={yScale(d.min - 0.5)}
            height={yScale(d.max + 0.5) - yScale(d.min - 0.5)}
            width={xScale(xMax)-xScale(xMin)}
-           fill={d.patid == selectedPatient ? "#000": data.treatment.find(t => t.value === d.treatment).color}
-           fillOpacity={d.patid == selectedPatient ? 0.2:0.1}
+           fill={d.patid == selectedPatid ? "#000": data.treatment.find(t => t.value === d.treatment).color}
+           fillOpacity={0.1}
            stroke={data.treatment.find(t => t.value === d.treatment).color}
            strokeOpacity={0.2}
-           onMouseOver={(e) => this.props.showDetails(filteredData.filter(dta => dta.patid === d.patid),e)}
+           onMouseOver={(e) => this.props.showDetails(data.patientData.find(p => d.patid == p.patid),e)}
          />
        {names}
        </g>
@@ -98,7 +100,7 @@ class ToxPlot extends PureComponent {
      var names = null
 
      if(!oneRowPerPatient) {
-      const rowData = uniqBy(filteredData.filter(d => d.patid == selectedPatient).map(d => {return {patid: d.patid, index: d.index, aeterm: d.aeterm}}), 'index')
+      const rowData = uniqBy(filteredData.filter(d => d.patid == selectedPatid).map(d => {return {patid: d.patid, index: d.index, aeterm: d.aeterm}}), 'index')
 
       if(rowData.length > 0)
        names = <AdverseEventLabels data={rowData} xScale={xScale} yScale={yScale} xPos={xMin}/>
@@ -145,7 +147,8 @@ class ToxPlot extends PureComponent {
             <AdverseEventRect
               filteredData={this.props.filteredData}
               xScale={xScale}
-              yScale={yScale}/>
+              yScale={yScale}
+              colors={data.toxColors}/>
               {events}
               {names}
               <g id="background-rects">

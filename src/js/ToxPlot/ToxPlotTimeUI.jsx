@@ -20,7 +20,6 @@ class ToxPlotTimeUI extends PureComponent {
    }
 
   updateOneGraph() {
-    console.log('hi');
     // console.log($('#oneGraph').is(':checked'));
     this.setState({
       oneGraph: $('#oneGraph').is(':checked')
