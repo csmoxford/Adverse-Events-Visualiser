@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'React'
 
+var $ = require('jquery')
 
 class PatientSelect extends PureComponent {
 

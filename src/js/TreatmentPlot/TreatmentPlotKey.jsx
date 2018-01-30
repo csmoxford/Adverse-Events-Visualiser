@@ -30,7 +30,7 @@ class TreatmentPlotKey extends PureComponent {
 
     })
 
-    return <svg width={250} height={currentPos}>
+    return <svg width={300} height={currentPos}>
       {keys}
     </svg>
 

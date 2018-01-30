@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import AdverseEventRow from './AdverseEventRow.jsx'
 import "./ShowToxicityRecord.css"
 import {formatDate} from '../utils/formatDate'
 
-class ShowToxicityRecord extends Component {
+class ShowToxicityRecord extends PureComponent {
 
 
   /*
@@ -15,35 +15,37 @@ class ShowToxicityRecord extends Component {
   render() {
     // receives
 
-    const {data, totalHeight, selectedPatient, thisData} = this.props
+    const {data, totalHeight, selectedPatient, thisPatientsAeData} = this.props
 
-    if(thisData === null)
+    if(selectedPatient === null)
       return <div></div>
 
-    const rows = thisData !== null?
-     thisData.sort(function(a,b) {
-       var value = 0
-       if(b.aegrade == undefined) {
-         value = -1
-       }if(a.aegrade == undefined) {
-         value = 1
-       } else if(a.aegrade < b.aegrade) {
-         value = 1
-       } else if(a.aegrade > b.aegrade) {
-         value = -1
-       } else if(a.toxStart > b.toxStart) {
-         value = 1
-       } else if(a.toxStart < b.toxStart) {
-         value = -1
-       }
-       return value
-     }).map((d,i) => {
-      return(<AdverseEventRow
-        key={'row' + i}
-        thisData={d}
-        data={data}
-        colors={data.toxColors}/>)
-    }): ""
+    var rows
+    if(thisPatientsAeData !== null) {
+      rows = thisPatientsAeData.sort(function(a,b) {
+         var value = 0
+         if(b.aegrade == undefined) {
+           value = -1
+         }if(a.aegrade == undefined) {
+           value = 1
+         } else if(a.aegrade < b.aegrade) {
+           value = 1
+         } else if(a.aegrade > b.aegrade) {
+           value = -1
+         } else if(a.toxStart > b.toxStart) {
+           value = 1
+         } else if(a.toxStart < b.toxStart) {
+           value = -1
+         }
+         return value
+       }).map((d,i) => {
+        return(<AdverseEventRow
+          key={'row' + i}
+          thisPatientsAeData={d}
+          data={data}
+          colors={data.toxColors}/>)
+      })
+    }
 
     const causality = data.causality.map((c,i) => <th key={i}>{c.label}</th>)
     const treatment = data.treatment.find(t => selectedPatient.treatment === t.value)

@@ -7,17 +7,17 @@ const causalityLabels = ["", "Not related", "Unlikely related", "Possibly relate
 
 
 const AdverseEventRow = (props) => {
-  const {data, thisData} = props
+  const {data, thisPatientsAeData} = props
 
-  const causality = data.causality.map((c,i) => <td key={i}>{causalityLabels[thisData[c.column]]}</td>)
+  const causality = data.causality.map((c,i) => <td key={i}>{causalityLabels[thisPatientsAeData[c.column]]}</td>)
 
   return(
-    <tr style={{ backgroundColor: props.colors[thisData.aegrade]}}>
-      <td>{formatDate(thisData.aestartdate)}</td>
-      <td>{formatDate(thisData.aestopdate)}</td>
-      <td>{thisData.aecategory}</td>
-      <td>{thisData.aeterm}</td>
-      <td>{thisData.aegrade}</td>
+    <tr style={{ backgroundColor: props.colors[thisPatientsAeData.aegrade]}}>
+      <td>{formatDate(thisPatientsAeData.aestartdate)}</td>
+      <td>{formatDate(thisPatientsAeData.aestopdate)}</td>
+      <td>{thisPatientsAeData.aecategory}</td>
+      <td>{thisPatientsAeData.aeterm}</td>
+      <td>{thisPatientsAeData.aegrade}</td>
       {causality}
     </tr>
   )

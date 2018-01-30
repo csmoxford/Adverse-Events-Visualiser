@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React from 'react'
 import { scaleLinear } from 'd3-scale'
 import TreatmentLegendBox from '../utils/TreatmentLegendBox'
 import {uniqBy} from 'lodash'
@@ -26,7 +26,6 @@ const AdverseEventLegend = (props) => {
       >
       {`Grade ${i+1}`}
     </text>
-
   </g>)
 
   return <g
@@ -76,10 +75,7 @@ const EventKey = (props) => {
   const {keyEvents, svgPosition} = props
 
   const uniqeuEvents = uniqBy(keyEvents, e => e.label)
-
-  const events = uniqeuEvents.map((e,i) => {
-
-    return <g key={i} transform={`translate(${i},${i*30})`}>
+  const events = uniqeuEvents.map((e,i) => <g key={i} transform={`translate(${i},${i*30})`}>
       <polyline
         points={`10,10 10,-10`}
         stroke={e.color}
@@ -90,8 +86,7 @@ const EventKey = (props) => {
         y={0}
         dominantBaseline="middle"
         >{e.label}</text>
-    </g>
-  })
+    </g>)
 
   return <g transform={`translate(${svgPosition.left},${svgPosition.top})`}>
     {events}
@@ -100,12 +95,13 @@ const EventKey = (props) => {
 
 const ToxPlotKey = (props) => {
 
-  const{ size, data} = props
-console.log(data.keyEvents);
+  const{ width, data} = props
+
   const events = data.keyEvents != undefined ? <EventKey keyEvents={data.keyEvents} svgPosition={{top: 260 + 30*data.treatment.length, left: 55}}/> : null
+  const height = 240 + 30*data.treatment.length + 30*(data.keyEvents != undefined? data.keyEvents.length: 0)
 
   return <svg
-    width={size.width} height={size.height}>
+    width={width} height={height}>
     <AdverseEventLegend
       svgPosition={{top: 50, left: 45}}/>
     <Duration
@@ -116,7 +112,6 @@ console.log(data.keyEvents);
       svgPosition={{top: 240, left: 55}}/>
     {events}
   </svg>
-
 }
 
 

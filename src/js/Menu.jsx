@@ -19,7 +19,6 @@ class Menu extends Component {
          {label: "Adverse Events", id: 'event', dropDown: true, active: false, subLinks: [
            {to: '/trialData/ae/', label: 'Adverse Events', id: 'event', dropDown: false},
            {to: '/trialData/ae/pt', label: 'Patient Worst Grade', id: 'event', dropDown: false},
-           {to: '/trialData/ae/key', label: 'Graph Key', id: 'event', dropDown: false},
            {dropDown: false, separator: true},
            {to: '/trialData/ae/table', label: 'Summary', id: 'event', dropDown: false, active: false},
            {to: '/trialData/ae/summary_table', label: 'Cycle Summary', id: 'event', dropDown: false, active: false},

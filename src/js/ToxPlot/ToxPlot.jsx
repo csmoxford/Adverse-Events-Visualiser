@@ -13,12 +13,6 @@ import AdverseEventLabels from './AdverseEventLabels'
 
 class ToxPlot extends PureComponent {
 
-/*
-   constructor(props){
-      super(props)
-   }
-*/
-
   componentWillUnmount() {
     console.log("don't unmount");
   }
@@ -125,17 +119,17 @@ class ToxPlot extends PureComponent {
         })
       }
 
-
-      return [<div key='white' style={{height: '30px'}}></div>,
-      <div key='axis' align="right"><svg
+      return [<div key='axis' align="right"><svg
       style={{verticalAlign: "bottom", marginRight: height < heightDiv ? "0px": "17px"}}
       ref={node => this.node = node}
-      width={size.width} height="50px">
+      width={size.width}
+      height="80px"
+      onMouseOver={this.props.showKey}>
       <Axis
         side="top"
         lab="Time (days)"
         xScale={xScale}
-        yPos={50}
+        yPos={80}
       /></svg>
     </div>,
         <div

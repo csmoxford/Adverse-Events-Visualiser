@@ -17,8 +17,14 @@ import AdverseEventRect from './ToxPlot/AdverseEventRect'
 import AdverseEventLabels from './ToxPlot/AdverseEventLabels'
 
 import ShowToxicityRecord from './ShowPatient/ShowToxicityRecord'
+import ShowTreatmentSummary from './ShowPatient/ShowTreatmentSummary'
 
 import TreatmentPlotOnePatient from './TreatmentPlot/TreatmentPlotOnePatient'
+
+import ToxPlotKey from './ToxPlot/ToxPlotKey'
+import TreatmentPlotKey from './TreatmentPlot/TreatmentPlotKey'
+
+var $ = require('jquery')
 
 
 function getIndex(data, oneRowPerPatient = false) {
@@ -45,10 +51,12 @@ class PatientView extends PureComponent {
     super(props)
     this.state = {
       patid: this.props.data.patientData[0].patid,
-      measureColumns: this.props.data.measureColumns == undefined? undefined: this.props.data.measureColumns[0]
+      measureColumns: this.props.data.measureColumns == undefined? undefined: this.props.data.measureColumns[0],
+      rightColumnInfo: 'legend'
     }
     this.updatePatient = this.updatePatient.bind(this)
     this.updateBloodValue = this.updateBloodValue.bind(this)
+    this.changeRightColumn = this.changeRightColumn.bind(this)
   }
 
   componentDidMount() {
@@ -70,6 +78,10 @@ class PatientView extends PureComponent {
     const measureColumns = this.props.data.measureColumns.find(d => d.column == $('#measureColumns').val())
     this.setState({measureColumns: measureColumns})
 
+  }
+
+  changeRightColumn() {
+    this.setState({rightColumnInfo: $('#rightColumn').val()})
   }
 
 
@@ -98,6 +110,7 @@ class PatientView extends PureComponent {
       var patient = data.patientData.find(p => p.patid === this.state.patid)
       var subData = filteredData.filter(d => d.patid === this.state.patid)
       getIndex(subData)
+
 
       var xMin = 0
       var xMax = 1
@@ -173,6 +186,33 @@ class PatientView extends PureComponent {
     }
 
 
+    var rightColumn
+
+    if(this.state.rightColumnInfo == 'legend') {
+      rightColumn = <div>
+          <div>
+            <ToxPlotKey key={0} width={300} data={data}/>
+          </div>
+          <div>
+            <TreatmentPlotKey data={data}/>
+          </div>
+        </div>
+    } else if(this.state.rightColumnInfo == 'ae') {
+      rightColumn = patient !== undefined ? <ShowToxicityRecord
+        data={data}
+        totalHeight={totalHeight - 90}
+        selectedPatient={patient}
+        thisPatientsAeData={subData}
+        /> : null
+    } else if(this.state.rightColumnInfo == 'treatment') {
+      rightColumn = patient !== undefined ? <ShowTreatmentSummary
+        data={data}
+        totalHeight={totalHeight - 90}
+        selectedPatient={patient}
+        /> : null
+    }
+
+
     return [<div  key={0} className='item-middle'>
         <div className="row">
           <div style={{height:'10px'}}></div>
@@ -190,12 +230,16 @@ class PatientView extends PureComponent {
       </div>
     </div>,
     <div key={1} className='item-right'>
-      {patient !== undefined ? <ShowToxicityRecord
-        data={data}
-        totalHeight={totalHeight}
-        selectedPatient={patient}
-        thisData={subData}
-        /> : null}
+      <div style={{height:"30px"}}></div>
+      <div>
+        <select id='rightColumn' className="selectpicker" onChange={this.changeRightColumn}>
+          <option value="legend">Legend</option>
+          <option value="ae">Adverse event data</option>
+          <option value="treatment">Treatment data</option>
+        </select>
+      </div>
+      <div style={{height:"20px"}}></div>
+      {rightColumn}
     </div>]
   }
 

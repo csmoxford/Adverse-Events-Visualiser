@@ -1,27 +1,15 @@
 import React, {Component}  from 'react'
 import {Switch, Route} from 'react-router-dom'
 
-import ToxPlot from './ToxPlot/ToxPlot'
-import ToxPlotKey from './ToxPlot/ToxPlotKey'
-import ToxPlotTimeUI from './ToxPlot/ToxPlotTimeUI'
-
-
-import ShowToxicityRecord from './ShowPatient/ShowToxicityRecord'
-import ToxFilters from './ToxFilters'
+import LoadData from './LoadData'
 import prepareData from './prepareData'
 
-import ToxTableUI from './ToxTable/ToxTableUI'
-import ToxTableSummary from './ToxTable/ToxTableSummary'
-
-import ToxPlotCycleUI from './ToxPlot/ToxPlotCycleUI'
-import ToxPlotKaplan from './ToxPlot/ToxPlotKaplan'
-
-import LoadData from './LoadData'
-import ToxAddData from './ToxAddData'
-
-import PatientView from './PatientView'
-
+import AdverseEvents from './AdverseEvents'
 import Treatment from './Treatment'
+
+
+
+import ToxFilters from './ToxFilters'
 
 import {vhToPx, vwToPx} from './utils/vhTOpx'
 import {DayDifference} from './utils/formatDate'
@@ -237,19 +225,12 @@ class TrialData extends Component {
         return <div className="cssGrid"><LoadData onSubmit={this.handleFileSelect}/></div>
       }
 
-
-
      // change zero date for plots
      var from = filterValues.from // get the start of time window from patientData
      from = from == undefined ? data.keyDates[0].column : from
-
-
      /***************************************************************/
-
      const totalHeight = vhToPx(94.5)
      const size = {width: vwToPx(49), height: totalHeight}
-
-
 
      return (
          <div className="cssGrid">
@@ -260,104 +241,8 @@ class TrialData extends Component {
             />}/>
              <Switch>
                <Route path="/trialData/load" render={() => <LoadData onSubmit={this.handleFileSelect}/>}/>
-               <Route path="/trialData/ae/addae" render={() => <ToxAddData data={data} filterValues={filterValues} addAdverseEvent={this.addAdverseEvent}/>}/>
-               <Route path='/trialData/ae/summary' render={() => <div id="main" className="item-main">
-                 <ToxPlotTimeUI
-                   data={data}
-                   filteredData={filteredData}
-                   />
-               </div>
-                 }/>
-              <Route path='/trialData/ae/table' render={() => <div className="item-main">
-                <div style={{height:30}}></div>
-                <ToxTableUI
-                   data={data}
-                   filteredData={filteredData}
-                />
-               </div>
-               }/>
-             <Route path='/trialData/ae/summary_table' render={() => <div className="item-main">
-                <div style={{height:30}}></div>
-                   <ToxTableSummary
-                      data={data}
-                      filteredData={filteredData}
-                   />
-                </div>
-                }/>
-              <Route path='/trialData/ae/cycle_plot' render={() => <div className="item-main">
-                      <ToxPlotCycleUI
-                         data={data}
-                         filteredData={filteredData}
-                      />
-                   </div>
-                   }/>
-               <Route path="/trialData/ae/survival" render={() => <ToxPlotKaplan
-                   data={data}
-                   filteredData={filteredData}
-                   />}/>
-                 <Route path="/trialData/ae/PatientView" render={() => <PatientView
-                   data={data}
-                   totalHeight={totalHeight}
-                   filteredData={filteredData}
-                   filterValues={filterValues}
-                   />}/>
-               <Route path='/trialData/ae/pt' render={() =>
-                    [
-                      <div className="item-middle" key={0}>
-                        <ToxPlot
-                          totalHeight={totalHeight}
-                           data={data}
-                           filteredData={filteredData}
-                           offset={{top: 0, bottom: 0, left: 10, right: 0}}
-                           size={size}
-                           showDetails={this.showDetails}
-                           selectedPatient={this.state.selectedPatient}
-                           filter={this.state.filterValues}
-                           oneRowPerPatient={true} />
-                     </div>,
-                     <div className="item-right" key={1}>
-                       <ShowToxicityRecord
-                         data={data}
-                         totalHeight={totalHeight}
-                         selectedPatient={this.state.selectedPatient}
-                         thisData={this.state.entry}/>
-                     </div>
-                   ]
-                 }
-                />
-                <Route path='/trialData/ae/key' render={() => <div className="item-middle" key={0}>
-                   <ToxPlotKey
-                     data={data}
-                      size={size} />
-                  </div>
-                }/>
-              <Route path="/trialData/treatment" render={() => <Treatment
-                  data={data}
-                  totalHeight={totalHeight}
-                  showDetails={this.showDetails}
-                  selectedPatient={this.state.selectedPatient}
-                  />}
-                />
-            <Route path='/trialData/ae' render={() =>
-                [<div className="item-middle" key={0}>
-                   <ToxPlot
-                     totalHeight={totalHeight}
-                     data={data}
-                     filteredData={filteredData}
-                     offset={{top: 0, bottom: 0, left: 10, right: 0}}
-                     size={size}
-                     showDetails={this.showDetails}
-                     filter={this.state.filterValues}
-                     selectedPatient={this.state.selectedPatient} />
-                 </div>,
-                 <div className="item-right" key={1}>
-                   <ShowToxicityRecord
-                     data={data}
-                     totalHeight={totalHeight}
-                     selectedPatient={this.state.selectedPatient}
-                     thisData={this.state.entry}/>
-                 </div>
-               ]}/>
+               <Route path="/trialData/treatment" render={() => <Treatment data={data} totalHeight={totalHeight} showDetails={this.showDetails} selectedPatient={this.state.selectedPatient} />} />
+               <Route path="/trialData/ae" render={() => <AdverseEvents data={data} filteredData={filteredData} filterValues={filterValues} showDetails={this.showDetails} selectedPatient={this.state.selectedPatient} selectedPatientAEs={this.state.entry} size={size}/>}/>
            </Switch>
         </div>
      )

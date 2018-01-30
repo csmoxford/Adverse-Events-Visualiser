@@ -39,7 +39,7 @@ class ToxFilters extends Component {
 
     const causality = data.causality.map((c,i) => {
       return (<div key={i} className="filter-option">
-      <label>{c.label}</label><br/>
+        <label>{c.label}</label><br/>
         <select id={c.column} className="selectpicker">
           <option value={1}>All causality levels</option>
           <option value={2}>Unlikely related or higher</option>
