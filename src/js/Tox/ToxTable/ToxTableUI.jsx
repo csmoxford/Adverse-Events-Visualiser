@@ -1,6 +1,4 @@
 import React, { PureComponent } from 'react'
-import {uniq, uniqBy} from 'lodash'
-import {sum} from 'd3-array'
 import './ToxTable.css'
 import ToxTableAE from './ToxTableAE'
 import ToxTableCategory from './ToxTableCategory'
@@ -75,7 +73,7 @@ class ToxTableUI extends PureComponent {
 
    updateSort() {
      var sortType = $('#tableSortType').val()
-     this.setState({sortFun: sortFunctions.find(f => f.id == sortType).fun})
+     this.setState({sortFun: sortFunctions.find(f => f.id === sortType).fun})
    }
 
    updateGroup() {
@@ -84,17 +82,17 @@ class ToxTableUI extends PureComponent {
 
   render() {
     var table = null
-    if(this.state.groupBy == "ae") {
+    if(this.state.groupBy === "ae") {
       table = <ToxTableAE
         sortFun={this.state.sortFun}
         {...this.props}
       />
-  } else if(this.state.groupBy == "category") {
+  } else if(this.state.groupBy === "category") {
     table = <ToxTableCategory
       sortFun={this.state.sortFun}
       {...this.props}
     />
-  } else if(this.state.groupBy == "keyGroups") {
+  } else if(this.state.groupBy === "keyGroups") {
     table = <ToxTableKeyGroups
       sortFun={this.state.sortFun}
       {...this.props}

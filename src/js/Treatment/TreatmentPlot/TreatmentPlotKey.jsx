@@ -1,10 +1,7 @@
 import React, {PureComponent} from 'react'
-import {scaleLinear} from 'd3-scale'
-import {max} from 'd3-array'
 import {uniqBy} from 'lodash'
 
 import {TreatmentKeySingle, TreatmentKeyDouble} from './TreatmentKey'
-
 
 
 class TreatmentPlotKey extends PureComponent {
@@ -14,8 +11,6 @@ class TreatmentPlotKey extends PureComponent {
     const {data} = this.props
 
     const uniqueSpec = uniqBy(data.treatmentSpecification, d => d.index)
-
-
     var currentPos = 50
     const height = 30
     const keys = uniqueSpec.map((d,i) => {
@@ -24,18 +19,18 @@ class TreatmentPlotKey extends PureComponent {
       const pos = currentPos
       currentPos += takeupHeight
 
-      if(d.type == "Single") {
+      if(d.type === "Single") {
         return <TreatmentKeySingle key={i} treatment={d} height={height} position={{left: 50, top: pos}}/>
-      } else if(d.type == "Double") {
+      } else if(d.type === "Double") {
         return <TreatmentKeyDouble key={i} treatment={d} height={height} position={{left: 50, top: pos}}/>
+      } else {
+        return null
       }
-
     })
 
     return <svg width={300} height={currentPos}>
       {keys}
     </svg>
-
   }
 }
 

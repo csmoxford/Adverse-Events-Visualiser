@@ -1,5 +1,4 @@
 import React from 'react'
-import { scaleLinear } from 'd3-scale'
 import TreatmentLegendBox from '../../utils/TreatmentLegendBox'
 import {uniqBy} from 'lodash'
 import {defaultToxColors} from '../../utils/Constants'
@@ -11,8 +10,7 @@ const AdverseEventLegend = (props) => {
   const height = 30
   const rows = colors.map((c,i) => <g
     key={i}
-    transform={`translate(0,${i*height + height/2})`}
-  >
+    transform={`translate(0,${i*height + height/2})`}>
     <rect
       x={0}
       y={-height/2}
@@ -97,8 +95,8 @@ const ToxPlotKey = (props) => {
 
   const{ width, data} = props
 
-  const events = data.keyEvents != undefined ? <EventKey keyEvents={data.keyEvents} svgPosition={{top: 260 + 30*data.treatment.length, left: 55}}/> : null
-  const height = 240 + 30*data.treatment.length + 30*(data.keyEvents != undefined? data.keyEvents.length: 0)
+  const events = data.keyEvents !== undefined ? <EventKey keyEvents={data.keyEvents} svgPosition={{top: 260 + 30*data.treatment.length, left: 55}}/> : null
+  const height = 240 + 30*data.treatment.length + 30*(data.keyEvents !== undefined? data.keyEvents.length: 0)
 
   return <svg
     width={width} height={height}>

@@ -33,7 +33,7 @@ class TreatmentPlotOnePatient extends PureComponent {
       .domain([xMin, xMax])
       .range([offset.left, size.width - offset.right])
 
-      const patient = data.patientData.find(p => p.patid == patid)
+      const patient = data.patientData.find(p => p.patid === patid)
 
 
 
@@ -41,7 +41,7 @@ class TreatmentPlotOnePatient extends PureComponent {
     // set this to true if data is prepared for plotting. Otherwise we will return a message instead of the plot.
     const treatmentRects = data.treatmentSpecification.map((t,i) => {
 
-      var readyData = data[t.datasetName].filter(d => d.patid == patid)
+      var readyData = data[t.datasetName].filter(d => d.patid === patid)
 
       if(readyData.length > 0) {
         readyData = readyData.map(d => {
@@ -57,7 +57,7 @@ class TreatmentPlotOnePatient extends PureComponent {
         containsData = true
 
         var rect = null
-        if(t.type == "Single") {
+        if(t.type === "Single") {
           rect = <SingleDateSet
             key={i}
             treatmentMetadata={t}
@@ -65,7 +65,7 @@ class TreatmentPlotOnePatient extends PureComponent {
             xScale={xScale}
             yScale={yScale}
             yPosition={t.index}/>
-        } else if(t.type == "Double") {
+        } else if(t.type === "Double") {
           rect = <DoubleDateSet
             key={i}
             treatmentMetadata={t}
@@ -81,8 +81,6 @@ class TreatmentPlotOnePatient extends PureComponent {
         return null
       }
     })
-
-    console.log(xScale.range()[1]);
 
     const treatmentNames = uniqBy(data.treatmentSpecification, d => d.index).map((t,i) => {
       return <text

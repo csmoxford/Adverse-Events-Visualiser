@@ -7,7 +7,7 @@ const TreatmentTablePatient = (props) => {
 
   const {data, selectedPatient} = props
 
-  if(data.treatmentSpecification == undefined) {
+  if(data.treatmentSpecification === undefined) {
     return <div></div>
   }
 
@@ -26,13 +26,13 @@ const TreatmentTablePatient = (props) => {
       return val
     })
 
-    const values = data[t.datasetName].filter(p => p.patid == selectedPatient.patid).map(p => doseColors.find(dc =>  p[t.column] >= dc.value).value)
+    const values = data[t.datasetName].filter(p => p.patid === selectedPatient.patid).map(p => doseColors.find(dc =>  p[t.column] >= dc.value).value)
     total += sum(values)
 
     return t.doseColors.map((d,j) => <tr key={`${i},${j}`}>
-      {j == 0 ? <td rowSpan={t.doseColors.length}>{t.label}</td>: null}
-      <td>{d.label == undefined ? d.value: d.label}</td>
-      <td>{values.filter(v => v == d.value).length}</td>
+      {j === 0 ? <td rowSpan={t.doseColors.length}>{t.label}</td>: null}
+      <td>{d.label === undefined ? d.value: d.label}</td>
+      <td>{values.filter(v => v === d.value).length}</td>
     </tr>)
   })
 

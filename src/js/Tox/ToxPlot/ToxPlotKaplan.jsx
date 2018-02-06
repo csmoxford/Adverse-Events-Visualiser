@@ -1,10 +1,9 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import {min, max} from 'd3-array'
 import { scaleLinear } from 'd3-scale'
 import Axis from '../../utils/Axis'
 import {uniq} from 'lodash'
 
-import TreatmentPolyLine from '../../utils/TreatmentPolyLine'
 import TreatmentLegendLine from '../../utils/TreatmentLegendLine'
 
 import {DayDifference} from '../../utils/formatDate'
@@ -16,8 +15,8 @@ function GetKaplanMeierData(patientData, filteredData, startColumn, censorColumn
 
   const survivalData = patientData.filter(p => !isNaN(p[startColumn]))
     .map(p => {
-      var dta = filteredData.filter(d => d.patid == p.patid)
-      if(dta.length == 0) {
+      var dta = filteredData.filter(d => d.patid === p.patid)
+      if(dta.length === 0) {
         return {time: Math.max(DayDifference(p[startColumn],p[censorColumn]),0), event: false}
       } else {
         return {time: Math.max(min(dta.map(d => d.toxStart)),0), event: true}
@@ -50,9 +49,10 @@ function KaplanMeier(data) {
       val = -1
     return val
   })
+
   var scur = 100
   for (var i = 0; i < times.length; i++) {
-    const d = data.filter(d => d.event && d.time == times[i]).length
+    const d = data.filter(d => d.event && d.time === times[i]).length
     const n = data.filter(d => d.time >= times[i]).length
     scur *= 1 - d/n
     dta.push({x: times[i], y: scur})
@@ -68,7 +68,6 @@ const ToxPlotKaplan = (props) => {
   const {data, filteredData} = props
 
   const offset={top: 30, bottom: 50, left: 50, right: 10}
-
   var size = {width: 0.8*window.screen.width, height: 0.8*window.screen.height}
 
   if(filteredData.length === 0) {
@@ -77,11 +76,10 @@ const ToxPlotKaplan = (props) => {
 
   const treatments = data.treatment.map(t => t.value)
   const color = data.treatment.map(t => t.color)
-  const patients = data.patientData.map(d => d.patid)
 
   const startColumn = data.keyDates[0]
   const censorColumn = data.keyDates[data.keyDates.length - 1]
-  const kaplanData = treatments.map(t => GetKaplanMeierData(data.patientData.filter(d => d.treatment == t), filteredData.filter(d => d.treatment == t), startColumn.column, censorColumn.column))
+  const kaplanData = treatments.map(t => GetKaplanMeierData(data.patientData.filter(d => d.treatment === t), filteredData.filter(d => d.treatment === t), startColumn.column, censorColumn.column))
 
 
   const xMin = 0

@@ -24,9 +24,9 @@ class ShowToxicityRecord extends PureComponent {
     if(thisPatientsAeData !== null) {
       rows = thisPatientsAeData.sort(function(a,b) {
          var value = 0
-         if(b.aegrade == undefined) {
+         if(b.aegrade === undefined) {
            value = -1
-         }if(a.aegrade == undefined) {
+         }if(a.aegrade === undefined) {
            value = 1
          } else if(a.aegrade < b.aegrade) {
            value = 1

@@ -7,7 +7,7 @@ function vhToPx(value) {
     d = document,
     e = d.documentElement,
     g = d.getElementsByTagName('body')[0],
-    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    // x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
   var result = (y*value)/100;
@@ -19,8 +19,8 @@ function vwToPx(value) {
     d = document,
     e = d.documentElement,
     g = d.getElementsByTagName('body')[0],
-    x = w.innerWidth || e.clientWidth || g.clientWidth,
-    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+    x = w.innerWidth || e.clientWidth || g.clientWidth
+    // y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
   var result = (x*value)/100;
   return result;

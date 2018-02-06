@@ -1,10 +1,9 @@
-import React, {Component, PureComponent } from 'react'
+import React, {PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
 import {uniq, uniqBy} from 'lodash'
 
 import Axis from '../../utils/Axis.jsx'
-import {DayDifference} from '../../utils/formatDate'
 import EventPolyline from '../../utils/EventPolyline'
 
 import AdverseEventRect from './AdverseEventRect'
@@ -46,7 +45,7 @@ class ToxPlot extends PureComponent {
 
     this.getIndex(filteredData, oneRowPerPatient)
 
-    const selectedPatid = selectedPatient == null ? undefined:  selectedPatient.patid
+    const selectedPatid = selectedPatient === null ? undefined:  selectedPatient.patid
 
     const xMin = 0
     const xMax = max(filteredData.map((d) => d.toxEnd)) + 1
@@ -69,7 +68,7 @@ class ToxPlot extends PureComponent {
         const vals = filteredData.filter(dx => dx.patid === d).map(dx => dx.index)
         const mn = min(vals)
         const mx = max(vals)
-        return {patid: d, treatment: filteredData.find(dx => dx.patid == d).treatment, min: mn, max: mx, mid: (mn+mx)/2}
+        return {patid: d, treatment: filteredData.find(dx => dx.patid === d).treatment, min: mn, max: mx, mid: (mn+mx)/2}
       })
 
 
@@ -80,11 +79,11 @@ class ToxPlot extends PureComponent {
            y={yScale(d.min - 0.5)}
            height={yScale(d.max + 0.5) - yScale(d.min - 0.5)}
            width={xScale(xMax)-xScale(xMin)}
-           fill={d.patid == selectedPatid ? "#000": data.treatment.find(t => t.value === d.treatment).color}
+           fill={d.patid === selectedPatid ? "#000": data.treatment.find(t => t.value === d.treatment).color}
            fillOpacity={0.1}
            stroke={data.treatment.find(t => t.value === d.treatment).color}
            strokeOpacity={0.2}
-           onMouseOver={(e) => this.props.showDetails(data.patientData.find(p => d.patid == p.patid),e)}
+           onMouseOver={(e) => this.props.showDetails(data.patientData.find(p => d.patid === p.patid),e)}
          />
        {names}
        </g>
@@ -95,7 +94,7 @@ class ToxPlot extends PureComponent {
      var names = null
 
      if(!oneRowPerPatient) {
-      const rowData = uniqBy(filteredData.filter(d => d.patid == selectedPatid).map(d => {return {patid: d.patid, index: d.index, aeterm: d.aeterm}}), 'index')
+      const rowData = uniqBy(filteredData.filter(d => d.patid === selectedPatid).map(d => {return {patid: d.patid, index: d.index, aeterm: d.aeterm}}), 'index')
 
       if(rowData.length > 0)
        names = <AdverseEventLabels data={rowData} xScale={xScale} yScale={yScale} xPos={xMin}/>

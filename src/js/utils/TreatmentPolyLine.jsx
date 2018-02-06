@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import {PathYAxis, PathLine} from './PolylinePaths'
+import React from 'react'
+import {PathYAxis} from './PolylinePaths'
 
 const TreatmentPolyLine = (props) => {
 

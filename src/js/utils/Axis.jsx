@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import { min, max } from 'd3-array'
 import getTicksNumeric from './getTicks'
 
 import './Axis.css'
@@ -11,6 +10,7 @@ class Axis extends PureComponent {
 
     const {side, width, yScale, xScale, lab} = this.props
 
+    var mergedTicks
     /*********************************************************************/
     if(side === "top" || side === 'bottom') {
       const yPos = this.props.yPos === null ? (side === "top" ? yScale.range()[0] : yScale.range()[1]) : this.props.yPos
@@ -22,8 +22,8 @@ class Axis extends PureComponent {
       const sign = side === 'top' ? -1: 1
       const labOffset = this.props.labOffset === null?  40: this.props.labOffset
 
-      var mergedTicks = ticks.map((d,i) => {return {tick: d, label: label[i]}})
-      mergedTicks = mergedTicks.filter((thing, index, self) =>
+      mergedTicks = ticks.map((d,i) => {return {tick: d, label: label[i]}})
+      mergedTicks.filter((thing, index, self) =>
         index === self.findIndex((t) => (
           t.tick === thing.tick && t.label === thing.label
         ))
@@ -67,8 +67,8 @@ class Axis extends PureComponent {
     const sign = side === 'left' ? -1 : 1
     const labOffset = this.props.labOffset === null?  30: this.props.labOffset
     // console.log(yMin + "," + yMax);
-    var mergedTicks = ticks.map((d,i) => {return {tick: d, label: label[i]}})
-    mergedTicks = mergedTicks.filter((thing, index, self) =>
+    mergedTicks = ticks.map((d,i) => {return {tick: d, label: label[i]}})
+    mergedTicks.filter((thing, index, self) =>
       index === self.findIndex((t) => (
         t.tick === thing.tick && t.label === thing.label
       ))

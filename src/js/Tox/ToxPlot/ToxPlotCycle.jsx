@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
-import { min, max } from 'd3-array'
-import {uniq} from 'lodash'
 import TreatmentLegendBox from '../../utils/TreatmentLegendBox'
 
 import ToxPlotCycleCreate from './ToxPlotCycleCreate'
@@ -9,7 +7,6 @@ import ToxPlotCycleCreate from './ToxPlotCycleCreate'
 function getCountsFromTimePeriods(data, patients, times) {
 
     return times.map((t,i) => {
-
       const value = 100*patients.filter(p => data.filter(d => d.patid === p.patid).filter(d => {
         const inTime = !((d.aestartdate < d[t.from] && d.aestopdate < d[t.from]) || (d.aestartdate > d[t.to])) && !isNaN(d[t.from]) // if toxicity was present in time window
         return inTime
@@ -36,11 +33,8 @@ class ToxPlotCycle extends PureComponent {
 
     const treatments = data.treatment.map(t => t.value)
     const color = data.treatment.map(t => t.color)
-    const patients = data.patientData.map(d => d.patid)
 
     const size = oneGraph ?{width: 0.8*window.innerWidth, height: 0.86*window.innerHeight} : {width: 0.8*window.innerWidth, height: Math.max(0.86*window.innerHeight/data.treatment.length, window.innerHeight*0.215)}
-
-
 
     const xMin = 0
     const xMax = data.keyDates.length - 1
@@ -58,9 +52,6 @@ class ToxPlotCycle extends PureComponent {
 
     const yMin = 0
     const yMax = 100
-    // max(countData.map(counts => max(counts.map((d) => d.y)))) + 0.5
-
-
 
     const yScale = scaleLinear()
        .domain([yMin,yMax])
@@ -69,11 +60,6 @@ class ToxPlotCycle extends PureComponent {
 
     const ticks = data.keyDates.map((c,i) => i)
     const label = data.keyDates.map(c => c.label)
-
-    const legend = <TreatmentLegendBox
-      treatment={data.treatment}
-      svgPosition={{left: size.width*0.8, top: offset.top+25}}
-      />
 
     var graphs;
     if(oneGraph) {

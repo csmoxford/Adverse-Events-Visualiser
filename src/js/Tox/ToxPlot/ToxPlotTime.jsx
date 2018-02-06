@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
-import { min, max } from 'd3-array'
-import Axis from '../../utils/Axis'
-import {uniq} from 'lodash'
+
 import ToxPlotTimeCreate from './ToxPlotTimeCreate'
 import TreatmentLegendBox from '../../utils/TreatmentLegendBox'
 
@@ -19,7 +17,7 @@ class ToxPlotTime extends PureComponent {
 
 
   render() {
-    const {data, parentID, filteredData, oneGraph, xMax} = this.props
+    const {data, filteredData, oneGraph, xMax} = this.props
 
     const offset={top: 30, bottom: 50, left: 50, right: 20}
 
@@ -28,16 +26,11 @@ class ToxPlotTime extends PureComponent {
     }
 
     const size = oneGraph ?{width: 0.8*window.innerWidth, height: 0.82*window.innerHeight} : {width: 0.8*window.innerWidth, height: Math.max(0.82*window.innerHeight/data.treatment.length, window.innerHeight*0.205)}
-
-
-
     const treatments = data.treatment.map(t => t.value)
     const color = data.treatment.map(t => t.color)
-    const patients = data.patientData.map(d => d.patid)
 
 
     const xMin = 0
-    // const xMax = max(filteredData.map((d) => d.toxEnd)) + 1
 
     const xScale = scaleLinear()
       .domain([xMin, xMax])

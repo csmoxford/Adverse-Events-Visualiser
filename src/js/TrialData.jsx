@@ -25,15 +25,15 @@ function filterData(data, filterValues) {
     const to = filterValues.to // get the end of time window from patientData
     const inTime = !((d.aestartdate < d[from] && (d.aestopdate < d[from]) || isNaN(d.aestopdate)) || (d.aestartdate > d[to])) && !isNaN(d[from]) // if toxicity was present in time window
     var aeSelected = true
-    if(filterValues.aeSelectType == 2){ // category
+    if(filterValues.aeSelectType === 2){ // category
       aeSelected = filterValues.aeCategorySelected.indexOf("All") !== -1 || filterValues.aeCategorySelected.indexOf(d.aecategory) !== -1 // if toxicity selected
-    } else if(filterValues.aeSelectType == 3){ // ae name
+    } else if(filterValues.aeSelectType === 3){ // ae name
       aeSelected = filterValues.aeSelected.indexOf("All") !== -1 || filterValues.aeSelected.indexOf(d.aeterm) !== -1 // if toxicity selected
-    } else if(filterValues.aeSelectType == 4){
+    } else if(filterValues.aeSelectType === 4){
       aeSelected = d[filterValues.keyGroupSelect]
     }
     const gradeSelected = d.aegrade >= filterValues.gradeSelected // if grade high enough
-    const causalityOk = filterValues.causalities.every((c) => d[c.column] >= c.value || (d[c.column] === undefined && c.value == 1) ) // if causality related enough
+    const causalityOk = filterValues.causalities.every((c) => d[c.column] >= c.value || (d[c.column] === undefined && c.value === 1) ) // if causality related enough
     const isSae = filterValues.isSae? d.sae: true
     const presentAtStart = filterValues.includePresentAtStart ? true: d.aestartdate >= d[from] // if toxicities present at start permitted then is true, otherwise start of toxicity must be on or after start of toxicity window
 
@@ -47,18 +47,18 @@ function locationOf(element, array, comparer, start, end) {
     if (array.length === 0)
         return -1;
 
-    start = start || 0;
-    end = end || array.length;
-    var pivot = (start + end) >> 1;  // should be faster than dividing by 2
-    var c = comparer(element, array[pivot]);
-    if (end - start <= 1) return c == -1 ? pivot - 1 : pivot;
+    start = start || 0
+    end = end || array.length
+    var pivot = (start + end) >> 1  // should be faster than dividing by 2
+    var c = comparer(element, array[pivot])
+    if (end - start <= 1) return c === -1 ? pivot - 1 : pivot
 
     switch (c) {
-        case -1: return locationOf(element, array, comparer, start, pivot);
-        case 0: return pivot;
-        case 1: return locationOf(element, array, comparer, pivot, end);
-    };
-};
+        case -1: return locationOf(element, array, comparer, start, pivot)
+        case 0: return pivot
+        case 1: return locationOf(element, array, comparer, pivot, end)
+    }
+}
 
 
 class TrialData extends Component {
@@ -140,7 +140,7 @@ class TrialData extends Component {
   showDetails(patient, event) {
     if(patient !== null) {
       this.setState({
-        entry: this.state.filteredData.filter(d => patient.patid == d.patid),
+        entry: this.state.filteredData.filter(d => patient.patid === d.patid),
         selectedPatient: patient
       })
     }
@@ -227,9 +227,6 @@ class TrialData extends Component {
         return <div className="cssGrid"><LoadData onSubmit={this.handleFileSelect}/></div>
       }
 
-     // change zero date for plots
-     var from = filterValues.from // get the start of time window from patientData
-     from = from == undefined ? data.keyDates[0].column : from
      /***************************************************************/
      const totalHeight = vhToPx(94.5)
      const size = {width: vwToPx(49), height: totalHeight}

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import {uniq} from 'lodash'
-import {sum} from 'd3-array'
 import './ToxTable.css'
 
 function bracketPercent (count = 0, total) {
@@ -18,13 +17,7 @@ class ToxTable extends PureComponent {
 */
 
   render() {
-    // size = {width, height}
-    // offset = {top,bottom,left,right}
-    // data = [{x,y,xm, grade},...]
-    // xticks = yticks = [...]
-    const {size, xticks, yticks, data, filteredData, selectedPatient, offset, oneRowPerPatient} = this.props
-
-    const adverseNames = uniq(filteredData.map((d,i) => d.aeterm))
+    const {data, filteredData} = this.props
 
     if(filteredData.length === 0) {
       return <div><br/>No data was sent. Table could not be plotted.</div>

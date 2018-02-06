@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import TreatmentPlot from './TreatmentPlot'
-import {max } from 'd3-array'
 import {uniqBy} from 'lodash'
 var $ = require('jquery')
 

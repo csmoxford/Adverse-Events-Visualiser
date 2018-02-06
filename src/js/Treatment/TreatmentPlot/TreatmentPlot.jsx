@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react'
 import {scaleLinear} from 'd3-scale'
-import {max} from 'd3-array'
 import {uniqBy} from 'lodash'
 
 import {SingleDateSet, DoubleDateSet} from './TreatmentDateSet'
@@ -16,7 +15,7 @@ class TreatmentPlot extends PureComponent {
 
     const {size, offset, data, treatmentSpecification, selectedPatient} = this.props
 
-    const selectedPatid = selectedPatient != undefined ? selectedPatient.patid: undefined
+    const selectedPatid = selectedPatient !== undefined ? selectedPatient.patid: undefined
 
     const nTreatments = uniqBy(treatmentSpecification, t => t.index).length
 
@@ -49,7 +48,7 @@ class TreatmentPlot extends PureComponent {
 
 
 
-        var readyData = data[t.datasetName].filter(d => d.patid == p.patid)
+        var readyData = data[t.datasetName].filter(d => d.patid === p.patid)
 
         if(readyData.length > 0) {
           readyData = readyData.map(d => {
@@ -63,7 +62,7 @@ class TreatmentPlot extends PureComponent {
           containsData = true
 
           var rect = null
-          if(t.type == "Single") {
+          if(t.type === "Single") {
             rect = <SingleDateSet
               key={i + "," + j}
               treatmentMetadata={t}
@@ -71,7 +70,7 @@ class TreatmentPlot extends PureComponent {
               xScale={xScale}
               yScale={yScale}
               yPosition={t.index + j * nTreatments}/>
-          } else if(t.type == "Double") {
+          } else if(t.type === "Double") {
             rect = <DoubleDateSet
               key={i + "," + j}
               treatmentMetadata={t}
@@ -109,7 +108,7 @@ class TreatmentPlot extends PureComponent {
         y={yScale(i*nTreatments - 0.5)}
         height={yScale(nTreatments) - yScale(0)}
         width={xScale(xMax)-xScale(xMin)}
-        fill={d.patid == selectedPatid ? "#000": color}
+        fill={d.patid === selectedPatid ? "#000": color}
         fillOpacity={0.1}
         stroke={color}
         strokeOpacity={0.2}

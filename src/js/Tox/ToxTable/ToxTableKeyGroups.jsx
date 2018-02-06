@@ -1,5 +1,5 @@
 import React from 'react'
-import {uniq, uniqBy} from 'lodash'
+import {uniq} from 'lodash'
 import {sum} from 'd3-array'
 import './ToxTable.css'
 
@@ -46,7 +46,6 @@ const ToxTableKeyGroups = (props) => {
     const trtData = data.treatment.map((t,j) => {
       const count1 = uniq(filteredData.filter(d => d[a.column] && d.treatment === t.value).map(d => d.patid)).length
       const count3 = uniq(filteredData.filter(d => d[a.column] && d.treatment === t.value && d.aegrade > 2).map(d => d.patid)).length
-      const style = {backgroundColor: t.color + '40'}
       return {count1: count1, count3: count3}
     })
     const total = {count1: sum(trtData.map(d => d.count1)), count3: sum(trtData.map(d => d.count3))}

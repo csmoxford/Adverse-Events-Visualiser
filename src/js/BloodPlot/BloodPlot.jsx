@@ -1,7 +1,6 @@
 import React, {PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
-import {uniq, uniqBy} from 'lodash'
 
 import CircleSet from '../utils/CircleSet'
 import Axis from '../utils/Axis'

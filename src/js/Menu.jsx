@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
-import {MenuItem} from 'react-bootstrap'
 import './Menu.css'
 
 const NavLink = (props) => {
@@ -78,7 +77,7 @@ class Menu extends Component {
     return <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-header">
-              <Link className="navbar-brand" to="/" onClick={this.removeActive}>Toxicity</Link>
+              <Link className="navbar-brand" to="" onClick={this.removeActive}>Toxicity</Link>
             </div>
             <div className="collapse navbar-collapse">
               <ul className="nav navbar-nav">

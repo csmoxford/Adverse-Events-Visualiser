@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './AdverseEventRow.css'
 import {formatDate} from '../../utils/formatDate'
 import {defaultToxColors} from '../../utils/Constants'

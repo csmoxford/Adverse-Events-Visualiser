@@ -4,7 +4,7 @@ import TreatmentPolyLine from '../../utils/TreatmentPolyLine'
 
 const ToxPlotTimeCreate = (props) => {
 
-  const {countData, color, xScale, yScale, offset, size, legend} = props
+  const {countData, color, xScale, yScale, size, legend} = props
 
   var plines
   if(Array.isArray(color)) {

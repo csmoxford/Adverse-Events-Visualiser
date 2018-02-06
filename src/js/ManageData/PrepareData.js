@@ -5,21 +5,23 @@ import {defaultToxColors} from '../utils/Constants'
 // Takes the data and performs some standard merging and date formatting
 function prepareData(data) {
 
+  var i,j
+
   var toxData = data.toxData;
   var patientData = data.patientData;
 
   var initDate = data.keyDates[0].column
 
-  for (var i = 0; i < patientData.length; i++) {
-    for (var j = 0; j < data.keyDates.length; j++) {
+  for (i = 0; i < patientData.length; i++) {
+    for (j = 0; j < data.keyDates.length; j++) {
       patientData[i][data.keyDates[j].column] = new Date(patientData[i][data.keyDates[j].column])
     }
   }
 
   // count and discard patients with no treatment assigned.
   var numberWithoutTreatment = 0
-  for (var i = patientData.length-1; i >= 0; i--) {
-    if(patientData[i].treatment == undefined) {
+  for (i = patientData.length-1; i >= 0; i--) {
+    if(patientData[i].treatment === undefined) {
       patientData.splice(i,1)
       numberWithoutTreatment++
     }
@@ -31,8 +33,8 @@ function prepareData(data) {
   // count and discard patients with no keyDate[0] which will typically be registration or randomisation dateOfMeasure
   var numberWithoutKeyDate = 0
   const keyDate = data.keyDates[0]
-  for (var i = patientData.length-1; i >= 0; i--) {
-    if(patientData[i][keyDate.column] == "Invalid Date") {
+  for (i = patientData.length-1; i >= 0; i--) {
+    if(patientData[i][keyDate.column] === "Invalid Date") {
       patientData.splice(i,1)
       numberWithoutKeyDate++
     }
@@ -55,9 +57,9 @@ function prepareData(data) {
     return order
   })
 
-  for (var i = 0; i < toxData.length; i++) {
+  for (i = 0; i < toxData.length; i++) {
     const patient = patientData.find(d => d.patid === toxData[i].patid)
-    if(patient != undefined) {
+    if(patient !== undefined) {
       toxData[i].aestartdate = new Date(toxData[i].aestartdate)
       toxData[i].aestopdate = new Date(toxData[i].aestopdate)
 
@@ -91,11 +93,11 @@ function prepareData(data) {
   if(data.measureData !== undefined) {
     var measureData = data.measureData
 
-    for (var i = 0; i < measureData.length; i++) {
+    for (i = 0; i < measureData.length; i++) {
       measureData[i].dateOfMeasure = new Date(measureData[i].dateOfMeasure)
 
       const patient = patientData.find(d => d.patid === measureData[i].patid)
-      if(patient != undefined) {
+      if(patient !== undefined) {
         Object.assign(measureData[i], patient)
 
         measureData[i].relativeTime = DayDifference(patient[initDate], measureData[i].dateOfMeasure) // miliseconds in a day
@@ -109,16 +111,16 @@ function prepareData(data) {
     for(var k=0; k < datasets.length; k++) {
       var dataset = data[datasets[k].datasetName]
 
-      for (var i = 0; i < dataset.length; i++) {
+      for (i = 0; i < dataset.length; i++) {
         const patient = patientData.find(d => d.patid === dataset[i].patid)
-        if(patient != undefined) {
+        if(patient !== undefined) {
           Object.assign(dataset[i], patient)
         }
       }
     }
   }
 
-  if(data.toxColors == undefined) {
+  if(data.toxColors === undefined) {
     data.toxColors = defaultToxColors
   }
 

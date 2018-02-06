@@ -2,7 +2,7 @@ import React, {Component } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
 import Axis from './utils/Axis'
-import {uniq, uniqBy} from 'lodash'
+import {uniqBy} from 'lodash'
 
 import 'bootstrap-select'
 import "bootstrap-select/dist/css/bootstrap-select.css"
@@ -11,7 +11,6 @@ import './Tox/ToxFilters.css'
 import BloodPlot from './BloodPlot/BloodPlot'
 
 import PatientSelect from './utils/PatientSelect'
-import EventPolyline from './utils/EventPolyline'
 
 import AdverseEventRect from './Tox/ToxPlot/AdverseEventRect'
 import AdverseEventLabels from './Tox/ToxPlot/AdverseEventLabels'
@@ -51,7 +50,7 @@ class PatientSummary extends Component {
     super(props)
     this.state = {
       patid: this.props.data.patientData[0].patid,
-      measureColumns: this.props.data.measureColumns == undefined? undefined: this.props.data.measureColumns[0],
+      measureColumns: this.props.data.measureColumns === undefined? undefined: this.props.data.measureColumns[0],
       rightColumnInfo: 'legend'
     }
     this.updatePatient = this.updatePatient.bind(this)
@@ -75,7 +74,7 @@ class PatientSummary extends Component {
   }
 
   updateBloodValue() {
-    const measureColumns = this.props.data.measureColumns.find(d => d.column == $('#measureColumns').val())
+    const measureColumns = this.props.data.measureColumns.find(d => d.column === $('#measureColumns').val())
     this.setState({measureColumns: measureColumns})
 
   }
@@ -87,7 +86,7 @@ class PatientSummary extends Component {
 
   render() {
 
-    const {data, filteredData, filterValues, totalHeight} = this.props
+    const {data, filteredData, totalHeight} = this.props
     const size = {width: 0.47*window.innerWidth, height: 350}
     const offset = {left: 50, right:50, top: 10, bottom: 50}
 
@@ -107,20 +106,16 @@ class PatientSummary extends Component {
     // if a patient has been selected
     if(this.state.patid !== undefined) {
 
-      var patient = data.patientData.find(p => p.patid === this.state.patid)
+      patient = data.patientData.find(p => p.patid === this.state.patid)
       var subData = filteredData.filter(d => d.patid === this.state.patid)
       getIndex(subData)
 
-
       var xMin = 0
       var xMax = 1
-      if(subData.length > 0) {
-        max(subData.map((d) => d.toxEnd)) + 1
-      }
 
       var subMeasureData = []
-      if(data.measureData != undefined){
-        var subMeasureData = data.measureData.filter(d => d.patid == this.state.patid)
+      if(data.measureData !== undefined){
+        subMeasureData = data.measureData.filter(d => d.patid === this.state.patid)
         if(subMeasureData.length > 0) {
           xMin = Math.min(xMin, min(subMeasureData.map((d) => d.relativeTime)) + 1)
           xMax = Math.max(xMax, max(subMeasureData.map((d) => d.relativeTime)) + 1)
@@ -142,10 +137,10 @@ class PatientSummary extends Component {
 
       const rowData = uniqBy(subData.map(d => {return {patid: d.patid, index: d.index, aeterm: d.aeterm}}), 'index')
 
-      if(subMeasureData.filter(d => d[this.state.measureColumns.column] != undefined).length > 0) {
+      if(subMeasureData.filter(d => d[this.state.measureColumns.column] !== undefined).length > 0) {
         bloodPlot = <BloodPlot
           size={size}
-          data={subMeasureData.filter(d => d[this.state.measureColumns.column] != undefined).map((d,i) => {return {x: d.relativeTime, y: d[this.state.measureColumns.column]}})}
+          data={subMeasureData.filter(d => d[this.state.measureColumns.column] !== undefined).map((d,i) => {return {x: d.relativeTime, y: d[this.state.measureColumns.column]}})}
           xScale={xScale}
           measure={this.state.measureColumns}
           />
@@ -176,7 +171,7 @@ class PatientSummary extends Component {
       }
 
       // if treatment was specified in the data then add it.
-      if(data.treatmentSpecification != undefined) {
+      if(data.treatmentSpecification !== undefined) {
         treatmentPlot = <TreatmentPlotOnePatient
           size={size}
           data={data}
@@ -188,7 +183,7 @@ class PatientSummary extends Component {
 
     var rightColumn
 
-    if(this.state.rightColumnInfo == 'legend') {
+    if(this.state.rightColumnInfo === 'legend') {
       rightColumn = <div>
           <div>
             <ToxPlotKey key={0} width={300} data={data}/>
@@ -197,14 +192,14 @@ class PatientSummary extends Component {
             <TreatmentPlotKey data={data}/>
           </div>
         </div>
-    } else if(this.state.rightColumnInfo == 'ae') {
+    } else if(this.state.rightColumnInfo === 'ae') {
       rightColumn = patient !== undefined ? <ShowToxicityRecord
         data={data}
         totalHeight={totalHeight - 90}
         selectedPatient={patient}
         thisPatientsAeData={subData}
         /> : null
-    } else if(this.state.rightColumnInfo == 'treatment') {
+    } else if(this.state.rightColumnInfo === 'treatment') {
       rightColumn = patient !== undefined ? <ShowTreatmentSummary
         data={data}
         totalHeight={totalHeight - 90}

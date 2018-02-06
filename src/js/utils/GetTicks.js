@@ -8,7 +8,7 @@ function getTicksNumeric(scale,  targetNumber = 5) {
   var pow10 = 10**Math.floor(Math.log10(range, 10))
   var v = range / pow10
 
-  var scale = [0.5,1,2,2.5,4,5].reduce((prev, curr) => Math.abs(curr*v - targetNumber) < Math.abs(prev*v - targetNumber) ? curr : prev);
+  scale = [0.5,1,2,2.5,4,5].reduce((prev, curr) => Math.abs(curr*v - targetNumber) < Math.abs(prev*v - targetNumber) ? curr : prev);
   domain[0] = Math.ceil(domain[0] / pow10 * scale)*pow10 / scale
   domain[1] = Math.floor(domain[1] / pow10 * scale)*pow10 / scale
   range = domain[1] - domain[0]

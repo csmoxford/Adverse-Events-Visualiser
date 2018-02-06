@@ -5,7 +5,7 @@ import {defaultToxColors} from '../../utils/Constants'
 class AdverseEventRect extends Component {
 
   shouldComponentUpdate(prevProps) {
-    return prevProps.filteredData != this.props.filteredData
+    return prevProps.filteredData !== this.props.filteredData
   }
 
   render() {

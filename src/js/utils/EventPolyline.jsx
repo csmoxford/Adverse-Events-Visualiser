@@ -1,18 +1,18 @@
-import React, {Component } from 'react'
+import React, {Component} from 'react'
 import {DayDifference} from './formatDate'
 
 // prevent update caused by xScale and mouseover event
 class EventPolyline extends Component {
 
   shouldComponentUpdate(prevProps) {
-    return prevProps.filteredData != this.props.filteredData
+    return prevProps.filteredData !== this.props.filteredData
   }
 
   render() {
-    const {data, filteredData, event, uniquePositions, filter, xScale, yScale} = this.props
+    const {data, event, uniquePositions, filter, xScale, yScale} = this.props
 
     const eventPolyline = uniquePositions.map((d,j) => {
-      const patient = data.patientData.find(p => p.patid == d.patid)
+      const patient = data.patientData.find(p => p.patid === d.patid)
       const x = DayDifference(patient[filter.from], patient[event.column])
       if(!isNaN(x)){
         return <polyline

@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 class CircleSet extends Component {
 
   shouldComponentUpdate(prevProps) {
-    return this.props.data != prevProps.data
+    return this.props.data !== prevProps.data
   }
 
   render() {

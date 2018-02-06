@@ -16,7 +16,7 @@ class Treatment extends Component {
 
     const {data, totalHeight, showDetails, selectedPatient} = this.props
 
-    if(data.treatmentSpecification == undefined) {
+    if(data.treatmentSpecification === undefined) {
       return <div className="item-middle">
         <div style={{height: '30px'}}></div>
         <p>No detailed treatment data has been uploaded.</p>

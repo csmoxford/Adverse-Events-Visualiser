@@ -3,9 +3,7 @@ import 'bootstrap-select'
 import "bootstrap-select/dist/css/bootstrap-select.css"
 import './ToxFilters.css'
 import './ToxAddData.css'
-import {uniq} from 'lodash'
 import {DayDifference} from '../utils/formatDate'
-import {matchHeight} from 'jquery-match-height'
 
 import PatientSelect from '../utils/PatientSelect'
 var $ = require('jquery')
@@ -43,7 +41,7 @@ class ToxAddData extends Component {
       return
     }
 
-    if(row.aeterm == "") {
+    if(row.aeterm === "") {
       this.setState({message: "Data not added: Adverse Event cannot be missing"})
       return
     }
@@ -63,10 +61,10 @@ class ToxAddData extends Component {
     row.aegrade = $('#aegrade').val()
     row.sae = $('#sae').is(':checked')
 
-
+    var i
     // causality
     if(data.causality !== undefined) {
-      for (var i = 0; i < data.causality.length; i++) {
+      for (i = 0; i < data.causality.length; i++) {
         const c = data.causality[i]
         row[c.column] = $("#c_" + c.column).val()
       }
@@ -74,13 +72,11 @@ class ToxAddData extends Component {
 
     // key groups
     if(data.keyGroups !== undefined) {
-      for (var i = 0; i < data.keyGroups.length; i++) {
+      for (i = 0; i < data.keyGroups.length; i++) {
         const c = data.keyGroups[i]
         row[c.column] = $("#kg_" + c.column).is(':checked')
       }
     }
-
-    console.log(row);
 
     this.setState({message: "Data added."})
     this.props.addAdverseEvent(row)
@@ -89,7 +85,7 @@ class ToxAddData extends Component {
 
   render() {
 
-    const {data, addAdverseEvent} = this.props
+    const {data} = this.props
 
     var causality
     if(data.causality !== undefined) {
