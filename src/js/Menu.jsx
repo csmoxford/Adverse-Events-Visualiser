@@ -59,7 +59,7 @@ class Menu extends Component {
       if(l.dropDown){
         const subLinks = l.subLinks.map((s,j) => {
           if(s.separator) {
-            return <li key={j} role="separator" class="divider"></li>
+            return <li key={j} role="separator" className="divider"></li>
           } else {
             return <NavLink key={j} {...s} updateActive={this.updateActive}/>
           }

@@ -1,5 +1,6 @@
 import {uniqBy} from 'lodash'
 import {DayDifference} from '../utils/formatDate'
+import {defaultToxColors} from '../utils/Constants'
 
 // Takes the data and performs some standard merging and date formatting
 function prepareData(data) {
