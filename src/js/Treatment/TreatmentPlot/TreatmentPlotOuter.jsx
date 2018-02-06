@@ -1,10 +1,10 @@
 import React, {Component}  from 'react'
-import TreatmentPlotUI from './TreatmentPlot/TreatmentPlotUI'
-import TreatmentPlotKey from './TreatmentPlot/TreatmentPlotKey'
-import ShowTreatmentSummary from './ShowPatient/ShowTreatmentSummary'
+import TreatmentPlotUI from './TreatmentPlotUI'
+import TreatmentPlotKey from './TreatmentPlotKey'
+import ShowTreatmentSummary from '../ShowPatient/ShowTreatmentSummary'
 
 
-class Treatment extends Component {
+class TreatmentPlotOuter extends Component {
 
 
   render() {
@@ -34,4 +34,4 @@ class Treatment extends Component {
 
 }
 
-export default Treatment
+export default TreatmentPlotOuter

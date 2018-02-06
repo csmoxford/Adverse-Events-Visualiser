@@ -1,8 +1,8 @@
 import React from 'react'
 import { scaleLinear } from 'd3-scale'
-import TreatmentLegendBox from '../utils/TreatmentLegendBox'
+import TreatmentLegendBox from '../../utils/TreatmentLegendBox'
 import {uniqBy} from 'lodash'
-import {defaultToxColors} from '../utils/Constants'
+import {defaultToxColors} from '../../utils/Constants'
 
 const AdverseEventLegend = (props) => {
   const {svgPosition} = props

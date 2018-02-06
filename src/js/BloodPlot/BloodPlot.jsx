@@ -1,10 +1,10 @@
 import React, {PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
-import Axis from './utils/Axis'
 import {uniq, uniqBy} from 'lodash'
 
-import CircleSet from './utils/CircleSet'
+import CircleSet from '../utils/CircleSet'
+import Axis from '../utils/Axis'
 
 
 class BloodPlot extends PureComponent {
@@ -24,23 +24,31 @@ class BloodPlot extends PureComponent {
        .range([size.height-offset.bottom, offset.top])
 
 
-    const minLine = measure.min == undefined? null: <polyline
-       points={`${xScale.range()[0]},${yScale(measure.min)} ${xScale.range()[1]},${yScale(measure.min)}`}
-       stroke={'#FF0000'}
-       strokeWidth={2}
-       />
+    var normRange
+    if(measure.min !== undefined && measure.max !== undefined) {
 
-     const maxLine = measure.max == undefined? null: <polyline
-        points={`${xScale.range()[0]},${yScale(measure.max)} ${xScale.range()[1]},${yScale(measure.max)}`}
-        stroke={'#FF0000'}
-        strokeWidth={2}
+      const minVar = measure.min > yScale.domain()[1] ? yScale.domain()[1] : Math.max(measure.min, yScale.domain()[0])
+      const maxVar = measure.max < yScale.domain()[0] ? yScale.domain()[0] : Math.min(measure.max, yScale.domain()[1])
+
+      normRange = <polyline
+         points={`${xScale.range()[0]},${yScale(minVar)} ${xScale.range()[1]},${yScale(minVar)} ${xScale.range()[1]},${yScale(maxVar)} ${xScale.range()[0]},${yScale(maxVar)}`}
+         fill="#00FF0040"
         />
+    } else if(measure.max !== undefined) {
+
+      const maxVar = measure.max < yScale.domain()[0] ? yScale.domain()[0] : Math.min(measure.max, yScale.domain()[1])
+
+      normRange = <polyline
+         points={`${xScale.range()[0]},${yScale.range()[0]} ${xScale.range()[1]},${yScale.range()[0]} ${xScale.range()[1]},${yScale(maxVar)} ${xScale.range()[0]},${yScale(maxVar)}`}
+         fill="#00FF0040"
+        />
+    }
+
 
 
     return <svg ref={node => this.node = node}
       width={size.width} height={size.height}>
-      {minLine}
-      {maxLine}
+      {normRange}
       <CircleSet
         data={data}
         xScale={xScale}

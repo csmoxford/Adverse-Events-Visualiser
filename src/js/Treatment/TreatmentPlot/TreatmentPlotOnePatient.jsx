@@ -1,17 +1,16 @@
 import React, {PureComponent} from 'react'
 import {scaleLinear} from 'd3-scale'
 import {max} from 'd3-array'
-
-import {SingleDateSet, DoubleDateSet} from './TreatmentDateSet'
-import {DayDifference} from '../utils/formatDate'
-
 import {uniqBy} from 'lodash'
 
-import Axis from '../utils/Axis'
+import {SingleDateSet, DoubleDateSet} from './TreatmentDateSet'
+
+import Axis from '../../utils/Axis'
+import {DayDifference} from '../../utils/formatDate'
+
+
 
 class TreatmentPlotOnePatient extends PureComponent {
-
-
 
   render() {
 

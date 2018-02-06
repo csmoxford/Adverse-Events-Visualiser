@@ -2,10 +2,12 @@ import React, {PureComponent} from 'react'
 import {scaleLinear} from 'd3-scale'
 import {max} from 'd3-array'
 import {uniqBy} from 'lodash'
+
 import {TreatmentKeySingle, TreatmentKeyDouble} from './TreatmentKey'
 
-class TreatmentPlotKey extends PureComponent {
 
+
+class TreatmentPlotKey extends PureComponent {
 
   render() {
 

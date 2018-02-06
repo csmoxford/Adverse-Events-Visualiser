@@ -1,4 +1,4 @@
-import React, {PureComponent } from 'react'
+import React, {Component } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
 import Axis from './utils/Axis'
@@ -6,23 +6,23 @@ import {uniq, uniqBy} from 'lodash'
 
 import 'bootstrap-select'
 import "bootstrap-select/dist/css/bootstrap-select.css"
-import './ToxFilters.css'
+import './Tox/ToxFilters.css'
 
-import BloodPlot from './BloodPlot'
+import BloodPlot from './BloodPlot/BloodPlot'
 
 import PatientSelect from './utils/PatientSelect'
 import EventPolyline from './utils/EventPolyline'
 
-import AdverseEventRect from './ToxPlot/AdverseEventRect'
-import AdverseEventLabels from './ToxPlot/AdverseEventLabels'
+import AdverseEventRect from './Tox/ToxPlot/AdverseEventRect'
+import AdverseEventLabels from './Tox/ToxPlot/AdverseEventLabels'
 
-import ShowToxicityRecord from './ShowPatient/ShowToxicityRecord'
-import ShowTreatmentSummary from './ShowPatient/ShowTreatmentSummary'
+import ShowToxicityRecord from './Tox/ShowPatient/ShowToxicityRecord'
+import ShowTreatmentSummary from './Treatment/ShowPatient/ShowTreatmentSummary'
 
-import TreatmentPlotOnePatient from './TreatmentPlot/TreatmentPlotOnePatient'
+import TreatmentPlotOnePatient from './Treatment/TreatmentPlot/TreatmentPlotOnePatient'
 
-import ToxPlotKey from './ToxPlot/ToxPlotKey'
-import TreatmentPlotKey from './TreatmentPlot/TreatmentPlotKey'
+import ToxPlotKey from './Tox/ToxPlot/ToxPlotKey'
+import TreatmentPlotKey from './Treatment/TreatmentPlot/TreatmentPlotKey'
 
 var $ = require('jquery')
 
@@ -44,7 +44,7 @@ function getIndex(data, oneRowPerPatient = false) {
   }
 }
 
-class PatientView extends PureComponent {
+class PatientSummary extends Component {
 
 
   constructor(props) {
@@ -245,4 +245,4 @@ class PatientView extends PureComponent {
 
 }
 
-export default PatientView
+export default PatientSummary

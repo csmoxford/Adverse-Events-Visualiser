@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import {formatDate} from '../utils/formatDate'
-import "./ShowToxicityRecord.css"
 import {uniqBy} from 'lodash'
 
+import {formatDate} from '../../utils/formatDate'
+
+
 class ShowTreatmentSummary extends Component {
-
-
   /*
      constructor(props){
         super(props)
@@ -39,12 +38,7 @@ class ShowTreatmentSummary extends Component {
         return val
       })
 
-      console.log(t);
-
       const values = data[t.datasetName].filter(p => p.patid == selectedPatient.patid).map(p => doseColors.find(dc =>  p[t.column] >= dc.value).value)
-
-
-      console.log(values);
 
       return t.doseColors.map((d,j) => <tr key={`${i},${j}`}>
         {j == 0 ? <td rowSpan={t.doseColors.length}>{t.label}</td>: null}

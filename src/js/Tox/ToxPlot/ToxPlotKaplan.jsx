@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react'
 import {min, max} from 'd3-array'
 import { scaleLinear } from 'd3-scale'
-import Axis from '../utils/Axis'
+import Axis from '../../utils/Axis'
 import {uniq} from 'lodash'
 
-import TreatmentPolyLine from '../utils/TreatmentPolyLine'
-import TreatmentLegendLine from '../utils/TreatmentLegendLine'
+import TreatmentPolyLine from '../../utils/TreatmentPolyLine'
+import TreatmentLegendLine from '../../utils/TreatmentLegendLine'
 
-import {DayDifference} from '../utils/formatDate'
-import {PathKaplanMeier} from '../utils/PolylinePaths'
+import {DayDifference} from '../../utils/formatDate'
+import {PathKaplanMeier} from '../../utils/PolylinePaths'
 
 
 // creates the survival times and event values from the datasets

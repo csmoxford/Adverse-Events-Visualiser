@@ -1,9 +1,9 @@
 import React from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
-import Axis from '../utils/Axis'
 
-import BarPlotSet from '../utils/BarPlotSet'
+import Axis from '../../utils/Axis'
+import BarPlotSet from '../../utils/BarPlotSet'
 
 const ToxPlotCycleCreate = (props) => {
   const {countData, color, xScale, yScale, offset, size, ticks, label, legend} = props

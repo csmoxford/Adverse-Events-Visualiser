@@ -4,8 +4,6 @@ import {Switch, Route} from 'react-router-dom'
 import ToxPlotUI from './ToxPlot/ToxPlotUI'
 import ToxPlotTimeUI from './ToxPlot/ToxPlotTimeUI'
 
-import PatientView from './PatientView'
-
 import ToxTableUI from './ToxTable/ToxTableUI'
 import ToxTableSummary from './ToxTable/ToxTableSummary'
 
@@ -27,7 +25,7 @@ class AdverseEvents extends Component {
       <Route path='/trialData/ae/summary_table' render={() => <div className="item-main"><div style={{height:30}}></div><ToxTableSummary data={data} filteredData={filteredData}/></div>}/>
       <Route path='/trialData/ae/cycle_plot' render={() => <div className="item-main"><ToxPlotCycleUI data={data} filteredData={filteredData}/></div>}/>
       <Route path="/trialData/ae/survival" render={() => <ToxPlotKaplan data={data} filteredData={filteredData} />}/>
-      <Route path="/trialData/ae/PatientView" render={() => <PatientView data={data} totalHeight={size.height} filteredData={filteredData} filterValues={filterValues} />}/>
+      <Route path="/trialData/ae/addae" render={() => <ToxAddData data={data} filterValues={filterValues} addAdverseEvent={this.props.addAdverseEvent}/>}/>
       <Route path='/trialData/ae/pt' render={() => <ToxPlotUI
                 totalHeight={size.height}
                 data={data}
@@ -50,7 +48,7 @@ class AdverseEvents extends Component {
                 selectedPatient={selectedPatient}
                 selectedPatientAEs={selectedPatientAEs}
                 oneRowPerPatient={false} />}/>
-        <Route path="/trialData/ae/addae" render={() => <ToxAddData data={data} filterValues={filterValues} addAdverseEvent={this.addAdverseEvent}/>}/>
+
       </Switch>
 
   }

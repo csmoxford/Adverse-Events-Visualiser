@@ -1,12 +1,13 @@
 import React, {Component, PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
-import Axis from '../utils/Axis.jsx'
 import {uniq, uniqBy} from 'lodash'
-import {DayDifference} from '../utils/formatDate'
+
+import Axis from '../../utils/Axis.jsx'
+import {DayDifference} from '../../utils/formatDate'
+import EventPolyline from '../../utils/EventPolyline'
 
 import AdverseEventRect from './AdverseEventRect'
-import EventPolyline from '../utils/EventPolyline'
 import AdverseEventLabels from './AdverseEventLabels'
 
 

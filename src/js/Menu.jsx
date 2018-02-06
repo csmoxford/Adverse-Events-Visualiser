@@ -15,7 +15,7 @@ class Menu extends Component {
        links:
        [
          {to: '/trialData/load', label: 'Load', id: 'load', dropDown: false, active: false},
-         {to: '/trialData/ae/PatientView', label: 'Patient Summary', id: 'patient', dropDown: false, active: false},
+         {to: '/trialData/patientSummary', label: 'Patient Summary', id: 'patient', dropDown: false, active: false},
          {label: "Adverse Events", id: 'event', dropDown: true, active: false, subLinks: [
            {to: '/trialData/ae/', label: 'Adverse Events', id: 'event', dropDown: false},
            {to: '/trialData/ae/pt', label: 'Patient Worst Grade', id: 'event', dropDown: false},

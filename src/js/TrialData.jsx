@@ -4,12 +4,12 @@ import {Switch, Route} from 'react-router-dom'
 import LoadData from './LoadData'
 import prepareData from './prepareData'
 
-import AdverseEvents from './AdverseEvents'
-import Treatment from './Treatment'
+import AdverseEvents from './Tox/AdverseEvents'
+import Treatment from './Treatment/Treatment'
 
+import PatientSummary from './PatientSummary'
 
-
-import ToxFilters from './ToxFilters'
+import ToxFilters from './Tox/ToxFilters'
 
 import {vhToPx, vwToPx} from './utils/vhTOpx'
 import {DayDifference} from './utils/formatDate'
@@ -234,15 +234,13 @@ class TrialData extends Component {
 
      return (
          <div className="cssGrid">
-           <Route path="/trialData/ae" render={() => <ToxFilters
-            className="item-left"
-            data={data}
-            updateFilterStateValues={this.updateFilterStateValues}
-            />}/>
+           <Route path="/trialData/ae" render={() => <ToxFilters className="item-left" data={data} updateFilterStateValues={this.updateFilterStateValues}/>}/>
+           <Route path="/trialData/patientSummary" render={() => <ToxFilters className="item-left" data={data} updateFilterStateValues={this.updateFilterStateValues}/>}/>
              <Switch>
                <Route path="/trialData/load" render={() => <LoadData onSubmit={this.handleFileSelect}/>}/>
                <Route path="/trialData/treatment" render={() => <Treatment data={data} totalHeight={totalHeight} showDetails={this.showDetails} selectedPatient={this.state.selectedPatient} />} />
-               <Route path="/trialData/ae" render={() => <AdverseEvents data={data} filteredData={filteredData} filterValues={filterValues} showDetails={this.showDetails} selectedPatient={this.state.selectedPatient} selectedPatientAEs={this.state.entry} size={size}/>}/>
+               <Route path="/trialData/ae" render={() => <AdverseEvents data={data} filteredData={filteredData} filterValues={filterValues} showDetails={this.showDetails} selectedPatient={this.state.selectedPatient} selectedPatientAEs={this.state.entry} size={size} addAdverseEvent={this.addAdverseEvent}/>}/>
+               <Route path="/trialData/patientSummary" render={() => <PatientSummary data={data} totalHeight={totalHeight} filteredData={filteredData} filterValues={filterValues} />}/>
            </Switch>
         </div>
      )

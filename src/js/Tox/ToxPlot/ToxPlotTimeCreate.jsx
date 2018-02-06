@@ -1,6 +1,6 @@
 import React from 'react'
-import Axis from '../utils/Axis'
-import TreatmentPolyLine from '../utils/TreatmentPolyLine'
+import Axis from '../../utils/Axis'
+import TreatmentPolyLine from '../../utils/TreatmentPolyLine'
 
 const ToxPlotTimeCreate = (props) => {
 

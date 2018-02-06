@@ -4,10 +4,10 @@ import "bootstrap-select/dist/css/bootstrap-select.css"
 import './ToxFilters.css'
 import './ToxAddData.css'
 import {uniq} from 'lodash'
-import {DayDifference} from './utils/formatDate'
+import {DayDifference} from '../utils/formatDate'
 import {matchHeight} from 'jquery-match-height'
 
-import PatientSelect from './utils/PatientSelect'
+import PatientSelect from '../utils/PatientSelect'
 var $ = require('jquery')
 
 
@@ -126,7 +126,8 @@ class ToxAddData extends Component {
           <div className="redbox">
             <h4><b>Required information</b></h4>
             <PatientSelect className="add-patient"
-              data={data.patientData}/>
+              patients={data.patientData}
+              treatment={data.treatment}/>
             <div className="add-patient">
               <label htmlFor="aecategory">Category</label><br/>
               <input id="aecategory" className="form-control"/>

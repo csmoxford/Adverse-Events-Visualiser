@@ -1,5 +1,5 @@
 import React, {Component } from 'react'
-import {defaultToxColors} from '../utils/Constants'
+import {defaultToxColors} from '../../utils/Constants'
 
 // prevent update caused by xScale and mouseover event
 class AdverseEventRect extends Component {

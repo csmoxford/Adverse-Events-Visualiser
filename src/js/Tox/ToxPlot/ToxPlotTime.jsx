@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
-import Axis from '../utils/Axis'
+import Axis from '../../utils/Axis'
 import {uniq} from 'lodash'
 import ToxPlotTimeCreate from './ToxPlotTimeCreate'
-import TreatmentLegendBox from '../utils/TreatmentLegendBox'
+import TreatmentLegendBox from '../../utils/TreatmentLegendBox'
 
 function getCounts(data, patients, times) {
     return times.map((t) => {
