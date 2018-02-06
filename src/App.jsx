@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import {HashRouter, Route, Switch, Link} from 'react-router-dom'
+
 import './App.css';
 import Menu from './js/Menu'
 import Home from './js/Home'
 import TrialData from './js/TrialData'
 import Error404 from './js/Error404'
-import {HashRouter, Route, Switch, Link} from 'react-router-dom'
+
 
 class App extends Component {
   render() {

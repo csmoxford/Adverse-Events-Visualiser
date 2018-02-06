@@ -1,18 +1,20 @@
 import React, {Component}  from 'react'
 import {Switch, Route} from 'react-router-dom'
 
-import LoadData from './LoadData'
-import prepareData from './prepareData'
+import LoadData from './ManageData/LoadData'
+import prepareData from './ManageData/prepareData'
 
 import AdverseEvents from './Tox/AdverseEvents'
 import Treatment from './Treatment/Treatment'
-
 import PatientSummary from './PatientSummary'
+import Error404 from './Error404'
 
 import ToxFilters from './Tox/ToxFilters'
 
 import {vhToPx, vwToPx} from './utils/vhTOpx'
 import {DayDifference} from './utils/formatDate'
+
+
 
 var $ = require('jquery')
 
@@ -241,6 +243,7 @@ class TrialData extends Component {
                <Route path="/trialData/treatment" render={() => <Treatment data={data} totalHeight={totalHeight} showDetails={this.showDetails} selectedPatient={this.state.selectedPatient} />} />
                <Route path="/trialData/ae" render={() => <AdverseEvents data={data} filteredData={filteredData} filterValues={filterValues} showDetails={this.showDetails} selectedPatient={this.state.selectedPatient} selectedPatientAEs={this.state.entry} size={size} addAdverseEvent={this.addAdverseEvent}/>}/>
                <Route path="/trialData/patientSummary" render={() => <PatientSummary data={data} totalHeight={totalHeight} filteredData={filteredData} filterValues={filterValues} />}/>
+               <Route component={Error404}/>
            </Switch>
         </div>
      )

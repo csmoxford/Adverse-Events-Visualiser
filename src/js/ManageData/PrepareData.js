@@ -1,12 +1,8 @@
 import {uniqBy} from 'lodash'
-import {DayDifference} from './utils/formatDate'
-import {defaultToxColors} from './utils/Constants'
+import {DayDifference} from '../utils/formatDate'
 
-
-
+// Takes the data and performs some standard merging and date formatting
 function prepareData(data) {
-
-
 
   var toxData = data.toxData;
   var patientData = data.patientData;

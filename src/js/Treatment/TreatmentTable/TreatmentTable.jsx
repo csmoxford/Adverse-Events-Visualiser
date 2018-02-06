@@ -10,7 +10,7 @@ class TreatmentTable extends PureComponent {
 
     const treatmentSpecs = uniqBy(data.treatmentSpecification, t => t.index)
 
-    const treatmentUI = data.treatment.map((t,i) => <th key={i} style={{backgroundColor: t.color + '40', paddingLeft: 5, paddingRight: 5}}>{t.label}</th>)
+    const treatmentUI = data.treatment.map((t,i) => <th key={i} style={{backgroundColor: t.color + '40', paddingLeft: 5, paddingRight: 5}}>{t.label} (n={data.patientData.filter(p => p.treatment == t.value).length})</th>)
 
     const rows = treatmentSpecs.map((t,i) => {
       const doseColors = t.doseColors.sort((a,b) => {

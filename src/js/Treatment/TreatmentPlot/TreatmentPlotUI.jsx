@@ -31,11 +31,7 @@ class TreatmentPlotUI extends PureComponent {
   render() {
     const {data} = this.props
 
-
     const specification = this.state.treatmentSpecification !== undefined ? this.state.treatmentSpecification : data.treatmentSpecification
-
-
-
     const treatmentSpecs = uniqBy(data.treatmentSpecification, d => d.index)
 
     var treatmentSelect

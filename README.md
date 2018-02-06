@@ -2,11 +2,13 @@
 
 This is a data visualisation tool for adverse events. The web based application takes a json data file and provides tools to explore the data at a patient and aggregated level in the form of tables and graphs. There are a number of filters to allow further investigation of the data.
 
+There is also some support to look at measure data (such as bloods) and treatment received data
+
 This is still a work in progress and may be updated considerably.
 
 ## Usage
 
-Go [here](https://csmoxford.github.io/Adverse-Events-Visualiser/) to start using this application. There is an example dataset with dummy data in the **Data** folder of this repository if you want to test it out. Note: you will need to download the data and select it from your local machine.
+Go [here](https://csmoxford.github.io/Adverse-Events-Visualiser/#/) to start using this application. There is an example dataset with dummy data in the **Data** folder of this repository if you want to test it out. Note: you will need to download the data and select it from your local machine.
 
 For best results use the Google Chrome browser.
 
@@ -57,6 +59,30 @@ The file should be of type json and contain all the information listed below.
 * column: the column name of the column in patientData
 * label: A display name for this event
 * color: a color associated with this event type
+
+**measureData:** (optional) A dataset of measure data at various time points such as blood test results.
+
+* patid: A unique patient identifier such as trial number
+* dateOfMeasure: The date the measurement was taken
+* measureColum: The column named in measureColumns
+
+**measureColumns:** (optional) A list of measure types to plot from measure data.
+
+* column: the column name of the column in measureData
+label: A display name for this measure
+* min: (optional) A minimum value for the range of this measure. A red line will be drawn at this level in the measure plot. Counld represent normal range or a CTCAE grade.
+* max: (optional) A maximum value for the range of this measure. A red line will be drawn at this level in the measure plot. Counld represent normal range or a CTCAE grade.
+
+**treatmentSpecification:** (optional, experimental) A list of treatment data metadata for treatment compliance data, for plotting patient treatment data.
+
+* index: A reference to the treatment type. In the case that there is multiple data for a single treatment type these should reference the same index and will be plotted overlaid in order.
+* type: One of "Single" or "Double". Define if the data is a single day or a time period between two dates.
+* label: A display name for this measure
+* datasetName: The name of the dataset containing the information for this treatment. This dataset should be provided as part of the data object
+column: A column containing a numerical representation of dose
+* startDate: The date treatment was given or the start of a time period that treatment was given on
+* endDate: the end of a treatment period for type = "Double"
+* doseColors: An array of dose colors. Each object should contain a value and a color. The treatment dose is assigned the color of the largest value in this array which is less than or equal to the dose. labels may be added and are used for keys in place of values. {"value":"0", "color": "#000000", "label": "0-25mg"}
 
 ## Development version
 

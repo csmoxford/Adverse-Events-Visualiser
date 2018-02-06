@@ -90,7 +90,7 @@ class LoadData extends PureComponent {
               <li>dateOfMeasure: The date the measurement was taken</li>
               <li>measureColum: The column named in measureColumns</li>
             </ul>
-            <p><b>measureColumns:</b> (optional) A list of measure types o plot from measure data.</p>
+            <p><b>measureColumns:</b> (optional) A list of measure types to plot from measure data.</p>
             <ul>
               <li>column: the column name of the column in measureData</li>
               <li>label: A display name for this measure</li>

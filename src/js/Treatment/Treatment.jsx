@@ -5,6 +5,8 @@ import TreatmentPlotOuter from './TreatmentPlot/TreatmentPlotOuter'
 
 import TreatmentTable from './TreatmentTable/TreatmentTable'
 
+import Error404 from '../Error404'
+
 
 class Treatment extends Component {
 
@@ -26,6 +28,7 @@ class Treatment extends Component {
     return <Switch>
       <Route path='/trialData/treatment/patient' component={() => <TreatmentPlotOuter  data={data} totalHeight={totalHeight} showDetails={showDetails} selectedPatient={selectedPatient} />}/>
       <Route path='/trialData/treatment/table' component={() => <div className="item-main"><div style={{height: '30px'}}></div><TreatmentTable  data={data}/></div>}/>
+      <Route component={Error404}/>
     </Switch>
 
   }

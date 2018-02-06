@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { min, max } from 'd3-array'
 import getTicksNumeric from './getTicks'
 
 import './Axis.css'
 
-class Axis extends Component {
+class Axis extends PureComponent {
 
 
   render() {
