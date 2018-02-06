@@ -2,17 +2,9 @@ import React, {PureComponent} from 'react'
 import {uniqBy} from 'lodash'
 
 
-
-
-
-
 class TreatmentTable extends PureComponent {
 
-
-
-
   render() {
-
 
     const {data} = this.props
 

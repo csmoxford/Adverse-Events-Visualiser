@@ -17,11 +17,7 @@ class TreatmentPlotUI extends PureComponent {
   componentDidMount() {
     $('.selectpicker').selectpicker()
   }
-/*
-  componentDidUpdate() {
-    $('.selectpicker').selectpicker()
-  }
-*/
+
   onTreatmentSelect() {
     const selected = $("#treatments").val()
     if(selected.includes("all")) {
