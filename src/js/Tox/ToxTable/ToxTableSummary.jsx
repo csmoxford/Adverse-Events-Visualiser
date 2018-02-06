@@ -33,7 +33,7 @@ class ToxTable extends PureComponent {
     const treatments = data.treatment.map(t => t.value)
     const numberOfPatients = treatments.map(t => data.patientData.filter(d => d.treatment === t).length)
 
-    const treatmentUI = data.treatment.map((t,i) => <th key={i} colSpan="3" style={{backgroundColor: t.color + '40'}}>{t.label} (n={numberOfPatients[i]})</th>)
+    const treatmentUI = data.treatment.map((t,i) => <th key={i} colSpan="3" style={{backgroundColor: t.color + '40', paddingLeft: 5, paddingRight: 5}}>{t.label} (n={numberOfPatients[i]})</th>)
     const aeHeader = data.treatment.map((t,i) => [
       <th key={`${i}_0`} style={{backgroundColor: t.color + '40'}}>n</th>,
       <th key={`${i}_1`} style={{backgroundColor: t.color + '40'}}>Grade 1-5</th>,
@@ -87,7 +87,7 @@ class ToxTable extends PureComponent {
             {treatmentUI}
           </tr>
           <tr>
-            <th>AdverseEvent</th>
+            <th>Adverse Event</th>
             {aeHeader}
           </tr>
           {rows}

@@ -1,3 +1,4 @@
+import {uniqBy} from 'lodash'
 import {DayDifference} from './utils/formatDate'
 import {defaultToxColors} from './utils/Constants'
 
@@ -101,6 +102,21 @@ function prepareData(data) {
         Object.assign(measureData[i], patient)
 
         measureData[i].relativeTime = DayDifference(patient[initDate], measureData[i].dateOfMeasure) // miliseconds in a day
+      }
+    }
+  }
+
+  if(data.treatmentSpecification !== undefined) {
+    const datasets = uniqBy(data.treatmentSpecification, d => d.index)
+
+    for(var k=0; k < datasets.length; k++) {
+      var dataset = data[datasets[k].datasetName]
+
+      for (var i = 0; i < dataset.length; i++) {
+        const patient = patientData.find(d => d.patid === dataset[i].patid)
+        if(patient != undefined) {
+          Object.assign(dataset[i], patient)
+        }
       }
     }
   }

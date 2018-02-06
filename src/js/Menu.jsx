@@ -29,7 +29,10 @@ class Menu extends Component {
            {dropDown: false, separator: true},
            {to: '/trialData/ae/addae', label: 'Add Adverse Event', id: 'event', dropDown: false, active: false}
          ]},
-         {to: '/trialData/treatment', label: 'Treatment', id: 'treatment', dropDown: false, active: false},
+         {label: "Treatment", id: 'treatment', dropDown: true, active: false, subLinks: [
+           {to: '/trialData/treatment/patient', label: 'Patient Level', id: 'treatment', dropDown: false, active: false},
+           {to: '/trialData/treatment/table', label: 'Summary', id: 'treatment', dropDown: false, active: false}
+         ]}
        ]
      }
      this.updateActive = this.updateActive.bind(this)
