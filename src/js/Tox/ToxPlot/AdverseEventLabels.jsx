@@ -1,7 +1,6 @@
 import React from 'react'
 
 
-
 const AdverseEventLabels = (props) => {
 
   const {data, xScale, yScale, xPos} = props

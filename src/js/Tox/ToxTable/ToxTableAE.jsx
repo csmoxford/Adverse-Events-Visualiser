@@ -2,12 +2,7 @@ import React from 'react'
 import {uniq, uniqBy} from 'lodash'
 import {sum} from 'd3-array'
 import './ToxTable.css'
-
-function bracketPercent (count = 0, total) {
-  if(count === 0)
-    return ""
-  return `(${Math.round(count/total*100)}%)`
-}
+import {bracketPercent} '../../utils/FormatNumber'
 
 const ToxTableAE = (props) => {
 

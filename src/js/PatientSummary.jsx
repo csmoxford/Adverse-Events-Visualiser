@@ -1,12 +1,10 @@
 import React, {Component } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
-import Axis from './utils/Axis'
+import Axis from './utils/Plot/Axis'
 import {uniqBy} from 'lodash'
 
-import 'bootstrap-select'
-import "bootstrap-select/dist/css/bootstrap-select.css"
-import './Tox/ToxFilters.css'
+import {Select} from './utils/Forms'
 
 import BloodPlot from './BloodPlot/BloodPlot'
 
@@ -94,12 +92,9 @@ class PatientSummary extends Component {
     // if measure data was defined
     if(data.measureColumns !== undefined) {
       const bloodOptions = data.measureColumns.map((d,i) => <option key={i} value={d.column}>{d.label}</option>)
-      bloodSelect = <div className="add-patient">
-        <label htmlFor="measureColumns">Measurement</label><br/>
-        <select id="measureColumns" className="selectpicker" onChange={this.updateBloodValue}>
-          {bloodOptions}
-        </select>
-      </div>
+      bloodSelect = <Select id="measureColumns" className="add-patient" onChange={this.updateBloodValue}>
+        {bloodOptions}
+      </Select>
     }
 
     var toxPlot, bloodPlot, patient, treatmentPlot
@@ -226,13 +221,11 @@ class PatientSummary extends Component {
     </div>,
     <div key={1} className='item-right'>
       <div style={{height:"30px"}}></div>
-      <div>
-        <select id='rightColumn' className="selectpicker" onChange={this.changeRightColumn}>
-          <option value="legend">Legend</option>
-          <option value="ae">Adverse event data</option>
-          <option value="treatment">Treatment data</option>
-        </select>
-      </div>
+      <Select id='rightColumn' onChange={this.changeRightColumn}>
+        <option value="legend">Legend</option>
+        <option value="ae">Adverse event data</option>
+        <option value="treatment">Treatment data</option>
+      </Select>
       <div style={{height:"20px"}}></div>
       {rightColumn}
     </div>]

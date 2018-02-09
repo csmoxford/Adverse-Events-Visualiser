@@ -21,6 +21,8 @@ class AdverseEvents extends Component {
 
     const {data, filteredData, filterValues, showDetails, selectedPatient, selectedPatientAEs, size} = this.props
 
+    console.log(selectedPatient);
+
     return <Switch>
       <Route path='/trialData/ae/summary' render={() => <div id="main" className="item-main"><ToxPlotTimeUI data={data} filteredData={filteredData} /></div>}/>
       <Route path='/trialData/ae/table' render={() => <div className="item-main"><div style={{height:30}}></div><ToxTableUI data={data} filteredData={filteredData}/></div>}/>
@@ -32,7 +34,7 @@ class AdverseEvents extends Component {
         totalHeight={size.height}
         data={data}
         filteredData={filteredData}
-        offset={{top: 0, bottom: 0, left: 10, right: 0}}
+        offset={{top: 0, bottom: 0, left: 10, right: 10}}
         size={size}
         showDetails={showDetails}
         filter={filterValues}
@@ -43,7 +45,7 @@ class AdverseEvents extends Component {
         totalHeight={size.height}
         data={data}
         filteredData={filteredData}
-        offset={{top: 0, bottom: 0, left: 10, right: 0}}
+        offset={{top: 0, bottom: 0, left: 10, right: 10}}
         size={size}
         showDetails={showDetails}
         filter={filterValues}

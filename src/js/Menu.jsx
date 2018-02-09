@@ -38,7 +38,7 @@ class Menu extends Component {
    }
 
    updateActive(id, event) {
-     console.log(id);
+     // console.log(id);
      var links = this.state.links
      links.forEach(l => l.active = false)
      links.find(l => l.id === id).active = true

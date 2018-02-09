@@ -7,10 +7,9 @@ import TreatmentTable from './TreatmentTable/TreatmentTable'
 
 import Error404 from '../Error404'
 
+var k = 0
 
 class Treatment extends Component {
-
-
 
   render() {
 
@@ -24,11 +23,10 @@ class Treatment extends Component {
     </div>
     }
 
-
     return <Switch>
-      <Route path='/trialData/treatment/patient' component={() => <TreatmentPlotOuter  data={data} totalHeight={totalHeight} showDetails={showDetails} selectedPatient={selectedPatient} />}/>
-      <Route path='/trialData/treatment/table' component={() => <div className="item-main"><div style={{height: '30px'}}></div><TreatmentTable  data={data}/></div>}/>
-      <Route component={Error404}/>
+      <Route key={0} path='/trialData/treatment/patient' render={() => <TreatmentPlotOuter  data={data} totalHeight={totalHeight} showDetails={showDetails} selectedPatient={selectedPatient} />}/>
+      <Route key={1} path='/trialData/treatment/table' render={() => <div className="item-main"><div style={{height: '30px'}}></div><TreatmentTable  data={data}/></div>}/>
+      <Route key={2} render={Error404}/>
     </Switch>
 
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Axis from '../../utils/Axis'
-import BarPlotSet from '../../utils/BarPlotSet'
+import Axis from '../../utils/Plot/Axis'
+import BarPlotSet from '../../utils/Plot/BarPlotSet'
 
 const ToxPlotCycleCreate = (props) => {
   const {countData, color, xScale, yScale, size, ticks, label, legend} = props

@@ -3,37 +3,32 @@ import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
 import {uniq, uniqBy} from 'lodash'
 
-import Axis from '../../utils/Axis.jsx'
-import EventPolyline from '../../utils/EventPolyline'
+import Axis from '../../utils/Plot/Axis.jsx'
+import EventPolyline from '../../utils/Plot/EventPolyline'
 
 import AdverseEventRect from './AdverseEventRect'
 import AdverseEventLabels from './AdverseEventLabels'
 
+function getIndex(data, oneRowPerPatient = false) {
 
+  var numberUnique = -1
+  for (var i = 0; i < data.length; i++) {
+    var isNew = true
+    var j = 0
+    while(isNew && j < i) {
+      if(data[i].patid === data[j].patid && (data[i].aeterm === data[j].aeterm || oneRowPerPatient))
+        isNew = false
+      j++
+    }
+
+    if(isNew) {
+      numberUnique++
+    }
+    data[i].index = numberUnique
+  }
+}
 
 class ToxPlot extends PureComponent {
-
-  componentWillUnmount() {
-    console.log("don't unmount");
-  }
-
-  getIndex(data, oneRowPerPatient = false) {
-
-    var numberUnique = -1
-    for (var i = 0; i < data.length; i++) {
-      var isNew = true
-      var j = 0
-      while(isNew && j<i) {
-        if(data[i].patid === data[j].patid && (data[i].aeterm === data[j].aeterm || oneRowPerPatient))
-          isNew = false
-        j++
-      }
-      if(isNew) {
-        numberUnique++
-      }
-      data[i].index = numberUnique
-    }
-  }
 
 
   render() {
@@ -43,7 +38,7 @@ class ToxPlot extends PureComponent {
       return <div><br/>No data was sent. Graph could not be plotted.</div>
     }
 
-    this.getIndex(filteredData, oneRowPerPatient)
+    getIndex(filteredData, oneRowPerPatient)
 
     const selectedPatid = selectedPatient === null ? undefined:  selectedPatient.patid
 
@@ -83,22 +78,20 @@ class ToxPlot extends PureComponent {
            fillOpacity={0.1}
            stroke={data.treatment.find(t => t.value === d.treatment).color}
            strokeOpacity={0.2}
-           onMouseOver={(e) => this.props.showDetails(data.patientData.find(p => d.patid === p.patid),e)}
+           onMouseEnter={(e) => this.props.showDetails(data.patientData.find(p => d.patid === p.patid),e)}
          />
        {names}
        </g>
      })
 
-
-
      var names = null
 
      if(!oneRowPerPatient) {
-      const rowData = uniqBy(filteredData.filter(d => d.patid === selectedPatid).map(d => {return {patid: d.patid, index: d.index, aeterm: d.aeterm}}), 'index')
-
-      if(rowData.length > 0)
-       names = <AdverseEventLabels data={rowData} xScale={xScale} yScale={yScale} xPos={xMin}/>
-      }
+       const rowData = uniqBy(filteredData.filter(d => d.patid === selectedPatid).map(d => {return {patid: d.patid, index: d.index, aeterm: d.aeterm}}), 'index')
+       if(rowData.length > 0) {
+         names = <AdverseEventLabels data={rowData} xScale={xScale} yScale={yScale} xPos={xMin}/>
+       }
+     }
 
       var events = null
       if(data.keyEvents !== undefined) {
@@ -124,7 +117,7 @@ class ToxPlot extends PureComponent {
       ref={node => this.node = node}
       width={size.width}
       height="80px"
-      onMouseOver={this.props.showKey}>
+      onMouseEnter={this.props.showKey}>
       <Axis
         side="top"
         lab="Time (days)"
@@ -153,7 +146,9 @@ class ToxPlot extends PureComponent {
 }
 
 ToxPlot.defaultProps = {
-  oneRowPerPatient: false
+  oneRowPerPatient: false,
+  size: {width: 1000, height: 500},
+  offset: {top: 0, bottom: 0, left: 5, right: 0}
 }
 
 export default ToxPlot

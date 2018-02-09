@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
 
 import ToxPlotTimeCreate from './ToxPlotTimeCreate'
-import TreatmentLegendBox from '../../utils/TreatmentLegendBox'
+import TreatmentLegendBox from '../../utils/Plot/TreatmentLegendBox'
 
 function getCounts(data, patients, times) {
     return times.map((t) => {

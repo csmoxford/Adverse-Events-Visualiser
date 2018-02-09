@@ -1,4 +1,4 @@
-import {significantFigures} from './FormatNumber'
+import {significantFigures} from '../FormatNumber'
 
 // generates ticks from a d3-scale object
 // targets the supplied number of ticks

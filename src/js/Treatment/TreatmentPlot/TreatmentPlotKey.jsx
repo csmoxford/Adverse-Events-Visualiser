@@ -1,38 +1,35 @@
-import React, {PureComponent} from 'react'
+import React from 'react'
 import {uniqBy} from 'lodash'
 
 import {TreatmentKeySingle, TreatmentKeyDouble} from './TreatmentKey'
 
 
-class TreatmentPlotKey extends PureComponent {
+const TreatmentPlotKey = (props) => {
+  const {data} = props
 
-  render() {
+  const uniqueSpec = uniqBy(data.treatmentSpecification, d => d.index)
+  var currentPos = 50
+  const height = 30
+  const keys = uniqueSpec.map((d,i) => {
 
-    const {data} = this.props
+    const takeupHeight = (d.doseColors.length + 1.5) * height
+    const pos = currentPos
+    currentPos += takeupHeight
 
-    const uniqueSpec = uniqBy(data.treatmentSpecification, d => d.index)
-    var currentPos = 50
-    const height = 30
-    const keys = uniqueSpec.map((d,i) => {
+    if(d.type === "Single") {
+      return <TreatmentKeySingle key={i} treatment={d} height={height} position={{left: 50, top: pos}}/>
+    } else if(d.type === "Double") {
+      return <TreatmentKeyDouble key={i} treatment={d} height={height} position={{left: 50, top: pos}}/>
+    } else {
+      return null
+    }
+  })
 
-      const takeupHeight = (d.doseColors.length + 1.5) * height
-      const pos = currentPos
-      currentPos += takeupHeight
-
-      if(d.type === "Single") {
-        return <TreatmentKeySingle key={i} treatment={d} height={height} position={{left: 50, top: pos}}/>
-      } else if(d.type === "Double") {
-        return <TreatmentKeyDouble key={i} treatment={d} height={height} position={{left: 50, top: pos}}/>
-      } else {
-        return null
-      }
-    })
-
-    return <svg width={300} height={currentPos}>
-      {keys}
-    </svg>
-  }
+  return <svg width={300} height={currentPos}>
+    {keys}
+  </svg>
 }
+
 
 
 export default TreatmentPlotKey

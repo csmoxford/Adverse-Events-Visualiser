@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react'
+import {Select} from './Forms'
 
 var $ = require('jquery')
 
@@ -16,7 +17,9 @@ class PatientSelect extends PureComponent {
   OnSelectUpdate() {
     const patient = this.props.patients.find(p => p.patid === $('#patid').val())
     $('#patidSelect button').css('background', this.props.treatment.find(t => t.value === patient.treatment).color + "40")
-    this.props.didChange()
+    if(this.props.didChange !== undefined) {
+      this.props.didChange()
+    }
   }
 
   render() {
@@ -29,12 +32,12 @@ class PatientSelect extends PureComponent {
       patientOptions = patients.map((d,i) => <option key={i}>{d.patid}</option>)
     }
 
-    return <div id="patidSelect" className="add-patient">
-      <label htmlFor="patid">Patient Trial Number</label><br/>
-      <select id="patid" className="selectpicker" onChange={this.OnSelectUpdate} style={{background: '#BBBBFF'}}>
+    return <div id="patidSelect">
+      <Select id="patid" label="Patient Trial Number" onChange={this.OnSelectUpdate}>
         {patientOptions}
-      </select>
+      </Select>
     </div>
+
   }
 }
 

@@ -4,11 +4,11 @@ import {Switch, Route} from 'react-router-dom'
 import LoadData from './ManageData/LoadData'
 import prepareData from './ManageData/prepareData'
 
-import AdverseEvents from './Tox/AdverseEvents'
 import Treatment from './Treatment/Treatment'
 import PatientSummary from './PatientSummary'
 import Error404 from './Error404'
 
+import AdverseEvents from './Tox/AdverseEvents'
 import ToxFilters from './Tox/ToxFilters'
 
 import {vhToPx, vwToPx} from './utils/vhTOpx'
@@ -66,30 +66,37 @@ class TrialData extends Component {
   constructor(props){
      super(props)
      this.updateFilterStateValues = this.updateFilterStateValues.bind(this)
-     this.updateDimentions = this.updateDimentions.bind(this)
+     this.updateDimensions = this.updateDimensions.bind(this)
      this.showDetails = this.showDetails.bind(this)
      this.handleFileSelect = this.handleFileSelect.bind(this)
      this.onReaderLoad = this.onReaderLoad.bind(this)
      this.addAdverseEvent = this.addAdverseEvent.bind(this)
+
      this.state = {
        data: null,
-       entry: null,
+       selectedPatientAEs: null,
        selectedPatient: null,
-       filterValues: null
+       filterValues: null,
+       size: this.getDimensions()
      }
   }
 
-  updateDimentions() {
-    const height = vhToPx(80)
-    const width = vwToPx(50);
-    this.setState({size: {width: width, height: height}})
+  updateDimensions() {
+    this.setState({size: this.getDimensions()})
+  }
+
+  getDimensions() {
+    return {width: vwToPx(50), height: vhToPx(80)}
   }
 
   componentWillMount() {
-        window.addEventListener("resize", this.updateDimentions);
+        window.addEventListener("resize", this.updateDimensions);
     }
 
   updateFilterStateValues() {
+    console.log("updating filter");
+
+
     const from = $("#adverseEventTimeFrom").val() // get the start of time window from patientData
     const to = $("#adverseEventTimeTo").val() // get the end of time window from patientData
     const aeSelectedType = $('#adverseEventType').val()
@@ -100,8 +107,6 @@ class TrialData extends Component {
     const causalities = this.state.data.causality.map(c =>  {return {column: c.column, value: isNaN($(`#${c.column}`).val())? 1 : $(`#${c.column}`).val()}})
     const isSae = $('#saeCheck').is(':checked')
     const includePresentAtStart = $('#presentCheck').is(':checked')
-
-    console.log("updating filter");
 
     const filterValues = {
         from: from,
@@ -116,7 +121,6 @@ class TrialData extends Component {
         includePresentAtStart: includePresentAtStart
       }
 
-
       // change start date to the time period from date
     var filteredData = filterData(this.state.data, filterValues)
 
@@ -128,8 +132,6 @@ class TrialData extends Component {
       }
     }
 
-
-
     this.setState({
       filterValues: filterValues,
       filteredData: filteredData,
@@ -140,7 +142,7 @@ class TrialData extends Component {
   showDetails(patient, event) {
     if(patient !== null) {
       this.setState({
-        entry: this.state.filteredData.filter(d => patient.patid === d.patid),
+        selectedPatientAEs: this.state.filteredData.filter(d => patient.patid === d.patid),
         selectedPatient: patient
       })
     }
@@ -222,6 +224,7 @@ class TrialData extends Component {
    render() {
 
      const {data, filteredData, filterValues} = this.state
+     const {size, selectedPatient, selectedPatientAEs} = this.state
 
       if(data === null) {
         return <div className="cssGrid"><LoadData onSubmit={this.handleFileSelect}/></div>
@@ -229,7 +232,7 @@ class TrialData extends Component {
 
      /***************************************************************/
      const totalHeight = vhToPx(94.5)
-     const size = {width: vwToPx(49), height: totalHeight}
+
 
      return (
          <div className="cssGrid">
@@ -237,8 +240,8 @@ class TrialData extends Component {
            <Route path="/trialData/patientSummary" render={() => <ToxFilters className="item-left" data={data} updateFilterStateValues={this.updateFilterStateValues}/>}/>
              <Switch>
                <Route path="/trialData/load" render={() => <LoadData onSubmit={this.handleFileSelect}/>}/>
-               <Route path="/trialData/treatment" render={() => <Treatment data={data} totalHeight={totalHeight} showDetails={this.showDetails} selectedPatient={this.state.selectedPatient} />} />
-               <Route path="/trialData/ae" render={() => <AdverseEvents data={data} filteredData={filteredData} filterValues={filterValues} showDetails={this.showDetails} selectedPatient={this.state.selectedPatient} selectedPatientAEs={this.state.entry} size={size} addAdverseEvent={this.addAdverseEvent}/>}/>
+               <Route path="/trialData/treatment" render={() => <Treatment data={data} totalHeight={totalHeight} showDetails={this.showDetails} selectedPatient={selectedPatient} />} />
+               <Route path="/trialData/ae" render={() => <AdverseEvents data={data} filteredData={filteredData} filterValues={filterValues} showDetails={this.showDetails} selectedPatient={selectedPatient} selectedPatientAEs={selectedPatientAEs} size={size} addAdverseEvent={this.addAdverseEvent}/>}/>
                <Route path="/trialData/patientSummary" render={() => <PatientSummary data={data} totalHeight={totalHeight} filteredData={filteredData} filterValues={filterValues} />}/>
                <Route component={Error404}/>
            </Switch>

@@ -1,5 +1,5 @@
 import React from 'react'
-import TreatmentLegendBox from '../../utils/TreatmentLegendBox'
+import TreatmentLegendBox from '../../utils/Plot/TreatmentLegendBox'
 import {uniqBy} from 'lodash'
 import {defaultToxColors} from '../../utils/Constants'
 

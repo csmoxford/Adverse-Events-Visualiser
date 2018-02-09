@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {DayDifference} from './formatDate'
+import {DayDifference} from '../formatDate'
 
 // prevent update caused by xScale and mouseover event
 class EventPolyline extends Component {

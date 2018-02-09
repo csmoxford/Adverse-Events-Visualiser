@@ -9,6 +9,10 @@ import ShowToxicityRecord from '../ShowPatient/ShowToxicityRecord'
 class ToxPlotUI extends Component {
 
 
+  componentDidMount() {
+    console.log('stop mounting');
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -19,9 +23,10 @@ class ToxPlotUI extends Component {
   }
 
   OnPatientMouseOver(patient, event) {
-    this.setState({legend: false})
-    console.log("hi");
+
+    console.log("patient" + patient.patid);
     this.props.showDetails(patient, event)
+    this.setState({legend: false})
   }
 
   showKey() {
@@ -30,6 +35,8 @@ class ToxPlotUI extends Component {
   }
 
   render() {
+
+    console.log(this.state.legend);
 
     var rightColumn
     if(this.state.legend) {
@@ -40,8 +47,7 @@ class ToxPlotUI extends Component {
 
     return  [
       <div className="item-middle" key={0}>
-
-        <ToxPlot  {...this.props} showDetails={this.OnPatientMouseOver} showKey={this.showKey}/>
+      <ToxPlot  {...this.props} showDetails={this.OnPatientMouseOver} showKey={this.showKey}/>
       </div>,
       <div className="item-right" key={1}>
         {rightColumn}

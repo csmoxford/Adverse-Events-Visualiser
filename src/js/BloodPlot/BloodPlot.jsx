@@ -2,8 +2,8 @@ import React, {PureComponent } from 'react'
 import { scaleLinear } from 'd3-scale'
 import { min, max } from 'd3-array'
 
-import CircleSet from '../utils/CircleSet'
-import Axis from '../utils/Axis'
+import CircleSet from '../utils/Plot/CircleSet'
+import Axis from '../utils/Plot/Axis'
 
 
 class BloodPlot extends PureComponent {

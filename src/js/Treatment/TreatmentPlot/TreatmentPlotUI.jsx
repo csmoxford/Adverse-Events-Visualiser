@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import TreatmentPlot from './TreatmentPlot'
 import {uniqBy} from 'lodash'
+import {Select} from '../../utils/Forms'
 var $ = require('jquery')
 
 class TreatmentPlotUI extends PureComponent {
@@ -15,6 +16,10 @@ class TreatmentPlotUI extends PureComponent {
 
   componentDidMount() {
     $('.selectpicker').selectpicker()
+  }
+
+  componentDidMount() {
+    console.log("TreatmentPlotUI is mounting");
   }
 
   onTreatmentSelect() {
@@ -33,17 +38,15 @@ class TreatmentPlotUI extends PureComponent {
     const specification = this.state.treatmentSpecification !== undefined ? this.state.treatmentSpecification : data.treatmentSpecification
     const treatmentSpecs = uniqBy(data.treatmentSpecification, d => d.index)
 
+    // only include a select if there is more than 1 treatment indexed
     var treatmentSelect
     if(treatmentSpecs.length >= 2) {
       const options = treatmentSpecs.map((t,i) => <option key={i} value={t.index}>{t.label}</option>)
 
-      treatmentSelect = <div className="filter-option">
-        <label>Treatments</label><br/>
-        <select id="treatments" multiple className="selectpicker" onChange={this.onTreatmentSelect}>
-          <option value="all">All</option>
-          {options}
-        </select>
-      </div>
+      treatmentSelect = <Select id="treatments" label="Treatments" multiple onChange={this.onTreatmentSelect}>
+        <option value="all">All</option>
+        {options}
+      </Select>
     }
 
     return <div>

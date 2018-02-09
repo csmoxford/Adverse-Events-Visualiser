@@ -16,5 +16,10 @@ function significantFigures( xArray, len ){
     return fixed === 0 ? rounded : rounded.map(x => x.toFixed(Math.min(fixed,len-numDigits)))
 }
 
+function bracketPercent (count = 0, total) {
+  if(count === 0)
+    return ""
+  return `(${Math.round(count/total*100)}%)`
+}
 
-export {significantFigures}
+export {significantFigures, bracketPercent}
