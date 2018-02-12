@@ -37,7 +37,6 @@ class PatientSelect extends PureComponent {
         {patientOptions}
       </Select>
     </div>
-
   }
 }
 

@@ -7,8 +7,6 @@ import TreatmentTable from './TreatmentTable/TreatmentTable'
 
 import Error404 from '../Error404'
 
-var k = 0
-
 class Treatment extends Component {
 
   render() {

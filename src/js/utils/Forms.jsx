@@ -3,6 +3,7 @@ import './Forms.css'
 import 'bootstrap-select'
 import "bootstrap-select/dist/css/bootstrap-select.css"
 
+// standardised Forms
 const Input = (props) => {
   const {id, type, className, label} = props
 
@@ -21,7 +22,7 @@ const Input = (props) => {
 
 const Select = (props) => {
 
-  const {id, label, options, multiple} = props
+  const {id, label, multiple} = props
 
   return <div className="filter-option">
     <label htmlFor={id}>{label}</label><br/>

@@ -84,6 +84,48 @@ column: A column containing a numerical representation of dose
 * endDate: the end of a treatment period for type = "Double"
 * doseColors: An array of dose colors. Each object should contain a value and a color. The treatment dose is assigned the color of the largest value in this array which is less than or equal to the dose. labels may be added and are used for keys in place of values. {"value":"0", "color": "#000000", "label": "0-25mg"}
 
+### Creating a .json file in R
+
+R is able to convert a list object into a json file. One option is to use the package jsonlite (`library(jsonlite)`). Below is an example.
+
+```R
+library(jsonlite)
+# patientData and toxData are already defined
+# create the datafile
+aeMetaData = list()
+
+# Add metadata
+# Treatment
+aeMetaData$treatment = data.frame(
+  value = c("Treatment", "Placebo"),
+  color = c("#00FF00","#FF0000"), # rgb colors
+  stringsAsFactors = FALSE
+)
+
+# Key Dates
+aeMetaData$keyDates = data.frame(
+  column = c("randomisationdate", "date_of_treatment_PartA", "date_of_treatment_PartB", "date_stopped_treatment"),
+  label = c("Date of Randomisation", "Part A", "Part B", "Date stopped treatment"),
+  stringsAsFactors = FALSE
+)
+
+# Causality
+aeMetaData$causality = data.frame(
+  column = c("imp_causality"),
+  label = c("IMP Causality"),
+  stringsAsFactors = FALSE
+)
+
+# add main data
+aeMetaData$patientData = patientData
+aeMetaData$toxData = toxData
+
+# create json string
+string = toJSON(aeMetaData, pretty = TRUE, Date = "ISO8601")
+# save to file
+writeLines(string, con="trialName_AEdata.json")
+```
+
 ## Development version
 
 To set-up a local development server:
@@ -95,6 +137,10 @@ To set-up a local development server:
 5. Install dependencies using the command **npm install -s**
 6. Start the app using the command **npm start**
 7. Once built the app will be running on http://localhost:3000. Go to this page in a web browser. Note that testing was performed in chrome.
+
+### Editing
+
+There is a structure summary in the file [/src/index.js](https://github.com/csmoxford/Adverse-Events-Visualiser/blob/master/src/index.js).
 
 ## Technical details
 

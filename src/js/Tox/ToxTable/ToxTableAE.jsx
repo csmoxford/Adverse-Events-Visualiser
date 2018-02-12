@@ -2,7 +2,7 @@ import React from 'react'
 import {uniq, uniqBy} from 'lodash'
 import {sum} from 'd3-array'
 import './ToxTable.css'
-import {bracketPercent} '../../utils/FormatNumber'
+import {bracketPercent} from '../../utils/FormatNumber'
 
 const ToxTableAE = (props) => {
 

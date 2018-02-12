@@ -1,7 +1,7 @@
 import React from 'react'
 import {uniq} from 'lodash'
 import './ToxTable.css'
-import {bracketPercent} '../../utils/FormatNumber'
+import {bracketPercent} from '../../utils/FormatNumber'
 
 const ToxTable = (props) => {
   const {data, filteredData} = this.props

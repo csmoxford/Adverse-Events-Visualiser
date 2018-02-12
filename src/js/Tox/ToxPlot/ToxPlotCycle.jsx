@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { scaleLinear } from 'd3-scale'
 import TreatmentLegendBox from '../../utils/Plot/TreatmentLegendBox'
 
