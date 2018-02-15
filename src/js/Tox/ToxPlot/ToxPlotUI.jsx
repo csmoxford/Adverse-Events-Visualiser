@@ -36,7 +36,6 @@ class ToxPlotUI extends Component {
 
   render() {
 
-    console.log(this.state.legend);
 
     var rightColumn
     if(this.state.legend) {

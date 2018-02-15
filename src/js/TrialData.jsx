@@ -86,7 +86,7 @@ class TrialData extends Component {
   }
 
   getDimensions() {
-    return {width: vwToPx(50), height: vhToPx(80)}
+    return {width: vwToPx(47), height: vhToPx(95)}
   }
 
   componentWillMount() {
@@ -126,7 +126,7 @@ class TrialData extends Component {
 
     for (var i = 0; i < filteredData.length; i++) {
       filteredData[i].toxStart = DayDifference(filteredData[i][from], filteredData[i].aestartdate)
-      filteredData[i].toxEnd = DayDifference(filteredData[i][from], filteredData[i].aestopdate)
+      filteredData[i].toxEnd = 1+DayDifference(filteredData[i][from], filteredData[i].aestopdate)
       if(isNaN(filteredData[i].toxEnd)) {
         filteredData[i].toxEnd = filteredData[i].toxStart + 1
       }
@@ -137,6 +137,8 @@ class TrialData extends Component {
       filteredData: filteredData,
       selectedPatient: null}
     )
+
+    console.log(filteredData);
   }
 
   showDetails(patient, event) {

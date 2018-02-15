@@ -31,6 +31,7 @@ class AdverseEvents extends Component {
       <Route path="/trialData/ae/survival" render={() => <ToxPlotKaplan data={data} filteredData={filteredData} />}/>
       <Route path="/trialData/ae/addae" render={() => <ToxAddData data={data} filterValues={filterValues} addAdverseEvent={this.props.addAdverseEvent}/>}/>
       <Route path='/trialData/ae/pt' render={() => <ToxPlotUI
+        key={"ptLevel"}
         totalHeight={size.height}
         data={data}
         filteredData={filteredData}
@@ -42,6 +43,7 @@ class AdverseEvents extends Component {
         selectedPatientAEs={selectedPatientAEs}
         oneRowPerPatient={true} />}/>
       <Route path='/trialData/ae/ae' render={() => <ToxPlotUI
+        key={"aeLevel"}
         totalHeight={size.height}
         data={data}
         filteredData={filteredData}

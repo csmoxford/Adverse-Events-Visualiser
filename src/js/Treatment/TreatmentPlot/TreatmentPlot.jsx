@@ -1,6 +1,7 @@
 import React from 'react'
 import {scaleLinear} from 'd3-scale'
 import {uniqBy} from 'lodash'
+import {max} from 'd3-array'
 
 import {SingleDateSet, DoubleDateSet} from './TreatmentDateSet'
 
@@ -18,7 +19,31 @@ const TreatmentPlot = (props) => {
   const nTreatments = uniqBy(treatmentSpecification, t => t.index).length
 
   const xMin = 0
-  const xMax = 30
+  const xMax = 2 + max(data.patientData.map(d => {
+    var diff = DayDifference(d[data.keyDates[0].column], d[data.keyDates[data.keyDates.length - 1].column])
+    if(!isNaN(diff)) {
+      return diff
+    } else {
+      return null
+    }
+  }))
+/*
+  treatmentSpecification.map((t,i) => {
+
+    var readyData = data[t.datasetName].filter(d => d.patid === p.patid)
+    if(readyData.length > 0) {
+      readyData = readyData.map(d => {
+        return {
+          x: DayDifference(p[data.keyDates[0].column], new Date(d[t.startDate])),
+          x2: DayDifference(p[data.keyDates[0].column],new Date(d[t.endDate])),
+          y: d[t.column]}
+      })
+    }
+
+      console.log(readyData);
+
+  })
+*/
   const yMin = -0.5
   const yMax = (nTreatments*data.patientData.length) - 0.5
 
@@ -40,6 +65,8 @@ const TreatmentPlot = (props) => {
 
   var containsData = false;
   // set this to true if data is prepared for plotting. Otherwise we will return a message instead of the plot.
+
+
   const treatmentData = treatmentSpecification.map((t,i) => {
 
     const patientData = data.patientData.map((p,j) => {

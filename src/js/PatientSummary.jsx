@@ -41,6 +41,7 @@ function getIndex(data, oneRowPerPatient = false) {
   }
 }
 
+
 class PatientSummary extends Component {
 
 
@@ -104,14 +105,13 @@ class PatientSummary extends Component {
       patient = data.patientData.find(p => p.patid === this.state.patid)
       var subData = filteredData.filter(d => d.patid === this.state.patid)
       getIndex(subData)
-
       var xMin = 0
-      var xMax = 1
+      var xMax = max(subData.map(d => d.toxEnd))
 
       var subMeasureData = []
       if(data.measureData !== undefined){
         subMeasureData = data.measureData.filter(d => d.patid === this.state.patid)
-        if(subMeasureData.length > 0) {
+        if(subData.length > 0) {
           xMin = Math.min(xMin, min(subMeasureData.map((d) => d.relativeTime)) + 1)
           xMax = Math.max(xMax, max(subMeasureData.map((d) => d.relativeTime)) + 1)
         }

@@ -13,9 +13,10 @@
 }
 
 .navbar-brand {
-    height: 4.9vh
+    height: 4.9vh;
 }
 
 .navbar {
-  height:5vh !important
+  height:5vh !important;
+  min-height: 0px;
 }

@@ -13,7 +13,7 @@ class EventPolyline extends Component {
 
     const eventPolyline = uniquePositions.map((d,j) => {
       const patient = data.patientData.find(p => p.patid === d.patid)
-      const x = DayDifference(patient[filter.from], patient[event.column])
+      const x = 1+DayDifference(patient[filter.from], patient[event.column])
       if(!isNaN(x)){
         return <polyline
           key={j}

@@ -34,6 +34,8 @@ class ToxPlot extends PureComponent {
   render() {
     const {size, data, filteredData, totalHeight, selectedPatient, offset, filter, oneRowPerPatient} = this.props
 
+
+
     if(filteredData.length === 0) {
       return <div><br/>No data was sent. Graph could not be plotted.</div>
     }
