@@ -107,7 +107,7 @@ class ToxTableUI extends PureComponent {
           <option value="category">Category</option>
           <option value="ae">Adverse Event Name</option>
           <option value="grade1">Grade 1-5</option>
-          <option value="grade1">Grade 3-5</option>
+          <option value="grade3">Grade 3-5</option>
         </select>
         <div style={{height: '20px'}}/>
       </div>

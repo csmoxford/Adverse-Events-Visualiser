@@ -5,8 +5,8 @@ import ShowTreatmentSummary from '../ShowPatient/ShowTreatmentSummary'
 
 
 const TreatmentPlotOuter = (props) => {
-  const {data, totalHeight, selectedPatient, showDetails} = props
-
+  const {data, totalHeight, filter, selectedPatient, showDetails} = props
+console.log(totalHeight);
   return [
     <div className="item-left" key={0}>
       <TreatmentPlotKey
@@ -16,7 +16,9 @@ const TreatmentPlotOuter = (props) => {
     <div className="item-middle" key={1}>
       <TreatmentPlotUI
         data={data}
+        filter={filter}
         showDetails={showDetails}
+        totalHeight={totalHeight}
         selectedPatient={selectedPatient}
         />
     </div>,

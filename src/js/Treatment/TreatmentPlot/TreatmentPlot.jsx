@@ -8,18 +8,21 @@ import {SingleDateSet, DoubleDateSet} from './TreatmentDateSet'
 import Axis from '../../utils/Plot/Axis'
 import {DayDifference} from '../../utils/formatDate'
 
+import EventPolyline from '../../utils/Plot/EventPolyline'
 
 
 const TreatmentPlot = (props) => {
 
-  const {size, offset, data, treatmentSpecification, selectedPatient} = props
+  const {size, offset, data, filter, treatmentSpecification, selectedPatient} = props
 
   const selectedPatid = selectedPatient !== null ? selectedPatient.patid: undefined
 
   const nTreatments = uniqBy(treatmentSpecification, t => t.index).length
 
+  const heightDiv = props.totalHeight
+
   const xMin = 0
-  const xMax = 2 + max(data.patientData.map(d => {
+  var xMax = 4 + max(data.patientData.map(d => {
     var diff = DayDifference(d[data.keyDates[0].column], d[data.keyDates[data.keyDates.length - 1].column])
     if(!isNaN(diff)) {
       return diff
@@ -27,23 +30,22 @@ const TreatmentPlot = (props) => {
       return null
     }
   }))
-/*
+
   treatmentSpecification.map((t,i) => {
 
-    var readyData = data[t.datasetName].filter(d => d.patid === p.patid)
+    var readyData = data[t.datasetName]
     if(readyData.length > 0) {
-      readyData = readyData.map(d => {
-        return {
-          x: DayDifference(p[data.keyDates[0].column], new Date(d[t.startDate])),
-          x2: DayDifference(p[data.keyDates[0].column],new Date(d[t.endDate])),
-          y: d[t.column]}
-      })
+      var val = max(data[t.datasetName].map(d => {
+        var patient = data.patientData.find(p => p.patid == d.patid)
+        return DayDifference(patient[data.keyDates[0].column], new Date(d[t.startDate]))
+      }))
+
+      if(val > xMax) {
+        xMax = val + 2
+      }
     }
-
-      console.log(readyData);
-
   })
-*/
+
   const yMin = -0.5
   const yMax = (nTreatments*data.patientData.length) - 0.5
 
@@ -137,9 +139,40 @@ const TreatmentPlot = (props) => {
     </g>
    })
 
+
+
+   var events = null
+   /*
+   if(data.keyEvents !== undefined) {
+
+     const uniquePositions = data.patientData.map((p,i) => {
+       return {patid: p.patid, treatment: p.treatment, min: i, max: i, mid: i}
+     })
+
+     events = data.keyEvents.map((e,i) => {
+       const event = <EventPolyline
+         key={i}
+         data={data}
+         uniquePositions={uniquePositions}
+         filter={filter}
+         event={e}
+         xScale={xScale}
+         yScale={yScale}
+         offset={0}/>
+
+       return <g key={i} id={e.column}>{event}</g>
+
+     })
+   }
+   */
+
   if(containsData) {
-  return <svg width={size.width} height={totalHeight}>
+  return <div
+    style={{height: `${heightDiv}px`, bottom: '0', right: '0',overflowY: 'auto', overflowX: 'hidden'}}>
+    <svg width={size.width}
+    height={totalHeight}>
     {treatmentData}
+    {events}
     <g id="treatmentNames">{treatmentNames}</g>
     <g id="treatmentRect">{treatmentRect}</g>
     <Axis
@@ -148,8 +181,8 @@ const TreatmentPlot = (props) => {
       xScale={xScale}
       yScale={yScale}
     />
-
-  </svg>
+    </svg>
+  </div>
   } else {
     return <div><p>This patient has no treatment data recorded.</p></div>
   }

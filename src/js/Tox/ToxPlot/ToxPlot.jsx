@@ -68,7 +68,7 @@ class ToxPlot extends PureComponent {
         return {patid: d, treatment: filteredData.find(dx => dx.patid === d).treatment, min: mn, max: mx, mid: (mn+mx)/2}
       })
 
-
+console.log();
       const backgroundRect = uniquePositions
          .map((d,i) => {
          return <g key={d.patid}><rect
@@ -110,7 +110,6 @@ class ToxPlot extends PureComponent {
             yScale={yScale}/>
 
           return <g key={i} id={e.column}>{event}</g>
-
         })
       }
 

@@ -73,11 +73,12 @@ const EventKey = (props) => {
   const {keyEvents, svgPosition} = props
 
   const uniqeuEvents = uniqBy(keyEvents, e => e.label)
-  const events = uniqeuEvents.map((e,i) => <g key={i} transform={`translate(${i},${i*30})`}>
+  const events = uniqeuEvents.map((e,i) => <g key={i} transform={`translate(${0},${i*30})`}>
       <polyline
         points={`10,10 10,-10`}
         stroke={e.color}
         strokeWidth={3}
+        strokeDasharray={e.dash ? "5,5": ""}
         />
       <text
         x={30}

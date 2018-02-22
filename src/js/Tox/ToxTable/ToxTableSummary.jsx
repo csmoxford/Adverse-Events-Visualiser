@@ -4,7 +4,7 @@ import './ToxTable.css'
 import {bracketPercent} from '../../utils/FormatNumber'
 
 const ToxTable = (props) => {
-  const {data, filteredData} = this.props
+  const {data, filteredData} = props
 
   if(filteredData.length === 0) {
     return <div><br/>No data was sent. Table could not be plotted.</div>

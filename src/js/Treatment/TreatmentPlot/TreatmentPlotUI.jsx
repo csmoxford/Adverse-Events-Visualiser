@@ -33,7 +33,7 @@ class TreatmentPlotUI extends PureComponent {
   }
 
   render() {
-    const {data} = this.props
+    const {data, filter} = this.props
 
     const specification = this.state.treatmentSpecification !== undefined ? this.state.treatmentSpecification : data.treatmentSpecification
     const treatmentSpecs = uniqBy(data.treatmentSpecification, d => d.index)
@@ -51,14 +51,14 @@ class TreatmentPlotUI extends PureComponent {
 
     return <div>
       <div className="row">
-        <div style={{height: "20px"}}>
-        </div>
         <div className="col-xs-12">
           {treatmentSelect}
         </div>
         <div className="col-xs-12">
           <TreatmentPlot
             data={data}
+            filter={filter}
+            totalHeight={this.props.totalHeight}
             treatmentSpecification={specification}
             selectedPatient={this.props.selectedPatient}
             showDetails={this.props.showDetails}/>

@@ -11,7 +11,7 @@ class Treatment extends Component {
 
   render() {
 
-    const {data, totalHeight, showDetails, selectedPatient} = this.props
+    const {data, totalHeight, filter, showDetails, selectedPatient} = this.props
 
     if(data.treatmentSpecification === undefined) {
       return <div className="item-middle">
@@ -22,7 +22,7 @@ class Treatment extends Component {
     }
 
     return <Switch>
-      <Route key={0} path='/trialData/treatment/patient' render={() => <TreatmentPlotOuter  data={data} totalHeight={totalHeight} showDetails={showDetails} selectedPatient={selectedPatient} />}/>
+      <Route key={0} path='/trialData/treatment/patient' render={() => <TreatmentPlotOuter  data={data} totalHeight={totalHeight} filter={filter} showDetails={showDetails} selectedPatient={selectedPatient} />}/>
       <Route key={1} path='/trialData/treatment/table' render={() => <div className="item-main"><div style={{height: '30px'}}></div><TreatmentTable  data={data}/></div>}/>
       <Route key={2} render={Error404}/>
     </Switch>

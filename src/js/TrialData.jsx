@@ -242,9 +242,9 @@ class TrialData extends Component {
            <Route path="/trialData/patientSummary" render={() => <ToxFilters className="item-left" data={data} updateFilterStateValues={this.updateFilterStateValues}/>}/>
              <Switch>
                <Route path="/trialData/load" render={() => <LoadData onSubmit={this.handleFileSelect}/>}/>
-               <Route path="/trialData/treatment" render={() => <Treatment data={data} totalHeight={totalHeight} showDetails={this.showDetails} selectedPatient={selectedPatient} />} />
+               <Route path="/trialData/treatment" render={() => <Treatment data={data} totalHeight={totalHeight}  filter={filterValues} showDetails={this.showDetails} selectedPatient={selectedPatient} />} />
                <Route path="/trialData/ae" render={() => <AdverseEvents data={data} filteredData={filteredData} filterValues={filterValues} showDetails={this.showDetails} selectedPatient={selectedPatient} selectedPatientAEs={selectedPatientAEs} size={size} addAdverseEvent={this.addAdverseEvent}/>}/>
-               <Route path="/trialData/patientSummary" render={() => <PatientSummary data={data} totalHeight={totalHeight} filteredData={filteredData} filterValues={filterValues} />}/>
+               <Route path="/trialData/patientSummary" render={() => <PatientSummary data={data} totalHeight={totalHeight} filteredData={filteredData} filter={filterValues} />}/>
                <Route component={Error404}/>
            </Switch>
         </div>

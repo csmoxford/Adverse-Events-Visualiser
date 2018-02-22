@@ -27,8 +27,8 @@ const ToxTableAE = (props) => {
       const count3 = uniq(filteredData.filter(d => d.treatment === t.value && d.aegrade > 2).map(d => d.patid)).length
       const style = {backgroundColor: t.color + '40'}
       return [
-        <td key={`${j}_0`} style={style}>{count1} {bracketPercent(count1,numberOfPatients[j])}</td>,
-        <td key={`${j}_1`} style={style}>{count3} {bracketPercent(count3,numberOfPatients[j])}</td>
+        <td key={`c${j}_0`} style={style}>{count1} {bracketPercent(count1,numberOfPatients[j])}</td>,
+        <td key={`c${j}_1`} style={style}>{count3} {bracketPercent(count3,numberOfPatients[j])}</td>
       ]
     })
 
@@ -51,8 +51,8 @@ const ToxTableAE = (props) => {
     const cells = data.treatment.map((t,j) => {
       const style = {backgroundColor: t.color + '40'}
       return [
-        <td key={`${j}_0`} style={style}>{a.treatmentData[j].count1} {bracketPercent(a.treatmentData[j].count1,numberOfPatients[j])}</td>,
-        <td key={`${j}_1`} style={style}>{a.treatmentData[j].count3} {bracketPercent(a.treatmentData[j].count3,numberOfPatients[j])}</td>
+        <td key={`c${j}_0`} style={style}>{a.treatmentData[j].count1} {bracketPercent(a.treatmentData[j].count1,numberOfPatients[j])}</td>,
+        <td key={`c${j}_1`} style={style}>{a.treatmentData[j].count3} {bracketPercent(a.treatmentData[j].count3,numberOfPatients[j])}</td>
       ]
     })
     return <tr key={i}>

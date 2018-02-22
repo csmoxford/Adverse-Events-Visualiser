@@ -9,6 +9,7 @@ import {Select} from './utils/Forms'
 import BloodPlot from './BloodPlot/BloodPlot'
 
 import PatientSelect from './utils/PatientSelect'
+import EventPolyline from './utils/Plot/EventPolyline'
 
 import AdverseEventRect from './Tox/ToxPlot/AdverseEventRect'
 import AdverseEventLabels from './Tox/ToxPlot/AdverseEventLabels'
@@ -85,7 +86,7 @@ class PatientSummary extends Component {
 
   render() {
 
-    const {data, filteredData, totalHeight} = this.props
+    const {data, filteredData, totalHeight, filter} = this.props
     const size = {width: 0.47*window.innerWidth, height: 350}
     const offset = {left: 50, right:50, top: 10, bottom: 50}
 
@@ -112,7 +113,7 @@ class PatientSummary extends Component {
       if(data.measureData !== undefined){
         subMeasureData = data.measureData.filter(d => d.patid === this.state.patid)
         if(subData.length > 0) {
-          xMin = Math.min(xMin, min(subMeasureData.map((d) => d.relativeTime)) + 1)
+          xMin = Math.min(xMin, min(subMeasureData.map((d) => d.relativeTime)) - 1)
           xMax = Math.max(xMax, max(subMeasureData.map((d) => d.relativeTime)) + 1)
         }
       }
@@ -146,6 +147,25 @@ class PatientSummary extends Component {
       }
 
       if(subData.length > 0) {
+
+        var events = null
+        if(data.keyEvents !== undefined) {
+          events = data.keyEvents.map((e,i) => {
+
+            const event = <EventPolyline
+              key={i}
+              data={data}
+              uniquePositions={[{patid: patient.patid, min: 0, max: max(subData.map(d => d.index))}]}
+              filter={filter}
+              event={e}
+              xScale={xScale}
+              yScale={yScale}/>
+
+            return <g key={i} id={e.column}>{event}</g>
+          })
+        }
+
+
         toxPlot = <svg ref={node => this.node = node}
       width={size.width} height={height}>
           <AdverseEventRect
@@ -153,6 +173,7 @@ class PatientSummary extends Component {
             xScale={xScale}
             yScale={yScale}
             colors={data.toxColors}/>
+            {events}
           <AdverseEventLabels data={rowData} xScale={xScale} yScale={yScale}/>
             <Axis
               side="bottom"

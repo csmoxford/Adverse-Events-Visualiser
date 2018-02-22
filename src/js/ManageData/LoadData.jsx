@@ -75,6 +75,7 @@ class LoadData extends PureComponent {
             <li>column: the column name of the column in patientData</li>
             <li>label: A display name for this event</li>
             <li>color: a color associated with this event type</li>
+            <li>dash: (optional) true / false use a dashed line. Default is false - solid</li>
           </ul>
           <p><b>measureData:</b> (optional) A dataset of measure data at various time points such as blood test results.</p>
           <ul>
