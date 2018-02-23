@@ -23,14 +23,13 @@ class ToxPlotUI extends Component {
   }
 
   OnPatientMouseOver(patient, event) {
-
-    console.log("patient" + patient.patid);
+    // console.log("patient" + patient.patid);
     this.props.showDetails(patient, event)
     this.setState({legend: false})
   }
 
   showKey() {
-    console.log("axis");
+    // console.log("axis");
     this.setState({legend: true})
   }
 

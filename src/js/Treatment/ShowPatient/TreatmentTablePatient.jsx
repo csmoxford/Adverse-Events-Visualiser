@@ -29,11 +29,21 @@ const TreatmentTablePatient = (props) => {
     const values = data[t.datasetName].filter(p => p.patid === selectedPatient.patid).map(p => doseColors.find(dc =>  p[t.column] >= dc.value).value)
     total += sum(values)
 
-    return t.doseColors.map((d,j) => <tr key={`${i},${j}`}>
-      {j === 0 ? <td rowSpan={t.doseColors.length}>{t.label}</td>: null}
-      <td>{d.label === undefined ? d.value: d.label}</td>
-      <td>{values.filter(v => v === d.value).length}</td>
-    </tr>)
+    const numberDoses = t.doseColors.filter((d,j) => values.filter(v => v === d.value).length > 0).length
+console.log(numberDoses);
+    var k = 0
+    return t.doseColors.map((d,j) => {
+      if(values.filter(v => v === d.value).length > 0) {
+        k++
+        return <tr key={`${i},${j}`}>
+          {k === 1 ? <td rowSpan={numberDoses}>{t.label}</td>: null}
+          <td>{d.label === undefined ? d.value: d.label}</td>
+          <td>{values.filter(v => v === d.value).length}</td>
+        </tr>
+      } else {
+        return null
+      }
+    })
   })
 
   if(total > 0) {

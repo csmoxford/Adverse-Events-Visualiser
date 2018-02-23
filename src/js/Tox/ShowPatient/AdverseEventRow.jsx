@@ -14,7 +14,7 @@ const AdverseEventRow = (props) => {
   return(
     <tr style={{ backgroundColor: props.colors[thisPatientsAeData.aegrade]}}>
       <td>{formatDate(thisPatientsAeData.aestartdate)}</td>
-      <td>{formatDate(thisPatientsAeData.aestopdate)}</td>
+      <td>{formatDate(thisPatientsAeData.providedAEstopdate)}</td>
       <td>{thisPatientsAeData.aecategory}</td>
       <td>{thisPatientsAeData.aeterm}</td>
       <td>{thisPatientsAeData.aegrade}</td>

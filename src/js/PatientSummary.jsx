@@ -22,6 +22,8 @@ import TreatmentPlotOnePatient from './Treatment/TreatmentPlot/TreatmentPlotOneP
 import ToxPlotKey from './Tox/ToxPlot/ToxPlotKey'
 import TreatmentPlotKey from './Treatment/TreatmentPlot/TreatmentPlotKey'
 
+import {DayDifference} from './utils/formatDate'
+
 var $ = require('jquery')
 
 
@@ -108,13 +110,14 @@ class PatientSummary extends Component {
       getIndex(subData)
       var xMin = 0
       var xMax = max(subData.map(d => d.toxEnd))
+      xMax = xMax === undefined ? 4: xMax
 
       var subMeasureData = []
       if(data.measureData !== undefined){
         subMeasureData = data.measureData.filter(d => d.patid === this.state.patid)
         if(subData.length > 0) {
-          xMin = Math.min(xMin, min(subMeasureData.map((d) => d.relativeTime)) - 1)
-          xMax = Math.max(xMax, max(subMeasureData.map((d) => d.relativeTime)) + 1)
+          xMin = Math.min(xMin, min(subMeasureData.map((d) => DayDifference(d[filter.from], d.dateOfMeasure))) - 1)
+          xMax = Math.max(xMax, max(subMeasureData.map((d) => DayDifference(d[filter.from], d.dateOfMeasure))) + 1)
         }
       }
 
@@ -136,7 +139,8 @@ class PatientSummary extends Component {
       if(subMeasureData.filter(d => d[this.state.measureColumns.column] !== undefined).length > 0) {
         bloodPlot = <BloodPlot
           size={size}
-          data={subMeasureData.filter(d => d[this.state.measureColumns.column] !== undefined).map((d,i) => {return {x: d.relativeTime, y: d[this.state.measureColumns.column]}})}
+          data={subMeasureData.filter(d => d[this.state.measureColumns.column] !== undefined).map((d,i) => {return {x: DayDifference(d[filter.from], d.dateOfMeasure) , y: d[this.state.measureColumns.column]}})}
+          filter={filter}
           xScale={xScale}
           measure={this.state.measureColumns}
           />
@@ -177,7 +181,7 @@ class PatientSummary extends Component {
           <AdverseEventLabels data={rowData} xScale={xScale} yScale={yScale}/>
             <Axis
               side="bottom"
-              lab="Time (days)"
+              lab={`Time (days from ${filter.fromLabel})`}
               xScale={xScale}
               yPos={yScale.range()[1]}
             />
@@ -191,6 +195,7 @@ class PatientSummary extends Component {
         treatmentPlot = <TreatmentPlotOnePatient
           size={size}
           data={data}
+          filter={filter}
           patid={this.state.patid}
           xScale={xScale}/>
       }

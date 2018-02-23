@@ -41,12 +41,17 @@ const DoubleDateSet = (props) => {
 
   const partialHeight = 0.33
 
-  const lines = data.map((d,i) => <polyline
-    key={i}
-    points={`${xScale(d.x)},${yScale(yPosition - partialHeight)}, ${xScale(d.x)},${yScale(yPosition + partialHeight)} ${xScale(d.x2)},${yScale(yPosition + partialHeight)}, ${xScale(d.x2)},${yScale(yPosition - partialHeight)}`}
-    fill={doseColors.find(c => d.y >= c.value).color}
-    strokeLinecap="round"
-  />)
+  const lines = data.map((d,i) => {
+    if(d.x >= xScale.domain[0] && d.x <= xScale.domain[0]) {
+      return <polyline
+      key={i}
+      points={`${xScale(d.x)},${yScale(yPosition - partialHeight)}, ${xScale(d.x)},${yScale(yPosition + partialHeight)} ${xScale(d.x2)},${yScale(yPosition + partialHeight)}, ${xScale(d.x2)},${yScale(yPosition - partialHeight)}`}
+      fill={doseColors.find(c => d.y >= c.value).color}
+      strokeLinecap="round"
+    />
+    }
+    return null
+  })
 
   return <g className="treatment">{lines}</g>
 }

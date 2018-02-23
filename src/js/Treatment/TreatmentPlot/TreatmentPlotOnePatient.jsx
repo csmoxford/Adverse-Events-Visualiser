@@ -12,7 +12,7 @@ import {DayDifference} from '../../utils/formatDate'
 
 const TreatmentPlotOnePatient = (props) => {
 
-  const {size, offset, data, patid} = props
+  const {size, offset, filter, data, patid} = props
 
 
   const xMin = 0
@@ -43,12 +43,9 @@ const TreatmentPlotOnePatient = (props) => {
 
     if(readyData.length > 0) {
       readyData = readyData.map(d => {
-        console.log(patient);
-
-
         return {
-          x: DayDifference(patient[data.keyDates[0].column], new Date(d[t.startDate])),
-          x2: DayDifference(patient[data.keyDates[0].column],new Date(d[t.endDate])),
+          x: DayDifference(patient[filter.from], new Date(d[t.startDate])),
+          x2: DayDifference(patient[filter.from],new Date(d[t.endDate])),
           y: d[t.column]}
       })
 
@@ -97,7 +94,7 @@ const TreatmentPlotOnePatient = (props) => {
       <g id="treatmentNames">{treatmentNames}</g>
       <Axis
         side="bottom"
-        lab="Time (days)"
+        lab={`Time (days from ${filter.fromLabel})`}
         xScale={xScale}
         yScale={yScale}
       />

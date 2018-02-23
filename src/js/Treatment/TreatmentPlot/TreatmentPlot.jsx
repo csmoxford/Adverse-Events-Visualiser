@@ -19,11 +19,11 @@ const TreatmentPlot = (props) => {
 
   const nTreatments = uniqBy(treatmentSpecification, t => t.index).length
 
-  const heightDiv = props.totalHeight
+  const heightDiv = props.totalHeight - 80
 
   const xMin = 0
   var xMax = 4 + max(data.patientData.map(d => {
-    var diff = DayDifference(d[data.keyDates[0].column], d[data.keyDates[data.keyDates.length - 1].column])
+    var diff = DayDifference(d[filter.from], d[filter.to])
     if(!isNaN(diff)) {
       return diff
     } else {
@@ -37,7 +37,7 @@ const TreatmentPlot = (props) => {
     if(readyData.length > 0) {
       var val = max(data[t.datasetName].map(d => {
         var patient = data.patientData.find(p => p.patid == d.patid)
-        return DayDifference(patient[data.keyDates[0].column], new Date(d[t.startDate]))
+        return DayDifference(patient[filter.from], new Date(d[t.startDate]))
       }))
 
       if(val > xMax) {
@@ -76,9 +76,10 @@ const TreatmentPlot = (props) => {
       var readyData = data[t.datasetName].filter(d => d.patid === p.patid)
       if(readyData.length > 0) {
         readyData = readyData.map(d => {
+          const patient = data.patientData.find(p => p.patid === d.patid)
           return {
-            x: DayDifference(p[data.keyDates[0].column], new Date(d[t.startDate])),
-            x2: DayDifference(p[data.keyDates[0].column],new Date(d[t.endDate])),
+            x: DayDifference(patient[filter.from], new Date(d[t.startDate])),
+            x2: DayDifference(patient[filter.from],new Date(d[t.endDate])),
             y: d[t.column]}
         })
 
@@ -167,7 +168,17 @@ const TreatmentPlot = (props) => {
    */
 
   if(containsData) {
-  return <div
+  return [<div key='axis' align="right"><svg
+  style={{verticalAlign: "bottom", marginRight: height < heightDiv ? "0px": "17px"}}
+  width={size.width}
+  height="80px">
+  <Axis
+    side="top"
+    lab={`Time (days ${filter.fromLabel})`}
+    xScale={xScale}
+    yPos={80}
+  /></svg></div>,
+  <div
     style={{height: `${heightDiv}px`, bottom: '0', right: '0',overflowY: 'auto', overflowX: 'hidden'}}>
     <svg width={size.width}
     height={totalHeight}>
@@ -175,14 +186,8 @@ const TreatmentPlot = (props) => {
     {events}
     <g id="treatmentNames">{treatmentNames}</g>
     <g id="treatmentRect">{treatmentRect}</g>
-    <Axis
-      side="bottom"
-      lab="Time (days)"
-      xScale={xScale}
-      yScale={yScale}
-    />
     </svg>
-  </div>
+  </div>]
   } else {
     return <div><p>This patient has no treatment data recorded.</p></div>
   }
@@ -194,7 +199,7 @@ const TreatmentPlot = (props) => {
 
 TreatmentPlot.defaultProps = {
   size: {width: 800, height: 500},
-  offset: {top:50, bottom: 50, left: 50, right: 50}
+  offset: {top:0, bottom: 0, left: 10, right: 10}
 }
 
 export default TreatmentPlot

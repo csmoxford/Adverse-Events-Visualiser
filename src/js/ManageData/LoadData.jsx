@@ -15,7 +15,6 @@ class LoadData extends PureComponent {
   }
 
   render() {
-    const {onSubmit} = this.props
 
     return <div className="item-middle">
       <div>
@@ -26,11 +25,13 @@ class LoadData extends PureComponent {
           <label htmlFor="fileinput" className="btn btn-primary btn-lg">Choose a file</label>
         </div>
         {this.state.response !== ""?<h4>File selected: {this.state.response}</h4>:null}
-        {this.state.response !== ""?<button className={`btn ${this.state.response !== ""? " btn-primary btn-lg": " btn-warning"}`} onClick={onSubmit}>Load Data</button>:null}
+        {this.state.response !== ""?<button className={`btn ${this.state.response !== ""? " btn-primary btn-lg": " btn-warning"}`} onClick={this.props.onSubmit}>Load Data</button>:null}
+        {this.props.loadedMessage}
         <div style={{textAlign: 'left'}}>
           <div style={{height:'30px'}}></div>
           <h3 style={{textAlign: 'center'}}>File format requirements. There are examples on <a href="https://github.com/csmoxford/Adverse-Events-Visualiser/tree/master/Data">github</a></h3>
           <p>The file should be of type json and contain all the information listed below.</p>
+          <p><b>trial:</b> The name of the trial or dataset</p>
           <p><b>treatment:</b> An array of objects containing the treatment information.</p>
           <ul>
             <li>value: the numeric or string value which is found in patientData</li>
@@ -70,10 +71,11 @@ class LoadData extends PureComponent {
             <li>column: the column name of the column in toxData</li>
             <li>label: A display name for this group</li>
           </ul>
-          <p><b>keyEvents:</b> (optional) A column label and color for an event to be placed on the adverse event patient level plots.</p>
+          <p><b>keyEvents:</b> (optional) A column label and color for an event to be placed on the adverse event patient level plots. These may be identical to some of the keyDates.</p>
           <ul>
             <li>column: the column name of the column in patientData</li>
             <li>label: A display name for this event</li>
+            <li>offset: (optional) true or false. Should the event be offset to end of day or not. Default is false</li>
             <li>color: a color associated with this event type</li>
             <li>dash: (optional) true / false use a dashed line. Default is false - solid</li>
           </ul>

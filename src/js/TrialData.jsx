@@ -23,23 +23,28 @@ function filterData(data, filterValues) {
     const filt = (d,i) => {
     const from = filterValues.from // get the start of time window from patientData
     const to = filterValues.to // get the end of time window from patientData
-    const inTime = !((d.aestartdate < d[from] && (d.aestopdate < d[from]) || isNaN(d.aestopdate)) || (d.aestartdate > d[to])) && !isNaN(d[from]) // if toxicity was present in time window
+    const inTime = !((d.aestartdate < d[from] && (d.aestopdate < d[from] || isNaN(d.aestopdate))) || (d.aestartdate > d[to])) && !isNaN(d[from]) // if toxicity was present in time window
     var aeSelected = true
-    if(filterValues.aeSelectType === 2){ // category
+    if(filterValues.aeSelectType === "2"){ // category
       aeSelected = filterValues.aeCategorySelected.indexOf("All") !== -1 || filterValues.aeCategorySelected.indexOf(d.aecategory) !== -1 // if toxicity selected
-    } else if(filterValues.aeSelectType === 3){ // ae name
+    } else if(filterValues.aeSelectType === "3"){ // ae name
       aeSelected = filterValues.aeSelected.indexOf("All") !== -1 || filterValues.aeSelected.indexOf(d.aeterm) !== -1 // if toxicity selected
-    } else if(filterValues.aeSelectType === 4){
+    } else if(filterValues.aeSelectType === "4"){
       aeSelected = d[filterValues.keyGroupSelect]
     }
+
     const gradeSelected = d.aegrade >= filterValues.gradeSelected // if grade high enough
-    const causalityOk = filterValues.causalities.every((c) => d[c.column] >= c.value || (d[c.column] === undefined && c.value === 1) ) // if causality related enough
+    const causalityOk = filterValues.causalities.every((c) => d[c.column] >= c.value || (d[c.column] === undefined && c.value === 1)) // if causality related enough
     const isSae = filterValues.isSae? d.sae: true
     const presentAtStart = filterValues.includePresentAtStart ? true: d.aestartdate >= d[from] // if toxicities present at start permitted then is true, otherwise start of toxicity must be on or after start of toxicity window
 
-
+    if(!(inTime && aeSelected && gradeSelected && causalityOk && isSae && presentAtStart)) {
+      // console.log(`${i}, Intime: ${inTime}, aeSelected: ${aeSelected}, gradeSelected: ${gradeSelected}, causalityOk: ${causalityOk}, isSae: ${isSae}, presentAtStart: ${presentAtStart}`);
+      // console.log(d);
+    }
     return  inTime && aeSelected && gradeSelected && causalityOk && isSae && presentAtStart
   }
+  // console.log(data.toxData.filter((d,i) => !filt(d,i)));
   return data.toxData.filter(filt)
 }
 
@@ -86,7 +91,7 @@ class TrialData extends Component {
   }
 
   getDimensions() {
-    return {width: vwToPx(47), height: vhToPx(95)}
+    return {width: vwToPx(46.5), height: vhToPx(95)}
   }
 
   componentWillMount() {
@@ -99,6 +104,10 @@ class TrialData extends Component {
 
     const from = $("#adverseEventTimeFrom").val() // get the start of time window from patientData
     const to = $("#adverseEventTimeTo").val() // get the end of time window from patientData
+
+    const fromLabel = this.state.data.keyDates.find(d => d.column === from).label
+    const toLabel = this.state.data.keyDates.find(d => d.column === to).label
+
     const aeSelectedType = $('#adverseEventType').val()
     const aeSelected = $("#adverseEventSelect").val() // if toxicity selected
     const aeCategorySelected = $('#adverseEventCategory').val() //
@@ -110,7 +119,9 @@ class TrialData extends Component {
 
     const filterValues = {
         from: from,
+        fromLabel: fromLabel,
         to: to,
+        toLabel: toLabel,
         aeSelectType: aeSelectedType,
         aeCategorySelected: aeCategorySelected,
         aeSelected: aeSelected,
@@ -137,8 +148,7 @@ class TrialData extends Component {
       filteredData: filteredData,
       selectedPatient: null}
     )
-
-    console.log(filteredData);
+    console.log(`Filter selected ${filteredData.length} row out of ${this.state.data.toxData.length} in the adverse event dataset`);
   }
 
   showDetails(patient, event) {
@@ -159,6 +169,8 @@ class TrialData extends Component {
           const filterValues = {
             from: obj.keyDates[0].column,
             to: obj.keyDates[obj.keyDates.length - 1].column,
+            fromLabel: obj.keyDates[0].label,
+            toLabel: obj.keyDates[obj.keyDates.length - 1].label,
             aeSelected: "All",
             gradeSelected: 1,
             causalities: [],
@@ -168,10 +180,18 @@ class TrialData extends Component {
 
           const filteredData = filterData(obj, filterValues)
 
+
+          const loadedMessage = <div>
+              <h4>Data is loaded from: {obj.trial}</h4>
+              <p>There is {obj.patientData.length} patients present in the dataset.</p>
+              <p>There is {obj.toxData.length} rows in the toxData dataset.</p>
+            </div>
+
           this.setState({
             filterValues: filterValues,
             data: obj,
-            filteredData: filteredData
+            filteredData: filteredData,
+            loadedMessage: loadedMessage
           })
       }
 
@@ -241,8 +261,8 @@ class TrialData extends Component {
            <Route path="/trialData/ae" render={() => <ToxFilters className="item-left" data={data} updateFilterStateValues={this.updateFilterStateValues}/>}/>
            <Route path="/trialData/patientSummary" render={() => <ToxFilters className="item-left" data={data} updateFilterStateValues={this.updateFilterStateValues}/>}/>
              <Switch>
-               <Route path="/trialData/load" render={() => <LoadData onSubmit={this.handleFileSelect}/>}/>
-               <Route path="/trialData/treatment" render={() => <Treatment data={data} totalHeight={totalHeight}  filter={filterValues} showDetails={this.showDetails} selectedPatient={selectedPatient} />} />
+               <Route path="/trialData/load" render={() => <LoadData onSubmit={this.handleFileSelect} loadedMessage={this.state.loadedMessage}/>}/>
+               <Route path="/trialData/treatment" render={() => <Treatment data={data} totalHeight={totalHeight}  filter={filterValues} showDetails={this.showDetails} selectedPatient={selectedPatient} size={size}/>} />
                <Route path="/trialData/ae" render={() => <AdverseEvents data={data} filteredData={filteredData} filterValues={filterValues} showDetails={this.showDetails} selectedPatient={selectedPatient} selectedPatientAEs={selectedPatientAEs} size={size} addAdverseEvent={this.addAdverseEvent}/>}/>
                <Route path="/trialData/patientSummary" render={() => <PatientSummary data={data} totalHeight={totalHeight} filteredData={filteredData} filter={filterValues} />}/>
                <Route component={Error404}/>

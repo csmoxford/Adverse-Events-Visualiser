@@ -20,8 +20,7 @@ class AdverseEvents extends Component {
 
 
     const {data, filteredData, filterValues, showDetails, selectedPatient, selectedPatientAEs, size} = this.props
-
-    console.log(selectedPatient);
+    // console.log(selectedPatient);
 
     return <Switch>
       <Route path='/trialData/ae/summary' render={() => <div id="main" className="item-main"><ToxPlotTimeUI data={data} filteredData={filteredData} /></div>}/>

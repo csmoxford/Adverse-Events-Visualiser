@@ -10,15 +10,19 @@ class CircleSet extends Component {
   render() {
 
     const {data, xScale, yScale, color, radius} = this.props
-console.log(data);
-    const circles = data.map((d,i) => <circle
-      key={i}
-      cx={xScale(d.x)}
-      cy={yScale(d.y)}
-      r={radius}
-      fill={color}
-    />)
-
+    // console.log(data);
+    const circles = data.map((d,i) => {
+      if(!isNaN(d.x) && !isNaN(d.y)) {
+        return <circle
+          key={i}
+          cx={xScale(d.x)}
+          cy={yScale(d.y)}
+          r={radius}
+          fill={color}
+        />
+      }
+      return null
+    })
     return <g id='#circleSet'>{circles}</g>
 
   }

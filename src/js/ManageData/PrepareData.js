@@ -34,7 +34,7 @@ function prepareData(data) {
   var numberWithoutKeyDate = 0
   const keyDate = data.keyDates[0]
   for (i = patientData.length-1; i >= 0; i--) {
-    if(patientData[i][keyDate.column] === "Invalid Date") {
+    if(isNaN(Date.parse(patientData[i][keyDate.column]))) {
       patientData.splice(i,1)
       numberWithoutKeyDate++
     }
@@ -63,10 +63,20 @@ function prepareData(data) {
       toxData[i].aestartdate = new Date(toxData[i].aestartdate)
       toxData[i].aestopdate = new Date(toxData[i].aestopdate)
 
+      toxData[i].providedAEstopdate = toxData[i].aestopdate // used in the tables
+
       Object.assign(toxData[i], patient)
 
-      toxData[i].toxStart = DayDifference(patient[initDate], toxData[i].aestartdate) // miliseconds in a day
-      toxData[i].toxEnd = 1+DayDifference(patient[initDate], toxData[i].aestopdate) // miliseconds in a day
+      if(isNaN(Date.parse(toxData[i].aestopdate))) { // if end date missing use latest end date
+        for(j=0; j<data.keyDates.length; j++) {
+          if(!isNaN(Date.parse(toxData[i][data.keyDates[j].column]))) {
+            toxData[i].aestopdate = toxData[i][data.keyDates[j].column]
+          }
+        }
+      }
+
+      toxData[i].toxStart = DayDifference(patient[initDate], toxData[i].aestartdate)
+      toxData[i].toxEnd = 1 + DayDifference(patient[initDate], toxData[i].aestopdate)
       if(isNaN(toxData[i].toxEnd)) {
         toxData[i].toxEnd = toxData[i].toxStart + 1
       }

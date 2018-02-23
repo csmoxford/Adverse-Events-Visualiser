@@ -11,10 +11,12 @@ class BloodPlot extends PureComponent {
 
   render() {
 
-    const {size, data, xScale, measure} = this.props
+    const {size, data, xScale, filter, measure} = this.props
     const offset={top: 10, bottom: 50}
 
-    console.log(data);
+    console.log(filter);
+
+    // console.log(data);
 
     const yMin = min(data.map((d) => d.y)) / 1.02
     const yMax = max(data.map((d) => d.y)) * 1.02
@@ -55,7 +57,7 @@ class BloodPlot extends PureComponent {
         />
       <Axis
         side="bottom"
-        lab="Time (days)"
+        lab={`Time (days from ${filter.fromLabel})`}
         xScale={xScale}
         yScale={yScale}
         yPos={yScale.range()[0]}

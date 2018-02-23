@@ -68,7 +68,6 @@ class ToxPlot extends PureComponent {
         return {patid: d, treatment: filteredData.find(dx => dx.patid === d).treatment, min: mn, max: mx, mid: (mn+mx)/2}
       })
 
-console.log();
       const backgroundRect = uniquePositions
          .map((d,i) => {
          return <g key={d.patid}><rect
@@ -121,7 +120,7 @@ console.log();
       onMouseEnter={this.props.showKey}>
       <Axis
         side="top"
-        lab="Time (days)"
+        lab={`Time (days ${filter.fromLabel})`}
         xScale={xScale}
         yPos={80}
       /></svg>

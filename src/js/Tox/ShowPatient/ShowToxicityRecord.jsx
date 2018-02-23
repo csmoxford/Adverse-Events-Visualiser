@@ -5,16 +5,8 @@ import {formatDate} from '../../utils/formatDate'
 
 class ShowToxicityRecord extends PureComponent {
 
-
-  /*
-     constructor(props){
-        super(props)
-     }
-  */
-
   render() {
     // receives
-
     const {data, totalHeight, selectedPatient, thisPatientsAeData} = this.props
 
     if(selectedPatient === null)
