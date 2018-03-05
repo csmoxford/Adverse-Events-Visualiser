@@ -112,14 +112,19 @@ class PatientSummary extends Component {
       var xMax = max(subData.map(d => d.toxEnd))
       xMax = xMax === undefined ? 4: xMax
 
+console.log(`xMin: ${xMin}, xMax: ${xMax}`);
       var subMeasureData = []
-      if(data.measureData !== undefined){
+      if(data.measureData !== undefined) {
         subMeasureData = data.measureData.filter(d => d.patid === this.state.patid)
         if(subData.length > 0) {
-          xMin = Math.min(xMin, min(subMeasureData.map((d) => DayDifference(d[filter.from], d.dateOfMeasure))) - 1)
-          xMax = Math.max(xMax, max(subMeasureData.map((d) => DayDifference(d[filter.from], d.dateOfMeasure))) + 1)
+          var mn = min(subMeasureData.map((d) => DayDifference(d[filter.from], d.dateOfMeasure)))
+          var mx = max(subMeasureData.map((d) => DayDifference(d[filter.from], d.dateOfMeasure)))
+          xMin = Math.min(xMin, mn === undefined? 0: mn - 1)
+          xMax = Math.max(xMax, mx == undefined? 0: mx + 1)
         }
       }
+
+      console.log(`xMin: ${xMin}, xMax: ${xMax}`);
 
       const xScale = scaleLinear()
         .domain([xMin, xMax])
@@ -160,7 +165,7 @@ class PatientSummary extends Component {
               key={i}
               data={data}
               uniquePositions={[{patid: patient.patid, min: 0, max: max(subData.map(d => d.index))}]}
-              filter={filter}
+              fromColumn={filter.from}
               event={e}
               xScale={xScale}
               yScale={yScale}/>

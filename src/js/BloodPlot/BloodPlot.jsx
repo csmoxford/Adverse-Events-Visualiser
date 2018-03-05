@@ -14,16 +14,11 @@ class BloodPlot extends PureComponent {
     const {size, data, xScale, filter, measure} = this.props
     const offset={top: 10, bottom: 50}
 
-    console.log(filter);
-
-    // console.log(data);
-
     const yMin = min(data.map((d) => d.y)) / 1.02
     const yMax = max(data.map((d) => d.y)) * 1.02
     const yScale = scaleLinear()
        .domain([yMin, yMax])
        .range([size.height-offset.bottom, offset.top])
-
 
     var normRange
     if(measure.min !== undefined && measure.max !== undefined) {
@@ -44,8 +39,6 @@ class BloodPlot extends PureComponent {
          fill="#00FF0040"
         />
     }
-
-
 
     return <svg ref={node => this.node = node}
       width={size.width} height={size.height}>

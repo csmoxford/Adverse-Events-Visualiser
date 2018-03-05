@@ -163,14 +163,14 @@ class TrialData extends Component {
 
 
   onReaderLoad(event){
-          var obj = JSON.parse(event.target.result);
-          prepareData(obj)
+          var data = JSON.parse(event.target.result);
+          prepareData(data)
 
           const filterValues = {
-            from: obj.keyDates[0].column,
-            to: obj.keyDates[obj.keyDates.length - 1].column,
-            fromLabel: obj.keyDates[0].label,
-            toLabel: obj.keyDates[obj.keyDates.length - 1].label,
+            from: data.keyDates[0].column,
+            to: data.keyDates[data.keyDates.length - 1].column,
+            fromLabel: data.keyDates[0].label,
+            toLabel: data.keyDates[data.keyDates.length - 1].label,
             aeSelected: "All",
             gradeSelected: 1,
             causalities: [],
@@ -178,18 +178,22 @@ class TrialData extends Component {
             includePresentAtStart: true
           }
 
-          const filteredData = filterData(obj, filterValues)
+          const filteredData = filterData(data, filterValues)
 
+          // look for missing treatment value patients from data.treatment
+          const missingTreatmentSpecification = data.patientData.filter(p => data.treatment.find(t => t.value == p.treatment) === undefined).length
+          const warningTreatment = missingTreatmentSpecification > 0 ? <p><b>Warning: </b>There were {missingTreatmentSpecification} patients whos treatment value did not match the treatment metadata</p>: null
 
           const loadedMessage = <div>
-              <h4>Data is loaded from: {obj.trial}</h4>
-              <p>There is {obj.patientData.length} patients present in the dataset.</p>
-              <p>There is {obj.toxData.length} rows in the toxData dataset.</p>
+              <h4>Data is loaded from: {data.trial}</h4>
+              <p>There is {data.patientData.length} patients present in the dataset.</p>
+              <p>There is {data.toxData.length} rows in the toxData dataset.</p>
+              {warningTreatment}
             </div>
 
           this.setState({
             filterValues: filterValues,
-            data: obj,
+            data: data,
             filteredData: filteredData,
             loadedMessage: loadedMessage
           })

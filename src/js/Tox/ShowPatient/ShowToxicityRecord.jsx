@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import AdverseEventRow from './AdverseEventRow.jsx'
 import "./ShowToxicityRecord.css"
 import {formatDate} from '../../utils/formatDate'
+import getTreatment from '../../utils/getTreatment'
 
 class ShowToxicityRecord extends PureComponent {
 
@@ -40,7 +41,7 @@ class ShowToxicityRecord extends PureComponent {
     }
 
     const causality = data.causality.map((c,i) => <th key={i}>{c.label}</th>)
-    const treatment = data.treatment.find(t => selectedPatient.treatment === t.value)
+    const treatment = getTreatment(data.treatment, selectedPatient)
 
     return(
       <div

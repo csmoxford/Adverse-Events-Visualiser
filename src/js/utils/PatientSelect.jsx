@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import {Select} from './Forms'
+import getTreatment from './getTreatment'
 
 var $ = require('jquery')
 
@@ -11,12 +12,13 @@ class PatientSelect extends PureComponent {
   }
 
   componentDidMount() {
-    $('#patidSelect button').css('background', this.props.treatment.find(t => t.value === this.props.patients[0].treatment).color + "40")
+    console.log(this.props.patients[0]);
+    $('#patidSelect button').css('background', getTreatment(this.props.treatment,this.props.patients[0]).color + "40")
   }
 
   OnSelectUpdate() {
     const patient = this.props.patients.find(p => p.patid === $('#patid').val())
-    $('#patidSelect button').css('background', this.props.treatment.find(t => t.value === patient.treatment).color + "40")
+    $('#patidSelect button').css('background', getTreatment(this.props.treatment,patient.treatment).color + "40")
     if(this.props.didChange !== undefined) {
       this.props.didChange()
     }
@@ -27,7 +29,7 @@ class PatientSelect extends PureComponent {
     const {patients, treatment} = this.props
     var patientOptions
     if(treatment !== undefined) {
-      patientOptions = patients.map((d,i) => <option key={i} style={{backgroundColor: treatment.find(t => t.value === d.treatment).color + "40"}}>{d.patid}</option>)
+      patientOptions = patients.map((d,i) => <option key={i} style={{backgroundColor: getTreatment(treatment,d).color + "40"}}>{d.patid}</option>)
     } else {
       patientOptions = patients.map((d,i) => <option key={i}>{d.patid}</option>)
     }

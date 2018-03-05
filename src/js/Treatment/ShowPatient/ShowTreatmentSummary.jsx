@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 
 
 import {formatDate} from '../../utils/formatDate'
+import getTreatment from '../../utils/getTreatment'
 
 import TreatmentTablePatient from './TreatmentTablePatient'
 
@@ -16,7 +17,7 @@ class ShowTreatmentSummary extends PureComponent {
       return <div></div>
     }
 
-    const treatment = data.treatment.find(t => selectedPatient.treatment === t.value)
+    const treatment = getTreatment(data.treatment, selectedPatient)
 
     return <div
       className="patient-record"

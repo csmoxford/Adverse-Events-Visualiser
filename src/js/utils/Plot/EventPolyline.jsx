@@ -5,10 +5,10 @@ import {DayDifference} from '../formatDate'
 class EventPolyline extends Component {
 
   render() {
-    const {data, event, uniquePositions, filter, xScale, yScale, offset} = this.props
+    const {data, event, uniquePositions, fromColumn, xScale, yScale, offset} = this.props
     const eventPolyline = uniquePositions.map((d,j) => {
       const patient = data.patientData.find(p => p.patid === d.patid)
-      const x = (event.offset ? 1 : 0) + DayDifference(patient[filter.from], patient[event.column])
+      const x = (event.offset ? 1 : 0) + DayDifference(patient[fromColumn], patient[event.column])
 
       if(!isNaN(x)){
         return <polyline

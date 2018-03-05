@@ -84,7 +84,7 @@
     {"patid": "P2", "treatment": 1, "registration": "2015-01-08", "mdtreatment": "2015-01-15", "eot": "2015-02-10"},
     {"patid": "P3", "treatment": 1, "registration": "2015-01-09", "mdtreatment": "2015-01-15", "eot": "2015-02-12"},
     {"patid": "P4", "treatment": 1, "registration": "2015-01-10", "mdtreatment": "2015-01-15", "eot": "2015-02-14"},
-    {"patid": "P5", "treatment": 0, "registration": "2015-01-12", "mdtreatment": "2015-01-18", "eot": "2015-02-18"}
+    {"patid": "P5", "treatment": 2, "registration": "2015-01-12", "mdtreatment": "2015-01-18", "eot": "2015-02-18"}
   ],
   "toxData": [
     {"aestartdate": "2015-01-01", "aestopdate": "2015-01-03", "patid": "P0", "aecategory": "Gastrointestinal", "aeterm": "Nausea", "aegrade": 1, "sae": false, "causalityD": 1},
@@ -97,7 +97,8 @@
     {"aestartdate": "2015-01-14", "aestopdate": "2015-01-14", "patid": "P4", "aecategory": "Gastrointestinal", "aeterm": "Nausea", "aegrade": 3, "sae": true, "causalityD": 5},
     {"aestartdate": "2015-01-17", "aestopdate": "2015-01-24", "patid": "P4", "aecategory": "Gastrointestinal", "aeterm": "Vomiting", "aegrade": 1, "sae": false, "causalityD": 3},
     {"aestartdate": "2015-01-18", "aestopdate": "", "patid": "P4", "aecategory": "Neurological", "aeterm": "Headache", "aegrade": 1, "sae": true, "causalityD": 3},
-    {"aestartdate": "2015-01-20", "aestopdate": "2015-01-22", "patid": "P4", "aecategory": "Vascular System", "aeterm": "Palpitations", "aegrade": 1, "sae": true, "causalityD": 1}
+    {"aestartdate": "2015-01-20", "aestopdate": "2015-01-22", "patid": "P4", "aecategory": "Vascular System", "aeterm": "Palpitations", "aegrade": 1, "sae": true, "causalityD": 1},
+    {"aestartdate": "2015-01-13", "aestopdate": "2015-01-22", "patid": "P5", "aecategory": "Vascular System", "aeterm": "Palpitations", "aegrade": 1, "sae": true, "causalityD": 1}
   ],
   "measureData": [
     {"patid": "P0", "dateOfMeasure": "2015-01-01","platelets": 50, "rbc": 240, "cholesterol": 4},

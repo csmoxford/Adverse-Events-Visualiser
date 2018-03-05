@@ -5,6 +5,7 @@ import {uniq, uniqBy} from 'lodash'
 
 import Axis from '../../utils/Plot/Axis.jsx'
 import EventPolyline from '../../utils/Plot/EventPolyline'
+import getTreatment from '../../utils/getTreatment'
 
 import AdverseEventRect from './AdverseEventRect'
 import AdverseEventLabels from './AdverseEventLabels'
@@ -75,9 +76,9 @@ class ToxPlot extends PureComponent {
            y={yScale(d.min - 0.5)}
            height={yScale(d.max + 0.5) - yScale(d.min - 0.5)}
            width={xScale(xMax)-xScale(xMin)}
-           fill={d.patid === selectedPatid ? "#000": data.treatment.find(t => t.value === d.treatment).color}
+           fill={d.patid === selectedPatid ? "#000": getTreatment(data.treatment, d).color}
            fillOpacity={0.1}
-           stroke={data.treatment.find(t => t.value === d.treatment).color}
+           stroke={getTreatment(data.treatment, d).color}
            strokeOpacity={0.2}
            onMouseEnter={(e) => this.props.showDetails(data.patientData.find(p => d.patid === p.patid),e)}
          />
@@ -103,7 +104,7 @@ class ToxPlot extends PureComponent {
             data={data}
             uniquePositions={uniquePositions}
             filteredData={filteredData}
-            filter={filter}
+            fromColumn={filter.from}
             event={e}
             xScale={xScale}
             yScale={yScale}/>

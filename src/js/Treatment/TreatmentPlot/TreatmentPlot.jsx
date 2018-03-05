@@ -7,8 +7,10 @@ import {SingleDateSet, DoubleDateSet} from './TreatmentDateSet'
 
 import Axis from '../../utils/Plot/Axis'
 import {DayDifference} from '../../utils/formatDate'
+import getTreatment from '../../utils/getTreatment'
 
 import EventPolyline from '../../utils/Plot/EventPolyline'
+
 
 
 const TreatmentPlot = (props) => {
@@ -125,7 +127,7 @@ const TreatmentPlot = (props) => {
 
 
   const treatmentRect = data.patientData.map((d,i) => {
-      const color = data.treatment.find(t => t.value === d.treatment).color
+      const color = getTreatment(data.treatment, d).color
       return <g key={d.patid}><rect
         x={xScale(xMin)}
         y={yScale(i*nTreatments - 0.5)}
@@ -143,29 +145,26 @@ const TreatmentPlot = (props) => {
 
 
    var events = null
-   /*
    if(data.keyEvents !== undefined) {
 
      const uniquePositions = data.patientData.map((p,i) => {
-       return {patid: p.patid, treatment: p.treatment, min: i, max: i, mid: i}
+       return {patid: p.patid, treatment: p.treatment, min: 2*i, max: 2*i + 1}
      })
 
      events = data.keyEvents.map((e,i) => {
-       const event = <EventPolyline
-         key={i}
-         data={data}
-         uniquePositions={uniquePositions}
-         filter={filter}
-         event={e}
-         xScale={xScale}
-         yScale={yScale}
-         offset={0}/>
-
-       return <g key={i} id={e.column}>{event}</g>
-
+       return <g key={i} id={e.column}>
+         <EventPolyline
+           key={i}
+           data={data}
+           uniquePositions={uniquePositions}
+           fromColumn={filter.from}
+           event={e}
+           xScale={xScale}
+           yScale={yScale}
+           offset={0}/>
+       </g>
      })
    }
-   */
 
   if(containsData) {
   return [<div key='axis' align="right"><svg
